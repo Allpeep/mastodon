@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Permalink from './permalink';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
+import Jam from 'mastodon/features/status/components/jam';
 import Icon from 'mastodon/components/icon';
 import { autoPlayGif } from 'mastodon/initial_state';
 
@@ -224,6 +225,8 @@ export default class StatusContent extends React.PureComponent {
 
           {!hidden && !!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
+          {!hidden && !!status.get('jam') && <Jam jam={status.get('jam')} />}
+
           {renderViewThread && showThreadButton}
         </div>
       );
@@ -233,6 +236,8 @@ export default class StatusContent extends React.PureComponent {
           <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
+
+          {!!status.get('jam') && <Jam jam={status.get('jam')} />}
 
           {renderViewThread && showThreadButton}
         </div>,
@@ -249,6 +254,8 @@ export default class StatusContent extends React.PureComponent {
           <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
+
+          {!!status.get('jam') && <Jam jam={status.get('jam')} />}
 
           {renderViewThread && showThreadButton}
         </div>
