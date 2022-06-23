@@ -5,6 +5,7 @@ export const ACCOUNTS_IMPORT = 'ACCOUNTS_IMPORT';
 export const STATUS_IMPORT   = 'STATUS_IMPORT';
 export const STATUSES_IMPORT = 'STATUSES_IMPORT';
 export const POLLS_IMPORT    = 'POLLS_IMPORT';
+export const JAM_IMPORT    = 'JAMS_IMPORT';
 export const FILTERS_IMPORT  = 'FILTERS_IMPORT';
 
 function pushUnique(array, object) {
@@ -36,6 +37,11 @@ export function importFilters(filters) {
 export function importPolls(polls) {
   return { type: POLLS_IMPORT, polls };
 }
+
+export function importJam(jam) {
+  return { type: JAM_IMPORT, jam };
+}
+
 
 export function importFetchedAccount(account) {
   return importFetchedAccounts([account]);
@@ -97,5 +103,11 @@ export function importFetchedStatuses(statuses) {
 export function importFetchedPoll(poll) {
   return dispatch => {
     dispatch(importPolls([normalizePoll(poll)]));
+  };
+}
+
+export function importFetchedJam(jam) {
+  return dispatch => {
+    dispatch(importJam(jam));
   };
 }

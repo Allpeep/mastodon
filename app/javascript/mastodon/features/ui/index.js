@@ -25,6 +25,7 @@ import PictureInPicture from 'mastodon/features/picture_in_picture';
 import {
   Compose,
   Status,
+  Jam,
   GettingStarted,
   KeyboardShortcuts,
   PublicTimeline,

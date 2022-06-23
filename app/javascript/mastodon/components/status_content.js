@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
+import Jam from 'mastodon/features/status/components/jam';
 import Icon from 'mastodon/components/icon';
 import { autoPlayGif, languages as preloadedLanguages, translationEnabled } from 'mastodon/initial_state';
 
@@ -273,6 +274,7 @@ class StatusContent extends React.PureComponent {
           <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} lang={lang} dangerouslySetInnerHTML={content} />
 
           {!hidden && poll}
+          {!hidden && !!status.get('jam') && <Jam jam={status.get('jam')} />}
           {!hidden && translateButton}
         </div>
       );
@@ -283,6 +285,7 @@ class StatusContent extends React.PureComponent {
             <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
 
             {poll}
+            {!hidden && !!status.get('jam') && <Jam jam={status.get('jam')} />}
             {translateButton}
           </div>
 
@@ -295,6 +298,7 @@ class StatusContent extends React.PureComponent {
           <div className='status__content__text status__content__text--visible translate' lang={lang} dangerouslySetInnerHTML={content} />
 
           {poll}
+          {!hidden && !!status.get('jam') && <Jam jam={status.get('jam')} />}
           {translateButton}
         </div>
       );

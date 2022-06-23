@@ -42,6 +42,11 @@ export function Status () {
   return import(/* webpackChunkName: "features/status" */'../../status');
 }
 
+export function Jam () {
+  return import(/* webpackChunkName: "features/status" */'../../jam');
+}
+
+
 export function GettingStarted () {
   return import(/* webpackChunkName: "features/getting_started" */'../../getting_started');
 }
