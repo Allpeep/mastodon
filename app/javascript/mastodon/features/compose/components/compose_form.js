@@ -7,6 +7,7 @@ import ReplyIndicatorContainer from '../containers/reply_indicator_container';
 import AutosuggestTextarea from '../../../components/autosuggest_textarea';
 import AutosuggestInput from '../../../components/autosuggest_input';
 import PollButtonContainer from '../containers/poll_button_container';
+import JamButtonContainer from '../containers/jam_button_container';
 import UploadButtonContainer from '../containers/upload_button_container';
 import { defineMessages, injectIntl } from 'react-intl';
 import SpoilerButtonContainer from '../containers/spoiler_button_container';
@@ -273,6 +274,7 @@ class ComposeForm extends ImmutablePureComponent {
         <div className='compose-form__buttons-wrapper'>
           <div className='compose-form__buttons'>
             <UploadButtonContainer />
+            <JamButtonContainer />
             <PollButtonContainer />
             <PrivacyDropdownContainer disabled={this.props.isEditing} />
             <SpoilerButtonContainer />

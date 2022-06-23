@@ -193,6 +193,13 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.index ["url"], name: "index_accounts_on_url", opclass: :text_pattern_ops, where: "(url IS NOT NULL)"
   end
 
+  create_table "accounts_jams", id: false, force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "jam_id", null: false
+    t.index ["account_id", "jam_id"], name: "index_accounts_jams_on_account_id_and_jam_id"
+    t.index ["jam_id", "account_id"], name: "index_accounts_jams_on_jam_id_and_account_id", unique: true
+  end
+
   create_table "accounts_tags", id: false, force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "tag_id", null: false
@@ -523,6 +530,13 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.integer "severity", default: 0, null: false
     t.text "comment", default: "", null: false
     t.index ["ip"], name: "index_ip_blocks_on_ip", unique: true
+  end
+
+  create_table "jams", force: :cascade do |t|
+    t.string "room_id", null: false
+    t.bigint "status_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "list_accounts", force: :cascade do |t|
@@ -940,6 +954,7 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.datetime "edited_at"
     t.boolean "trendable"
     t.bigint "ordered_media_attachment_ids", array: true
+    t.bigint "jam_id"
     t.index ["account_id", "id", "visibility", "updated_at"], name: "index_statuses_20190820", order: { id: :desc }, where: "(deleted_at IS NULL)"
     t.index ["account_id"], name: "index_statuses_on_account_id"
     t.index ["deleted_at"], name: "index_statuses_on_deleted_at", where: "(deleted_at IS NOT NULL)"

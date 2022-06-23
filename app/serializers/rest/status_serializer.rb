@@ -29,6 +29,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
 
   has_one :preview_card, key: :card, serializer: REST::PreviewCardSerializer
   has_one :preloadable_poll, key: :poll, serializer: REST::PollSerializer
+  has_one :jam, key: :jam, serializer: REST::JamSerializer
 
   def id
     object.id.to_s

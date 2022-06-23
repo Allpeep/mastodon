@@ -62,6 +62,9 @@ export const COMPOSE_UPLOAD_CHANGE_REQUEST     = 'COMPOSE_UPLOAD_UPDATE_REQUEST'
 export const COMPOSE_UPLOAD_CHANGE_SUCCESS     = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
 export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
 
+export const COMPOSE_JAM_ADD             = 'COMPOSE_JAM_ADD';
+export const COMPOSE_JAM_REMOVE          = 'COMPOSE_JAM_REMOVE';
+
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
 export const COMPOSE_POLL_OPTION_ADD      = 'COMPOSE_POLL_OPTION_ADD';
@@ -192,6 +195,7 @@ export function submitCompose(routerHistory) {
         spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
         visibility: getState().getIn(['compose', 'privacy']),
         poll: getState().getIn(['compose', 'poll'], null),
+        jam: getState().getIn(['compose', 'jam'], false),
         language: getState().getIn(['compose', 'language']),
       },
       headers: {
@@ -748,6 +752,19 @@ export function changeComposing(value) {
     value,
   };
 }
+
+export function addJam() {
+  return {
+    type: COMPOSE_JAM_ADD,
+  };
+};
+
+export function removeJam() {
+  return {
+    type: COMPOSE_JAM_REMOVE,
+  };
+};
+
 
 export function addPoll() {
   return {

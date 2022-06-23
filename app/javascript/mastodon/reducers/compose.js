@@ -36,6 +36,8 @@ import {
   COMPOSE_UPLOAD_CHANGE_SUCCESS,
   COMPOSE_UPLOAD_CHANGE_FAIL,
   COMPOSE_RESET,
+  COMPOSE_JAM_ADD,
+  COMPOSE_JAM_REMOVE,
   COMPOSE_POLL_ADD,
   COMPOSE_POLL_REMOVE,
   COMPOSE_POLL_OPTION_ADD,
@@ -512,6 +514,10 @@ export default function compose(state = initialState, action) {
         }));
       }
     });
+  case COMPOSE_JAM_ADD:
+    return state.set('jam', true);
+  case COMPOSE_JAM_REMOVE:
+    return state.set('jam', false);
   case COMPOSE_POLL_ADD:
     return state.set('poll', initialPoll);
   case COMPOSE_POLL_REMOVE:

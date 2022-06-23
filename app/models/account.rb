@@ -272,6 +272,26 @@ class Account < ApplicationRecord
     @keypair ||= OpenSSL::PKey::RSA.new(private_key || public_key)
   end
 
+  def jam_seed
+    return nil unless private_key
+
+    Base64.urlsafe_encode64(OpenSSL::Digest.new('SHA256').digest(keypair.to_pem))
+  end
+
+  def jam_private_key
+    seed_hash = OpenSSL::Digest.new('SHA512').digest(jam_seed)
+    Ed25519::SigningKey.new seed_hash[0..31]
+  end
+
+  def jam_public_key
+    jam_private_key.verify_key
+  end
+
+  def jam_identity
+    Base64.urlsafe_encode64(jam_public_key.to_bytes).gsub('=','')
+  end
+
+
   def tags_as_strings=(tag_names)
     hashtags_map = Tag.find_or_create_by_names(tag_names).index_by(&:name)
 

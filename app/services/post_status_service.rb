@@ -68,6 +68,7 @@ class PostStatusService < BaseService
 
     ApplicationRecord.transaction do
       @status = @account.statuses.create!(status_attributes)
+      JamCreatorWorker.new.perform(@status.id) if @status.jam.present?
     end
   end
 
@@ -165,6 +166,7 @@ class PostStatusService < BaseService
       ordered_media_attachment_ids: (@options[:media_ids] || []).map(&:to_i) & @media.map(&:id),
       thread: @in_reply_to,
       poll_attributes: poll_attributes,
+      jam_attributes: jam_attributes,
       sensitive: @sensitive,
       spoiler_text: @options[:spoiler_text] || '',
       visibility: @visibility,
@@ -187,6 +189,13 @@ class PostStatusService < BaseService
 
     @options[:poll].merge(account: @account, voters_count: 0)
   end
+
+  def jam_attributes
+    return unless @options[:jam]
+
+    @options[:poll] = {room_id: SecureRandom.base36(16)}
+  end
+
 
   def scheduled_options
     @options.tap do |options_hash|

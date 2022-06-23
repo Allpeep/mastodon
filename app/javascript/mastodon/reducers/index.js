@@ -39,6 +39,7 @@ import markers from './markers';
 import picture_in_picture from './picture_in_picture';
 import accounts_map from './accounts_map';
 import history from './history';
+import jams from './jams';
 import tags from './tags';
 import followed_tags from './followed_tags';
 
@@ -83,6 +84,7 @@ const reducers = {
   markers,
   picture_in_picture,
   history,
+  jams,
   tags,
   followed_tags,
 };

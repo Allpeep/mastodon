@@ -524,6 +524,7 @@ Rails.application.routes.draw do
       resources :filters,      only: [:index, :create, :show, :update, :destroy]
       resources :endorsements, only: [:index]
       resources :markers,      only: [:index, :create]
+      resources :jams,         only: [:show]
 
       namespace :apps do
         get :verify_credentials, to: 'credentials#show'
