@@ -17,7 +17,7 @@ class JamCreatorWorker
   def perform(status_id)
     status = Status.find(status_id)
 
-    jam_host = 'https://jam.systems'
+    jam_host = Rails.configuration.x.jam_url
 
     jam = status.jam
     room_id = jam.room_id
