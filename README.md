@@ -1,7 +1,7 @@
 <h1><picture>
   <source media="(prefers-color-scheme: dark)" srcset="./lib/assets/wordmark.dark.png?raw=true">
   <source media="(prefers-color-scheme: light)" srcset="./lib/assets/wordmark.light.png?raw=true">
-  <img alt="Mastodon" src="./lib/asssets/wordmark.light.png?raw=true" height="34">
+  <img alt="Mastodon" src="./lib/assets/wordmark.light.png?raw=true" height="34">
 </picture></h1>
 
 [![GitHub release](https://img.shields.io/github/release/mastodon/mastodon.svg)][releases]
@@ -72,8 +72,8 @@ Mastodon acts as an OAuth2 provider, so 3rd party apps can use the REST and Stre
 
 - **PostgreSQL** 9.5+
 - **Redis** 4+
-- **Ruby** 2.5+
-- **Node.js** 12+
+- **Ruby** 2.6+
+- **Node.js** 14+
 
 The repository includes deployment configurations for **Docker and docker-compose** as well as specific platforms like **Heroku**, **Scalingo**, and **Nanobox**. The [**standalone** installation guide](https://docs.joinmastodon.org/admin/install/) is available in the documentation.
 
