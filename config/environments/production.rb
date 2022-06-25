@@ -132,5 +132,5 @@ Rails.application.configure do
   }
 
   config.x.otp_secret = ENV.fetch('OTP_SECRET')
-  config.x.jam_url = ENV.fetch('JAM_URL')
+  config.x.jam_url = ENV.fetch('JAM_URL', 'https://jam.systems')
 end
