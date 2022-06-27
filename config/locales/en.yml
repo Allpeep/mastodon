@@ -1595,6 +1595,7 @@ en:
   tags:
     does_not_match_previous_name: does not match the previous name
   themes:
+    allpeep: Allpeep
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
     mastodon-light: Mastodon (Light)
