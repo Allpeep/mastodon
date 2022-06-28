@@ -10,9 +10,8 @@
 #
 class Jam < ApplicationRecord
   belongs_to :status
-  has_and_belongs_to_many :accounts
 
   def speakers
-    status.active_mentions + [status.account]
+    status.active_mentions.map(&:account) + [status.account]
   end
 end
