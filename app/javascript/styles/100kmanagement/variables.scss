@@ -1,0 +1,22 @@
+// Dependent colors
+$black: #000000;
+
+$classic-base-color: $black;
+$classic-primary-color: #ffc400;
+$classic-secondary-color: #eedcc0;
+$classic-highlight-color: $classic-primary-color;
+
+$ui-base-color: $classic-base-color !default;
+$ui-primary-color: $classic-primary-color !default;
+$ui-secondary-color: $classic-secondary-color !default;
+$ui-highlight-color: $classic-highlight-color !default;
+
+$darker-text-color: lighten($ui-primary-color, 20%) !default;
+$dark-text-color: lighten($ui-primary-color, 12%) !default;
+$secondary-text-color: lighten($ui-secondary-color, 6%) !default;
+$highlight-text-color: lighten($ui-highlight-color, 8%) !default;
+$action-button-color: $ui-primary-color;
+
+$inverted-text-color: $black !default;
+$lighter-text-color: darken($ui-base-color, 6%) !default;
+$light-text-color: darken($ui-primary-color, 40%) !default;
