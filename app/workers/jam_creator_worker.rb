@@ -18,12 +18,14 @@ class JamCreatorWorker
     status = Status.find(status_id)
 
     jam_host = Rails.configuration.x.jam_url
+    jam_config = JSON.load_file(Rails.root.join('config', 'jam-config.json'))
 
     jam = status.jam
     room_id = jam.room_id
     speakers = jam.speakers
     creator = status.account
-    room_config = {
+
+    room_config = jam_config['defaultRoom'].merge({
       name: 'Jam',
       description: '',
       speakers: speakers.map(&:jam_identity),
@@ -31,7 +33,7 @@ class JamCreatorWorker
       access: {
         lockedIdentities: true,
       }
-    }
+    })
 
     payload = signData(creator.jam_private_key, room_config)
 
