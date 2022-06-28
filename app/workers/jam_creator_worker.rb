@@ -25,7 +25,7 @@ class JamCreatorWorker
     speakers = jam.speakers
     creator = status.account
 
-    room_config = jam_config['defaultRoom'].merge({
+    room_config = (jam_config['defaultRoom'] || {}).merge({
       name: 'Jam',
       description: '',
       speakers: speakers.map(&:jam_identity),
