@@ -74,7 +74,7 @@ class Jam extends ImmutablePureComponent {
       title={'Jam'}
       className={'jam__iframe'}
       allow='microphone;*'
-      src={`${jam.get('server_url')}${jam.get('room_id')}?debug=yes#${jamHash}`}
+      src={`${jam.get('server_url')}/${jam.get('room_id')}?debug=yes#${jamHash}`}
     />);
 
   }
