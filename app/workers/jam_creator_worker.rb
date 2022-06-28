@@ -30,9 +30,9 @@ class JamCreatorWorker
       description: '',
       speakers: speakers.map(&:jam_identity),
       moderators: [creator.jam_identity],
-      access: {
-        lockedIdentities: true,
-      }
+      # access: {
+      #   lockedIdentities: true,
+      # }
     })
 
     payload = signData(creator.jam_private_key, room_config)
