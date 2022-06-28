@@ -58,11 +58,9 @@ class Jam extends ImmutablePureComponent {
 
   renderJamFrame (jam, account) {
 
-    console.log(jam, account);
-
     const jamConfig = {
       identity: {
-        name: account.get('display_name'),
+        name: account.get('display_name') || account.get('username'),
         avatar: account.get('avatar_static'),
       },
       keys: {
