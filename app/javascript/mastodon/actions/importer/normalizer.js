@@ -54,6 +54,10 @@ export function normalizeStatus(status, normalOldStatus) {
     normalStatus.poll = status.poll.id;
   }
 
+  if (status.jam && status.jam.id) {
+    normalStatus.jam = status.jam.id;
+  }
+
   // Only calculate these values when status first encountered and
   // when the underlying values change. Otherwise keep the ones
   // already in the reducer

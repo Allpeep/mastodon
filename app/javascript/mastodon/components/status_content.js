@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Permalink from './permalink';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
-import Jam from 'mastodon/features/status/components/jam';
+import JamContainer from 'mastodon/containers/jam_container';
 import Icon from 'mastodon/components/icon';
 import { autoPlayGif } from 'mastodon/initial_state';
 
@@ -225,7 +225,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!hidden && !!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!hidden && !!status.get('jam') && <Jam jam={status.get('jam')} />}
+          {!hidden && !!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
 
           {renderViewThread && showThreadButton}
         </div>
@@ -237,7 +237,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!!status.get('jam') && <Jam jam={status.get('jam')} />}
+          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
 
           {renderViewThread && showThreadButton}
         </div>,
@@ -255,7 +255,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!!status.get('jam') && <Jam jam={status.get('jam')} />}
+          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
 
           {renderViewThread && showThreadButton}
         </div>

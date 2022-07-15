@@ -6,6 +6,7 @@ export const STATUS_IMPORT   = 'STATUS_IMPORT';
 export const STATUSES_IMPORT = 'STATUSES_IMPORT';
 export const POLLS_IMPORT    = 'POLLS_IMPORT';
 export const JAM_IMPORT    = 'JAMS_IMPORT';
+export const JAMS_IMPORT    = 'JAMS_IMPORT';
 
 function pushUnique(array, object) {
   if (array.every(element => element.id !== object.id)) {
@@ -32,6 +33,11 @@ export function importStatuses(statuses) {
 export function importPolls(polls) {
   return { type: POLLS_IMPORT, polls };
 }
+
+export function importJams(jams) {
+  return { type: JAMS_IMPORT, jams };
+}
+
 
 export function importJam(jam) {
   return { type: JAM_IMPORT, jam };
@@ -67,6 +73,7 @@ export function importFetchedStatuses(statuses) {
     const accounts = [];
     const normalStatuses = [];
     const polls = [];
+    const jams = [];
 
     function processStatus(status) {
       pushUnique(normalStatuses, normalizeStatus(status, getState().getIn(['statuses', status.id])));
@@ -79,11 +86,16 @@ export function importFetchedStatuses(statuses) {
       if (status.poll && status.poll.id) {
         pushUnique(polls, normalizePoll(status.poll));
       }
+
+      if (status.jam && status.jam.id) {
+        pushUnique(jams, status.jam);
+      }
     }
 
     statuses.forEach(processStatus);
 
     dispatch(importPolls(polls));
+    dispatch(importJams(jams));
     dispatch(importFetchedAccounts(accounts));
     dispatch(importStatuses(normalStatuses));
   };
