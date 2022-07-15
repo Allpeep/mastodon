@@ -5,7 +5,7 @@ export const JAM_FETCH_REQUEST = 'JAM_FETCH_REQUEST';
 export const JAM_FETCH_SUCCESS = 'JAM_FETCH_SUCCESS';
 export const JAM_FETCH_FAIL    = 'JAM_FETCH_FAIL';
 
-export function fetchJam(id) {
+export const fetchJam = (id)  => {
   return (dispatch, getState) => {
     const skipLoading = getState().getIn(['jams', id], null) !== null;
 
@@ -25,7 +25,7 @@ export function fetchJam(id) {
 };
 
 
-export function fetchJamRequest(id, skipLoading) {
+export const fetchJamRequest = (id, skipLoading) => {
   return {
     type: JAM_FETCH_REQUEST,
     id,
@@ -33,7 +33,7 @@ export function fetchJamRequest(id, skipLoading) {
   };
 };
 
-export function fetchJamSuccess(skipLoading) {
+export const fetchJamSuccess = (skipLoading) => {
   return {
     type: JAM_FETCH_SUCCESS,
     skipLoading,
@@ -41,7 +41,7 @@ export function fetchJamSuccess(skipLoading) {
 };
 
 
-export function fetchJamFail(id, error, skipLoading) {
+export const fetchJamFail = (id, error, skipLoading) => {
   return {
     type: JAM_FETCH_FAIL,
     id,
