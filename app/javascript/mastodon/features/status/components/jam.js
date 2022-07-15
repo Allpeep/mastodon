@@ -1,31 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect} from 'react';
 import Avatar from 'mastodon/components/avatar';
 import { debounce } from 'lodash';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import DisplayName from '../../../components/display_name';
+import { importDefaultIdentity } from 'jam-core';
 
 
 export default class Jam extends React.PureComponent {
 
   static propTypes = {
-    roomId: PropTypes.string,
     jam: ImmutablePropTypes.map,
-    speakers: ImmutablePropTypes.list,
+    account: ImmutablePropTypes.map,
   };
 
   static defaultProps = {
   };
 
   state = {
+    inRoom: false,
+    isIdentitySet: false,
   };
 
   // componentWillReceiveProps (nextProps) {
   //   nextProps;
   // }
 
+
   componentDidMount () {
     window.addEventListener('resize', this.handleResize, { passive: true });
+    const { jam, account } = this.props;
+    useEffect(async () => {
+      await importDefaultIdentity({
+        info: {
+          name: account.get('display_name') || account.get('username'),
+          avatar: account.get('avatar_static'),
+        },
+        seed: jam.get('jam_seed'),
+      });
+      this.setState({ isIdentitySet: true });
+    });
   }
 
   componentWillUnmount () {
@@ -38,13 +50,14 @@ export default class Jam extends React.PureComponent {
     this.setState({ width });
   }
 
-  handleJamClick = (e) => {
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey) && this.context.router) {
-      e.preventDefault();
-      this.context.router.history.push(`/jams/${this.props.jam.get('id')}`);
-    }
+  enterRoom = (e) => {
+    e.preventDefault();
+    console.log('Entering room');
 
-    e.stopPropagation();
+    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
+      const inRoom = true;
+      this.setState({ inRoom });
+    }
   }
 
 
@@ -65,25 +78,50 @@ export default class Jam extends React.PureComponent {
     }
   }
 
+  renderJamFrame = (jam, account) => {
+
+    const jamConfig = {
+      domain: 'beta.jam.systems',
+      development: true,
+      sfu: true,
+    };
+
+    return (<iframe
+      title={'Jam'}
+      className={'jam__iframe'}
+      allow='microphone;*'
+      src={`${jam.get('server_url')}/${jam.get('room_id')}?debug=yes#${jamHash}`}
+    />);
+
+  }
 
   render () {
-    const { jam } = this.props;
 
-    const jamId = jam.get('id');
+
+
+    const { jam, account } = this.props;
+
     const speakers = jam.get('speakers');
+    const inRoom = this.state.inRoom;
+    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+    console.log(inRoom);
+
+    console.log(speakers.map((s) => s));
 
     return (
-      <a href={`/web/jams/${jamId}`} className={'status-jam'} onClick={this.handleJamClick}>
+      <div>
+        { inRoom ? this.renderJamFrame(jam, account) : (<button  onClick={this.enterRoom}>Enter room</button>) }
+        { !inRoom && <div className={'jam-room-outside'}>
+          <ul>
+            {speakers.map((speaker) => (
 
-        <ul>
-          {speakers.map((speaker) => (
-            <li>
-              <div><Avatar account={speaker} size={24} /></div>
-              <DisplayName account={speaker} />
-            </li>
-          ))}
-        </ul>
-      </a>
+              <li key={speaker.get('acct')}>
+                <div><Avatar account={speaker} size={24} /></div>
+              </li>
+            ))}
+          </ul>
+        </div>}
+      </div>
     );
   }
 
