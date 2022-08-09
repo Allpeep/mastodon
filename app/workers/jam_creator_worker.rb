@@ -17,12 +17,12 @@ class JamCreatorWorker
   def perform(status_id)
     status = Status.find(status_id)
 
-    jam_host = Rails.configuration.x.jam_url
     jam_config = JSON.load_file(Rails.root.join('config', 'jam-config.json'))
 
     jam = status.jam
     room_id = jam.room_id
     speakers = jam.speakers
+    jam_host = jam.jam_host
     creator = status.account
 
     room_config = (jam_config['defaultRoom'] || {}).merge({
@@ -37,7 +37,7 @@ class JamCreatorWorker
 
     payload = signData(creator.jam_private_key, room_config)
 
-    response = HTTP.post("#{jam_host}/_/pantry/api/v1/rooms/#{room_id}", json: payload)
+    response = HTTP.post("https://#{jam_host}/_/pantry/api/v1/rooms/#{room_id}", json: payload)
     Rails.logger.error response.status
     raise unless response.status.success?
 

@@ -7,6 +7,7 @@
 #  status_id  :bigint(8)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  jam_host   :string
 #
 class Jam < ApplicationRecord
   belongs_to :status
