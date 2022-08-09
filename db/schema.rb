@@ -544,6 +544,7 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.bigint "status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "jam_host"
   end
 
   create_table "list_accounts", force: :cascade do |t|

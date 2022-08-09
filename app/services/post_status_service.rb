@@ -193,7 +193,10 @@ class PostStatusService < BaseService
   def jam_attributes
     return unless @options[:jam]
 
-    @options[:poll] = {room_id: SecureRandom.base36(16)}
+    @options[:jam] = {
+      room_id: SecureRandom.base36(16),
+      jam_host: Rails.configuration.x.jam_host,
+    }
   end
 
 

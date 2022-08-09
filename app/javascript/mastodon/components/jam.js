@@ -27,16 +27,16 @@ export default class Jam extends React.PureComponent {
 
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize, {passive: true});
-    const { jam, account } = this.props;
-    importDefaultIdentity(
-      {
-        info: {
-          name: account.get('display_name') || account.get('username'),
-          avatar: account.get('avatar_static'),
-        },
-        seed: jam.get('jam_seed'),
-      }).then(() => this.setState({ isIdentitySet: true })).catch(console.log);
+    window.addEventListener('resize', this.handleResize, { passive: true });
+    // const { jam, account } = this.props;
+    // importDefaultIdentity(
+    //   {
+    //     info: {
+    //       name: account.get('display_name') || account.get('username'),
+    //       avatar: account.get('avatar_static'),
+    //     },
+    //     seed: jam.get('jam_seed'),
+    //   }).then(() => this.setState({ isIdentitySet: true })).catch(console.log);
   }
 
   componentWillUnmount() {
@@ -46,7 +46,7 @@ export default class Jam extends React.PureComponent {
   _setDimensions() {
     const width = this.node.offsetWidth;
 
-    this.setState({width});
+    this.setState({ width });
   }
 
   enterRoom = (e) => {
@@ -102,17 +102,12 @@ export default class Jam extends React.PureComponent {
 
   renderJamRoom = (jam) => {
 
-    const jamConfig = {
-      domain: 'beta.jam.systems',
-      development: true,
-      sfu: true,
-    };
 
     return (
       // <JamProvider options={{ jamConfig }}>
       //   <JamRoom speakers={jam.get('speakers')} />
       // </JamProvider>
-      <JamProvider options={{ jamConfig, initialProps: { roomId: jam.get('room_id') } }}>
+      <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
         <h3>Test</h3>
       </JamProvider>
     );
@@ -156,14 +151,9 @@ export default class Jam extends React.PureComponent {
     const { jam, account } = this.props;
 
     const speakers = jam.get('speakers');
-    const inRoom = this.state.inRoom;
-    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-    console.log(inRoom);
 
-    console.log(speakers.map((s) => s));
-
-    if(this.state.isIdentitySet && this.state.inRoom) {
-      return this.renderJamFrame(jam, account);
+    if(this.state.inRoom) {
+      return this.renderJamRoom(jam, account);
     } else {
       return this.renderJamLobby(speakers);
     }
