@@ -108,7 +108,7 @@ export default class Jam extends React.PureComponent {
       //   <JamRoom speakers={jam.get('speakers')} />
       // </JamProvider>
       <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
-        <h3>Test</h3>
+        <JamRoom speakers={jam.get('speakers')} />
       </JamProvider>
     );
 
@@ -152,7 +152,7 @@ export default class Jam extends React.PureComponent {
 
     const speakers = jam.get('speakers');
 
-    if(this.state.inRoom) {
+    if (this.state.inRoom) {
       return this.renderJamRoom(jam, account);
     } else {
       return this.renderJamLobby(speakers);
