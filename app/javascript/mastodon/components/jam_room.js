@@ -35,7 +35,7 @@ export default class JamRoom extends React.PureComponent {
 
   renderJamLobby(speakers) {
     return (<div className={'jam-room-outside'}>
-      <button onClick={this.enterRoom}>Enter room</button>
+      <button onClick={this.handleEnterRoom}>Enter room</button>
       <ul>
         {speakers.map((speaker) => (
 
@@ -51,6 +51,8 @@ export default class JamRoom extends React.PureComponent {
     let { inRoom } = this.state;
     let { speakers } = this.props;
 
+
+
     return inRoom ? (<Room />) : this.renderJamLobby(speakers);
 
 
@@ -61,10 +63,27 @@ export default class JamRoom extends React.PureComponent {
 
 function Room() {
   let [state, api] = useJam();
-  let { enterRoom } = api;
-  let [myIdentity, roomId] = use(state, ['myIdentity', 'roomId']);
-  return (<div>
-    <h3>Test</h3>
+  let { enterRoom, leaveRoom, setProps } = api;
+  let [myIdentity, roomId, speaking, peers, iSpeaker] = use(state, ['myIdentity', 'roomId', 'speaking', 'peers', 'iAmSpeaker']);
+
+  //speakers
+  async function enter() {
+
+    await setProps({ userInteracted: true });
+
+    await enterRoom(roomId)
+  }
+  enter();
+
+  let amIspeaking = speaking.has(myIdentity.info.id)
+  let amIspeaker = iSpeaker
+  console.log(amIspeaker)
+  return (<div className='room-container'>
+    <div>{amIspeaking ? "speaking" : "not speaking"}</div>
+    <img src={myIdentity.info.avatar}></img>
+    <div>{myIdentity.info.name}</div>
+    <div>{amIspeaker}</div>
+    {/* peers.map ..., new Avatar component? */}
   </div>);
 }
 
