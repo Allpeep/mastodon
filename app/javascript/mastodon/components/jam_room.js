@@ -1,89 +1,72 @@
-import React from 'react';
-import Avatar from 'mastodon/components/avatar';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useJam, use } from 'jam-core-react';
+import Avatar from 'mastodon/components/avatar';
+import { StageAvatar } from './jam_avatar';
 
-
-export default class JamRoom extends React.PureComponent {
-
-  static propTypes = {
-    speakers: ImmutablePropTypes.list,
-  };
-
-
-  static defaultProps = {};
-
-  state = {
-    inRoom: false,
-  };
-
-
-  handleEnterRoom = (e) => {
-    e.preventDefault();
-    console.log('Entering room');
-
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const inRoom = true;
-      this.setState({ inRoom });
-    }
-  }
-
-  renderJamRoom() {
-
-  }
-
-  renderJamLobby(speakers) {
-    return (<div className={'jam-room-outside'}>
-      <button onClick={this.handleEnterRoom}>Enter room</button>
-      <ul>
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={24} /></div>
-          </li>
-        ))}
-      </ul>
-    </div>);
-  }
-
-  render() {
-    let { inRoom } = this.state;
-    let { speakers } = this.props;
-
-
-
-    return inRoom ? (<Room />) : this.renderJamLobby(speakers);
-
-
-  };
-
-
-}
-
-function Room() {
+const JamRoom = ({ roomId, handleleaveRoom }) => {
   let [state, api] = useJam();
   let { enterRoom, leaveRoom, setProps } = api;
-  let [myIdentity, roomId, speaking, peers, iSpeaker] = use(state, ['myIdentity', 'roomId', 'speaking', 'peers', 'iAmSpeaker']);
+  let [myIdentity, speaking, peers, peerState, iSpeaker, reactions, identities, room, myPeerState] = use(state, ['myIdentity', 'speaking', 'peers', 'peerState', 'iAmSpeaker', 'reactions', 'identities', 'room', 'myPeerState']);
 
-  //speakers
-  async function enter() {
 
-    await setProps({ userInteracted: true });
+  useEffect(() => {
 
-    await enterRoom(roomId)
-  }
-  enter();
+    async function enter() {
 
-  let amIspeaking = speaking.has(myIdentity.info.id)
-  let amIspeaker = iSpeaker
-  console.log(amIspeaker)
-  return (<div className='room-container'>
-    <div>{amIspeaking ? "speaking" : "not speaking"}</div>
-    <img src={myIdentity.info.avatar}></img>
-    <div>{myIdentity.info.name}</div>
-    <div>{amIspeaker}</div>
-    {/* peers.map ..., new Avatar component? */}
-  </div>);
+      await setProps({ userInteracted: true });
+      await setProps('roomId', roomId);
+      await enterRoom(roomId);
+
+      return () => {
+        leaveRoom();
+      }
+    }
+    enter();
+
+  }, [])
+
+  let {
+    speakers,
+    moderators,
+  } = room || {};
+
+
+
+
+
+  return (
+    <div className='room-container'>
+      <button className='status__content__spoiler-link' onClick={handleleaveRoom}>Leave Room</button>
+      <img src={myIdentity.info.avatar}></img>
+      <div>{myIdentity.info.name}</div>
+      <div>{myIdentity.info.avatar}</div>
+      <ul className='speakerlist'>
+        {<StageAvatar
+          key={myIdentity.info.id}
+          peerId={myIdentity.info.id}
+          {...{ speaking, moderators, reactions, room }}
+          canSpeak={true}
+          peerState={myPeerState}
+          info={myIdentity.info}
+        />
+        }
+
+        {(speakers ?? []).filter(id => peers.includes(id)).map(peerId => {
+
+          return <StageAvatar
+            key={peerId}
+            {...{ speaking }}
+            {...{ peerId, peerState, reactions }}
+            canSpeak={true}
+            peerState={peerState[peerId]}
+            info={identities[peerId]}
+          />
+
+        })}
+      </ul>
+
+    </div>
+  );
 }
 
+export default JamRoom; 

@@ -87,12 +87,14 @@ export default class Jam extends React.PureComponent {
 
   renderJamLobby = (speakers) => {
     return (<div className={'jam-room-outside'}>
-      <button className={'status__content__spoiler-link'} onClick={this.enterRoom}>Enter room</button>
+      <button className={'status__content__spoiler-link'} onClick={this.enterRoom}>Enter Jam 🌱</button>
       <ul>
         {speakers.map((speaker) => (
 
           <li key={speaker.get('acct')}>
+            is this
             <div><Avatar account={speaker} size={24} /></div>
+            the lobby?
           </li>
         ))}
       </ul>
@@ -108,7 +110,7 @@ export default class Jam extends React.PureComponent {
       //   <JamRoom speakers={jam.get('speakers')} />
       // </JamProvider>
       <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
-        <JamRoom speakers={jam.get('speakers')} />
+        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} />
       </JamProvider>
     );
 
