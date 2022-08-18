@@ -17,6 +17,7 @@ export const StageAvatar = ({
         <div className={amSpeaking ? "speak-circle" : 'quiet-circle'}>
             <img className='avatar' src={info.avatar} ></img>
         </div>
+        <h3>{info.name}</h3>
     </li >)
 
 }

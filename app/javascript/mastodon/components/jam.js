@@ -28,15 +28,6 @@ export default class Jam extends React.PureComponent {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize, { passive: true });
-    // const { jam, account } = this.props;
-    // importDefaultIdentity(
-    //   {
-    //     info: {
-    //       name: account.get('display_name') || account.get('username'),
-    //       avatar: account.get('avatar_static'),
-    //     },
-    //     seed: jam.get('jam_seed'),
-    //   }).then(() => this.setState({ isIdentitySet: true })).catch(console.log);
   }
 
   componentWillUnmount() {
@@ -87,14 +78,12 @@ export default class Jam extends React.PureComponent {
 
   renderJamLobby = (speakers) => {
     return (<div className={'jam-room-outside'}>
-      <button className={'status__content__spoiler-link'} onClick={this.enterRoom}>Enter Jam 🌱</button>
+      <button className={'status__content__spoiler-link jam-button'} onClick={this.enterRoom}>Enter Jam 🌱</button>
       <ul>
         {speakers.map((speaker) => (
 
           <li key={speaker.get('acct')}>
-            is this
             <div><Avatar account={speaker} size={24} /></div>
-            the lobby?
           </li>
         ))}
       </ul>
@@ -102,7 +91,7 @@ export default class Jam extends React.PureComponent {
   }
 
 
-  renderJamRoom = (jam) => {
+  renderJamRoom = (jam, account) => {
 
 
     return (
@@ -110,7 +99,7 @@ export default class Jam extends React.PureComponent {
       //   <JamRoom speakers={jam.get('speakers')} />
       // </JamProvider>
       <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
-        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} />
+        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
       </JamProvider>
     );
 

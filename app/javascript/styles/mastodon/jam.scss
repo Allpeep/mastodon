@@ -5,11 +5,17 @@ iframe.jam__iframe {
 
 .jam-room-outside ul li {
   display: inline-block;
+  margin-top: 1rem;
 }
 
 .room-container {
   display: 'flex';
   flex-direction: 'column';
+  background-color: $ui-base-color;
+  border-radius: 0.35rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
+  margin-top: 1.125rem;
 }
 
 .avatar-container {
@@ -21,13 +27,19 @@ iframe.jam__iframe {
   align-items: center;
 }
 
+.avatar-container h3 {
+  text-align: center;
+}
+
 .avatar {
   width: 3rem;
   height: 3rem;
   border-width: 1px;
   border-radius: 50%;
   border-color: #D1D5DB;
-
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 
   @media (min-width: 768px) {
     width: 5rem;
@@ -50,4 +62,18 @@ iframe.jam__iframe {
 .speakerlist {
   display: flex;
   flex-wrap: wrap;
+}
+
+
+.jam-button {
+  padding-top: 0.25rem 1.5rem 0.25rem 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-size: 1.5rem;
+  width: 30%;
+  max-width: 115px;
+  height: 3rem;
+  border-radius: 1rem;
+  user-select: none;
 }
