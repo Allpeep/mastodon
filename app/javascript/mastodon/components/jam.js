@@ -78,7 +78,7 @@ export default class Jam extends React.PureComponent {
 
   renderJamLobby = (speakers) => {
     return (<div className={'jam-room-outside'}>
-      <button className={'status__content__spoiler-link jam-button'} onClick={this.enterRoom}>Enter Jam 🌱</button>
+      <button className={'status__content__spoiler-link jam-button'} onClick={this.enterRoom}>Join Jam 🌱</button>
       <ul>
         {speakers.map((speaker) => (
 
