@@ -85,7 +85,7 @@ export default class Jam extends React.PureComponent {
             <div><Avatar account={speaker} size={48} /></div>
           </li>
         ))}
-        {speakers.map((speaker) => (
+        {/* {speakers.map((speaker) => (
 
           <li key={speaker.get('acct')}>
             <div><Avatar account={speaker} size={48} /></div>
@@ -126,7 +126,7 @@ export default class Jam extends React.PureComponent {
           <li key={speaker.get('acct')}>
             <div><Avatar account={speaker} size={48} /></div>
           </li>
-        ))}
+        ))} */}
       </ul>
       <button className={'jam-button'} onClick={this.enterRoom}>Join Jam</button>
     </div>);
@@ -142,7 +142,7 @@ export default class Jam extends React.PureComponent {
       // </JamProvider>
       <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
-        <ColorPalette></ColorPalette>
+        {/* <ColorPalette></ColorPalette> */}
       </JamProvider>
     );
 
@@ -197,23 +197,23 @@ export default class Jam extends React.PureComponent {
 
 }
 
-function ColorPalette() {
+// function ColorPalette() {
 
-  return (
-    <div className='colors'>
-      <div className="one">1</div>
-      <div className="two">2</div>
-      <div className="tree">3</div>
-      <div className="four">4</div>
-      <div className="five">5</div>
-      <div className="six">6</div>
-      <div className="seven">7</div>
-      <div className="eight">8</div>
-      <div className="nine">9</div>
-    </div>
-  )
-
-
+//   return (
+//     <div className='colors'>
+//       <div className="one">1</div>
+//       <div className="two">2</div>
+//       <div className="tree">3</div>
+//       <div className="four">4</div>
+//       <div className="five">5</div>
+//       <div className="six">6</div>
+//       <div className="seven">7</div>
+//       <div className="eight">8</div>
+//       <div className="nine">9</div>
+//     </div>
+//   )
 
 
-}
+
+
+// }
