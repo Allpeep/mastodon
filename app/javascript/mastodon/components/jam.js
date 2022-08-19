@@ -78,15 +78,57 @@ export default class Jam extends React.PureComponent {
 
   renderJamLobby = (speakers) => {
     return (<div className={'jam-room-outside'}>
-      <button className={'status__content__spoiler-link jam-button'} onClick={this.enterRoom}>Join Jam 🌱</button>
       <ul>
         {speakers.map((speaker) => (
 
           <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={24} /></div>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
+          </li>
+        ))}
+        {speakers.map((speaker) => (
+
+          <li key={speaker.get('acct')}>
+            <div><Avatar account={speaker} size={48} /></div>
           </li>
         ))}
       </ul>
+      <button className={'jam-button'} onClick={this.enterRoom}>Join Jam</button>
     </div>);
   }
 
@@ -100,6 +142,7 @@ export default class Jam extends React.PureComponent {
       // </JamProvider>
       <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
+        <ColorPalette></ColorPalette>
       </JamProvider>
     );
 
@@ -151,5 +194,26 @@ export default class Jam extends React.PureComponent {
 
 
   };
+
+}
+
+function ColorPalette() {
+
+  return (
+    <div className='colors'>
+      <div className="one">1</div>
+      <div className="two">2</div>
+      <div className="tree">3</div>
+      <div className="four">4</div>
+      <div className="five">5</div>
+      <div className="six">6</div>
+      <div className="seven">7</div>
+      <div className="eight">8</div>
+      <div className="nine">9</div>
+    </div>
+  )
+
+
+
 
 }
