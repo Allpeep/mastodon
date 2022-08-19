@@ -39,13 +39,13 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   }, [])
 
   let {
+    speakers,
     moderators,
   } = room || {};
-  let speakers = account.get('speakers')
 
   return (
     <div>
-      <div><button className='status__content__spoiler-link jam-button' onClick={handleleaveRoom}>Leave Room</button></div>
+      <div className='buttonflex'><button className='jam-button room-button' onClick={handleleaveRoom}>Leave Room</button></div>
       <div className='room-container'>
         <ul className='speakerlist'>
 

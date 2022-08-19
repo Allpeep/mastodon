@@ -3,16 +3,31 @@ iframe.jam__iframe {
   height: 480px;
 }
 
+.jam-room-outside {
+  display: flex;
+}
+
+.jam-room-outside ul {
+  max-width: 65%;
+  background-color: $ui-base-color;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  padding-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .jam-room-outside ul li {
-  display: inline-block;
   margin-top: 1rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .room-container {
   display: 'flex';
   flex-direction: 'column';
   background-color: $ui-base-color;
-  border-radius: 0.35rem;
+  border-radius: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.75rem;
   margin-top: 1.125rem;
@@ -35,7 +50,7 @@ iframe.jam__iframe {
   width: 3rem;
   height: 3rem;
   border-width: 1px;
-  border-radius: 50%;
+  border-radius: 25%;
   border-color: #D1D5DB;
   display: block;
   margin-left: auto;
@@ -49,13 +64,13 @@ iframe.jam__iframe {
 
 .speak-circle {
   padding: 0.25rem;
-  border-radius: 9999px;
-  background-color: $ui-highlight-color;
+  border-radius: 25%;
+  background-color: $ui-base-lighter-color;
 }
 
 .quiet-circle {
   padding: 0.25rem;
-  border-radius: 9999px;
+  border-radius: 25%;
   background-color: $ui-base-color;
 }
 
@@ -67,13 +82,85 @@ iframe.jam__iframe {
 
 .jam-button {
   padding-top: 0.25rem 1.5rem 0.25rem 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
   color: #ffffff;
-  font-size: 1.5rem;
-  width: 30%;
-  max-width: 115px;
+  font-size: 1rem;
+  max-width: 350px;
   height: 3rem;
   border-radius: 1rem;
   user-select: none;
+  background-color: $ui-highlight-color;
+  font-weight: 800;
+  border-style: none;
+  margin-left: auto;
+  margin-right: 2rem;
+}
+
+.room-button {
+  margin-top: -1.75rem;
+}
+
+.jam-button:hover {
+  background-color: lighten($ui-highlight-color, 2%);
+}
+
+.jam-button:active {
+  background-color: darken($ui-highlight-color, 2%);
+}
+
+// $ui-base-lighter-color: 
+// $ui-primary-color: 
+// $ui-secondary-color:
+// $ui-highlight-color: 
+// $primary-text-color: 
+// $darker-text-color: 
+// $dark-text-color: 
+// $secondary-text-color: 
+
+.colors {
+  display: flex
+}
+
+.colors div {
+  width: 20px;
+  height: 20px;
+}
+
+.one {
+  background-color: $ui-base-color;
+}
+
+.two {
+  background-color: $ui-base-lighter-color;
+}
+
+.three {
+  background-color: $ui-primary-color;
+}
+
+.four {
+  background-color: $ui-secondary-color;
+}
+
+.five {
+  background-color: $ui-highlight-color;
+}
+
+.six {
+  background-color: $primary-text-color;
+}
+
+.seven {
+  background-color: $darker-text-color;
+}
+
+.eight {
+  background-color: $dark-text-color;
+}
+
+
+
+.buttonflex {
+  display: flex;
 }
