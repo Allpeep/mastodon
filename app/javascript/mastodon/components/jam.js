@@ -85,48 +85,6 @@ export default class Jam extends React.PureComponent {
             <div><Avatar account={speaker} size={48} /></div>
           </li>
         ))}
-        {/* {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))}
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={48} /></div>
-          </li>
-        ))} */}
       </ul>
       <button className={'jam-button'} onClick={this.enterRoom}>Join Jam</button>
     </div>);

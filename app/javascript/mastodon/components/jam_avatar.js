@@ -21,3 +21,28 @@ export const StageAvatar = ({
     </li >)
 
 }
+
+
+export function AudienceAvatar({
+    room,
+    peerId,
+    peerState,
+    // reactions,
+    info,
+    // handRaised,
+    onClick,
+}) {
+
+    let { inRoom = null } = peerState || {};
+    info = info || { id: peerId };
+    return (
+        inRoom && (
+            <li className="avatar-container">
+                <div className="quiet-circle">
+                    <img className="avatar audience-avatar" src={info.avatar} />
+                </div>
+            </li>
+        )
+    );
+}
+
