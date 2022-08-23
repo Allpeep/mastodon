@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useJam, use } from 'jam-core-react';
 import Avatar from 'mastodon/components/avatar';
-import { StageAvatar } from './jam_avatar';
+import { AudienceAvatar, StageAvatar } from './jam_avatar';
 import { importDefaultIdentity } from 'jam-core';
 
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
@@ -43,23 +43,29 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     moderators,
   } = room || {};
 
+  let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
+
+
   return (
     <div>
       <div className='buttonflex'><button className='jam-button room-button' onClick={handleleaveRoom}>Leave Room</button></div>
       <div className='room-container'>
-        <ul className='speakerlist'>
 
-          {<StageAvatar
+        <div className='jam-title'>
+          Speakers
+        </div>
+        <ul className='listwrap'>
+
+          {iSpeaker && <StageAvatar
             key={myIdentity.info.id}
             peerId={myIdentity.info.id}
-            {...{ speaking, moderators, reactions, room }}
+            {...{ speaking }}
             canSpeak={true}
             peerState={myPeerState}
             info={myIdentity.info}
           />
           }
-
-          {(speakers ?? []).filter(id => peers.includes(id)).map(peerId => {
+          {stagePeers.map(peerId => {
 
             return <StageAvatar
               key={peerId}
@@ -71,10 +77,35 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             />
 
           })}
-
         </ul>
 
+        <div className='jam-mini-title'>
+          Audience
+        </div>
+        <ul className='listwrap audiencelist' >
+          {!iSpeaker &&
+            <AudienceAvatar {...{ reactions, room }}
+              peerId={myIdentity.info.id}
+              peerState={myPeerState}
+              info={myIdentity.info}
+            />
+          }
+
+          {peers.filter(id => !stagePeers.includes(id)).map(peerId => {
+            return (
+              <AudienceAvatar
+                key={peerId}
+                {...{ speaking }}
+                {...{ peerId, peerState, reactions }}
+                canSpeak={true}
+                peerState={peerState[peerId]}
+                info={identities[peerId]}
+              />
+            )
+          })}
+        </ul>
       </div>
+
     </div>
   );
 }
