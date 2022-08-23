@@ -6,6 +6,9 @@ const proxy = httpProxy.createProxyServer({ ws: true, secure: false });
 
 const parseRequestUrl = (req) => {
   const [, prefix, jamHost, jamPath] = req.url.match(/(\/jam-proxy\/([^\/]*))(\/.*)/);
+  console.log('Proxying Jam ... ');
+  console.log(req.url, prefix, jamHost, jamPath);
+
   return { prefix, jamHost, jamPath };
 };
 
