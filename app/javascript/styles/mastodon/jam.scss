@@ -13,7 +13,7 @@ iframe.jam__iframe {
   background-color: $ui-base-color;
   border-radius: 0.5rem;
   padding: 1rem;
-  padding-top: 0.5rem;
+  padding-top: 0rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -30,9 +30,14 @@ iframe.jam__iframe {
   background-color: $ui-base-color;
   border-radius: 0.5rem;
   padding-top: 0.5rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 1rem;
   margin-top: 1rem;
 }
+
+// .audiencelist {
+//   background-color: darken($ui-base-color, 5%);
+//   padding-bottom: 1rem;
+// }
 
 .avatar-container {
   position: relative;
@@ -45,6 +50,11 @@ iframe.jam__iframe {
 
 .avatar-container h3 {
   text-align: center;
+  color: $darker-text-color
+}
+
+.avatar-container:hover {
+  cursor: pointer;
 }
 
 .avatar {
@@ -63,6 +73,16 @@ iframe.jam__iframe {
   }
 }
 
+.audience-avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+
+  @media (min-width: 768px) {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
 .speak-circle {
   padding: 0.25rem;
   border-radius: 25%;
@@ -75,7 +95,7 @@ iframe.jam__iframe {
   background-color: $ui-base-color;
 }
 
-.speakerlist {
+.listwrap {
   display: flex;
   flex-wrap: wrap;
 }
@@ -110,15 +130,31 @@ iframe.jam__iframe {
   background-color: darken($ui-highlight-color, 2%);
 }
 
-// $ui-base-lighter-color: 
-// $ui-primary-color: 
-// $ui-secondary-color:
-// $ui-highlight-color: 
-// $primary-text-color: 
-// $darker-text-color: 
-// $dark-text-color: 
-// $secondary-text-color: 
+.jam-title {
+  color: $dark-text-color;
+  margin-left: .75rem;
+  padding-bottom: 0.1rem;
+  border-bottom-width: 2px;
+  border-bottom-style: groove;
+  border-color: $dark-text-color;
+  max-width: 33%;
+}
 
+.jam-mini-title {
+  color: darken($dark-text-color, 1%);
+  border-bottom-width: 2px;
+  border-bottom-style: groove;
+  border-color: darken($dark-text-color, 1%);
+  max-width: 25%;
+  margin-left: 0.75rem;
+  font-size: smaller;
+}
+
+.buttonflex {
+  display: flex;
+}
+
+//ColorPalette
 .colors {
   display: flex
 }
@@ -160,8 +196,6 @@ iframe.jam__iframe {
   background-color: $dark-text-color;
 }
 
-
-
-.buttonflex {
-  display: flex;
+.nine {
+  background-color: $secondary-text-color;
 }

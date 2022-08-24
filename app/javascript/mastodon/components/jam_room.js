@@ -12,19 +12,15 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
 
   useEffect(() => {
-
-    importDefaultIdentity(
-      {
-        info: {
-          name: account.get('display_name') || account.get('username'),
-          avatar: account.get('avatar_static'),
-        },
-        seed: jam.get('jam_seed'),
-      })
-
-
-
     async function enter() {
+      await importDefaultIdentity(
+        {
+          info: {
+            name: account.get('display_name') || account.get('username'),
+            avatar: account.get('avatar_static'),
+          },
+          seed: jam.get('jam_seed'),
+        })
 
       await setProps({ userInteracted: true });
       await setProps('roomId', roomId);
@@ -41,9 +37,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let {
     speakers,
     moderators,
-  } = room || {};
+  } = state.room || {};
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
+  console.log(peers)
+  console.log(stagePeers)
 
 
   return (
@@ -56,7 +54,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
         </div>
         <ul className='listwrap'>
 
-          {iSpeaker && <StageAvatar
+          {state.iAmSpeaker && <StageAvatar
             key={myIdentity.info.id}
             peerId={myIdentity.info.id}
             {...{ speaking }}
@@ -83,13 +81,14 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           Audience
         </div>
         <ul className='listwrap audiencelist' >
-          {!iSpeaker &&
+          {!state.iAmSpeaker &&
             <AudienceAvatar {...{ reactions, room }}
               peerId={myIdentity.info.id}
               peerState={myPeerState}
               info={myIdentity.info}
             />
           }
+
 
           {peers.filter(id => !stagePeers.includes(id)).map(peerId => {
             return (
