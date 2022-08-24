@@ -124,6 +124,9 @@ export default class Jam extends React.PureComponent {
       },
     };
 
+    console.log(account.get('username'))
+    console.log(account.get('avatar_static'))
+
     const jamHash = window.btoa(JSON.stringify(jamConfig));
 
     return (<div><button className={'status__content__spoiler-link'} onClick={this.leaveRoom}>Leave room</button><iframe
