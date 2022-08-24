@@ -31,7 +31,7 @@ export default class StatusContent extends React.PureComponent {
     hidden: true,
   };
 
-  _updateStatusLinks () {
+  _updateStatusLinks() {
     const node = this.node;
 
     if (!node) {
@@ -65,12 +65,12 @@ export default class StatusContent extends React.PureComponent {
 
     if (this.props.status.get('collapsed', null) === null) {
       let collapsed =
-          this.props.collapsable
-          && this.props.onClick
-          && node.clientHeight > MAX_HEIGHT
-          && this.props.status.get('spoiler_text').length === 0;
+        this.props.collapsable
+        && this.props.onClick
+        && node.clientHeight > MAX_HEIGHT
+        && this.props.status.get('spoiler_text').length === 0;
 
-      if(this.props.onCollapsedToggle) this.props.onCollapsedToggle(collapsed);
+      if (this.props.onCollapsedToggle) this.props.onCollapsedToggle(collapsed);
 
       this.props.status.set('collapsed', collapsed);
     }
@@ -102,11 +102,11 @@ export default class StatusContent extends React.PureComponent {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this._updateStatusLinks();
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this._updateStatusLinks();
   }
 
@@ -135,8 +135,8 @@ export default class StatusContent extends React.PureComponent {
       return;
     }
 
-    const [ startX, startY ] = this.startXY;
-    const [ deltaX, deltaY ] = [Math.abs(e.clientX - startX), Math.abs(e.clientY - startY)];
+    const [startX, startY] = this.startXY;
+    const [deltaX, deltaY] = [Math.abs(e.clientX - startX), Math.abs(e.clientY - startY)];
 
     let element = e.target;
     while (element) {
@@ -168,7 +168,7 @@ export default class StatusContent extends React.PureComponent {
     this.node = c;
   }
 
-  render () {
+  render() {
     const { status } = this.props;
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
@@ -225,7 +225,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!hidden && !!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!hidden && !!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
+          {!hidden && !!status.get('jam') && <JamContainer jamId={status.get('jam')} />}
 
           {renderViewThread && showThreadButton}
         </div>
@@ -237,7 +237,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
+          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} />}
 
           {renderViewThread && showThreadButton}
         </div>,
@@ -255,7 +255,7 @@ export default class StatusContent extends React.PureComponent {
 
           {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
 
-          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} account={status.get('account')} />}
+          {!!status.get('jam') && <JamContainer jamId={status.get('jam')} />}
 
           {renderViewThread && showThreadButton}
         </div>
