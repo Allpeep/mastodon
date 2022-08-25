@@ -2,30 +2,28 @@
 const http = require('http');
 const httpProxy = require('@tgrx/http-proxy');
 
-const proxy = httpProxy.createProxyServer({ ws: true, secure: false });
+const proxy = httpProxy.createProxyServer({ secure: false, changeOrigin: true, toProxy: true, ignorePath: true });
 
 const parseRequestUrl = (req) => {
   const [, prefix, jamHost, jamPath] = req.url.match(/(\/jam-proxy\/([^\/]*))(\/.*)/);
-  console.log('Proxying Jam ... ');
-  console.log(req.url, prefix, jamHost, jamPath);
-
   return { prefix, jamHost, jamPath };
 };
 
-proxy.on('proxyReq', function(proxyReq, req) {
-  proxyReq.setHeader('host', req.host);
-});
+const requestToTarget = (req) => {
+  const { jamHost, jamPath } = parseRequestUrl(req);
+  return `https://${jamHost}${jamPath}`;
+};
+
 
 const server = http.createServer(function(req, res) {
-  const { jamHost, jamPath } = parseRequestUrl(req);
-  req.url = jamPath;
-  req.host = jamHost;
   proxy.web(req, res, {
-    target: {
-      protocol: 'https:',
-      host: jamHost,
-      servername: jamHost,
-    },
+    target: requestToTarget(req),
+  });
+});
+
+server.on('upgrade', function (req, socket, head) {
+  proxy.ws(req, socket, head, {
+    target: requestToTarget(req),
   });
 });
 
