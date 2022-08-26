@@ -71,7 +71,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
               {...{ peerId, peerState, reactions }}
               canSpeak={true}
               peerState={peerState[peerId]}
-              info={identities[peerId]}
+              info={identities[peerId] || { peerId }}
             />
 
           })}
@@ -109,4 +109,4 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   );
 }
 
-export default JamRoom; 
+export default JamRoom;
