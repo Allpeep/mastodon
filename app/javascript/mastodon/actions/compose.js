@@ -565,15 +565,15 @@ const fetchComposeSuggestionsTags = throttle((dispatch, getState, token) => {
 export function fetchComposeSuggestions(token) {
   return (dispatch, getState) => {
     switch (token[0]) {
-    case ':':
-      fetchComposeSuggestionsEmojis(dispatch, getState, token);
-      break;
-    case '#':
-      fetchComposeSuggestionsTags(dispatch, getState, token);
-      break;
-    default:
-      fetchComposeSuggestionsAccounts(dispatch, getState, token);
-      break;
+      case ':':
+        fetchComposeSuggestionsEmojis(dispatch, getState, token);
+        break;
+      case '#':
+        fetchComposeSuggestionsTags(dispatch, getState, token);
+        break;
+      default:
+        fetchComposeSuggestionsAccounts(dispatch, getState, token);
+        break;
     }
   };
 }
@@ -765,6 +765,12 @@ export function removeJam() {
   };
 };
 
+export function changeJamTitle(title) {
+  return {
+    type: COMPOSE_JAM_TITLE_CHANGE,
+    title,
+  }
+}
 
 export function addPoll() {
   return {
