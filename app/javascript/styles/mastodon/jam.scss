@@ -48,14 +48,19 @@ iframe.jam__iframe {
   align-items: center;
 }
 
+.avatar-dropdown {
+  position: absolute;
+  border-color: black;
+  border-style: groove;
+  border-width: 1px;
+}
+
 .avatar-container h3 {
   text-align: center;
   color: $darker-text-color
 }
 
-.avatar-container:hover {
-  cursor: pointer;
-}
+
 
 .avatar {
   width: 3rem;
@@ -87,12 +92,14 @@ iframe.jam__iframe {
   padding: 0.25rem;
   border-radius: 25%;
   background-color: $ui-base-lighter-color;
+  position: relative;
 }
 
 .quiet-circle {
   padding: 0.25rem;
   border-radius: 25%;
   background-color: $ui-base-color;
+  position: relative;
 }
 
 .listwrap {
@@ -152,6 +159,36 @@ iframe.jam__iframe {
 
 .buttonflex {
   display: flex;
+}
+
+
+
+//Jam Poll
+
+.jam-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px;
+  border-top: 1px solid darken($simple-background-color, 8%);
+}
+
+.jam-form-input {
+  display: block;
+  box-sizing: border-box;
+  width: 80%;
+  font-size: 14px;
+  color: #282c37;
+  outline: 0;
+  font-family: inherit;
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 6px 10px;
+}
+
+.jam-input:active {
+  border-color: purple;
 }
 
 //ColorPalette
