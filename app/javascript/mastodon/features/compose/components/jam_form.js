@@ -17,7 +17,7 @@ class JamForm extends ImmutablePureComponent {
     };
 
     render() {
-        const { jam, handleChange } = this.props;
+        const { jam } = this.props;
 
         if (!jam) {
             return null;
