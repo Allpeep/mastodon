@@ -6689,22 +6689,21 @@ jake@^10.8.5:
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
-
-jam-core-react@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/jam-core-react/-/jam-core-react-0.4.0.tgz#f16f788bfd8cc4982e9728571e288dbf7347d84a"
-  integrity sha512-tnA+4btmfbX2QRsOOzQHJPPhiIkiL1v76NQ7cEadReRi0iICjTS5jzjRq9SHwHUmfPwCoRTcq6h8OjJcMlhPMg==
+jam-core-react@^0.5.0:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/jam-core-react/-/jam-core-react-0.5.5.tgz#22e4759f5d0fdb85b33035499543f26bca3cf346"
+  integrity sha512-mRyHwS2poO/oQNf5wb5ZP1SD3ZM/3lQu1aEKz2JULZfU46OYm1UXAVTyoiHLk6rmyxjbgCod+QHPw7jEZs7gbQ==
   dependencies:
     fast-base64 "^0.1.8"
-    jam-core "0.4.0"
+    jam-core "0.5.5"
     minimal-state "^5.6.0"
     use-minimal-state "^3.5.0"
     watsign "^0.1.8"
 
-jam-core@0.4.0, jam-core@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/jam-core/-/jam-core-0.4.0.tgz#dcdcb80f245cd53c9c261680dbe87610277a60c1"
-  integrity sha512-D31F8t2VEwR9fshMClKVUG6GV+njR5DqbdLMtDbgKHujuwvO6j+jfnavstKlSw1Lhcp6JXgDWBfLbl1DdtJL+Q==
+jam-core@0.5.5, jam-core@^0.5.0:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/jam-core/-/jam-core-0.5.5.tgz#f127e3f44652cfdc72ca30e9d929fb40da4c32b8"
+  integrity sha512-ByyvVJ6c1bKEbMTWo22yTkGW/blC4VYu6hDIesicuDMPnTJM4TRNT65t38paA5evmNOrWy8xbmJNaw6r2TpxSA==
   dependencies:
     fast-base64 "^0.1.8"
     mediasoup-client "^3.6.31"

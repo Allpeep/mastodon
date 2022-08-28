@@ -1,61 +1,55 @@
-import React, {useState} from "react"
+import React from 'react';
+import DropdownMenuContainer from '../containers/dropdown_menu_container';
+import { use, useJam } from 'jam-core-react';
 
-export const StageAvatar = ({
-    speaking,
-    canSpeak,
-    moderators,
-    peerId,
-    peerState,
-    reactions,
-    info,
+
+const SpeakerRing = ({peerId}) => {
+  let [state] = useJam();
+  let [speaking] = use(state, ['speaking']);
+  let isSpeaking = speaking && speaking.has(peerId);
+  return <div className={`speaker-ring ${isSpeaking ? 'active' : ''}`} />;
+};
+
+export const JamAvatar = ({
+  roomId,
+  api,
+  state,
+  peerId,
+  audience,
 }) => {
 
-    const [dropdown, setDropdown] = useState(false)
+  let { addPresenter, addSpeaker, addModerator } = api;
+  const handleMakeModerator = () => {
+    alert('test');
+  };
+  const handleMakePresenter = () => {
+    addPresenter(roomId, peerId);
+  };
 
-    const handleDropdown = () => {
 
-    }
+  let menu = [];
+  menu.push({ text: 'Make moderator', action: handleMakeModerator });
+  menu.push({ text: 'Make presenter', action: handleMakePresenter });
 
-    let amSpeaking = speaking.has(peerId)
+  info = info || { id: peerId};
+  let { inRoom = null } = peerState || {};
 
-
-    return (<li className='avatar-container' key={peerId} >
-        <div className={amSpeaking ? "speak-circle" : 'quiet-circle'} onClick={() => {setDropdown(true)}} onMouseLeave={() => setDropdown(false)}>
-            <img className='avatar' src={info.avatar} ></img>
-            {dropdown ? 
-        <div className="avatar-dropdown" onBlur={() => setDropdown(false)}>
-            <ul>
-                Speaker
-            </ul>
-        </div> : null}
+  return inRoom && (
+    <DropdownMenuContainer
+      items={menu}
+      size={18}
+      direction='right'
+    >
+      <li key={peerId}>
+        <div className={`avatar-container ${audience ? 'audience' : ''}`}>
+          <SpeakerRing peerId={peerId} />
+          <img className='avatar' src={info.avatar} alt={`Avatar ${info.name}`} />
         </div>
-        <h3>{info.name}</h3>
-        
-    </li >)
+        <div className={`avatar-name ${audience ? 'audience' : ''}`}>{info.name}</div>
+      </li>
+    </DropdownMenuContainer>);
 
-}
+};
 
 
-export function AudienceAvatar({
-    room,
-    peerId,
-    peerState,
-    // reactions,
-    info,
-    // handRaised,
-    onClick,
-}) {
-
-    let { inRoom = null } = peerState || {};
-    info = info || { id: peerId };
-    return (
-        inRoom && (
-            <li className="avatar-container">
-                <div className="quiet-circle">
-                    <img className="avatar audience-avatar" src={info.avatar} />
-                </div>
-            </li>
-        )
-    );
-}
 
