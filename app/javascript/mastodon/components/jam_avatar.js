@@ -12,40 +12,70 @@ const SpeakerRing = ({peerId}) => {
 
 export const JamAvatar = ({
   roomId,
-  api,
-  state,
   peerId,
-  audience,
 }) => {
 
-  let { addPresenter, addSpeaker, addModerator } = api;
-  const handleMakeModerator = () => {
-    alert('test');
-  };
+  let [state, api] = useJam();
+  let [
+    iAmModerator,
+    myIdentity,
+    identities,
+    { moderators, speakers, presenters },
+  ] = use(state, [
+    'iAmModerator', 'myIdentity', 'identities', 'room']);
+
+  const { addPresenter, addSpeaker, addModerator, removeSpeaker, removeModerator, removePresenter } = api;
+
+  const handleMakeSpeaker = () => addSpeaker(roomId, peerId);
+  const handleMakeModerator = () => addModerator(roomId, peerId);
+  const handleRemoveSpeaker = () => removeSpeaker(roomId, peerId);
+  const handleRemoveModerator = () => removeModerator(roomId, peerId);
+  const handleRemovePresenter = () => removePresenter(roomId, peerId);
+
   const handleMakePresenter = () => {
-    addPresenter(roomId, peerId);
+    presenters.forEach((id) => removePresenter(roomId, id));
+    return addPresenter(roomId, peerId);
   };
 
+  const isModerator = !!moderators.includes(peerId);
+  const isSpeaker = !!speakers.includes(peerId);
+  const isPresenter = !!presenters.includes(peerId);
+
+  const isMe = myIdentity.info.id === peerId;
 
   let menu = [];
-  menu.push({ text: 'Make moderator', action: handleMakeModerator });
-  menu.push({ text: 'Make presenter', action: handleMakePresenter });
+  if(iAmModerator) {
+    if(isModerator) {
+      menu.push({ text: 'Remove moderator', action: handleRemoveModerator });
+    } else {
+      menu.push({ text: 'Make moderator', action: handleMakeModerator() });
+    }
+    if(isSpeaker) {
+      menu.push({ text: 'Remove speaker', action: handleRemoveSpeaker });
+      if(!isPresenter) {
+        menu.push({ text: 'Make presenter', action: handleMakePresenter });
+      }
+    } else {
+      menu.push({ text: 'Make speaker', action: handleMakeSpeaker });
+    }
+    if(isPresenter) {
+      menu.push({ text: 'Remove presenter', action: handleRemovePresenter });
+    }
+  }
+  const info = isMe ? myIdentity.info : identities[peerId] || { id: peerId};
 
-  info = info || { id: peerId};
-  let { inRoom = null } = peerState || {};
-
-  return inRoom && (
+  return (
     <DropdownMenuContainer
       items={menu}
       size={18}
       direction='right'
     >
       <li key={peerId}>
-        <div className={`avatar-container ${audience ? 'audience' : ''}`}>
+        <div className={`avatar-container ${isSpeaker ? '' : 'audience'}`}>
           <SpeakerRing peerId={peerId} />
           <img className='avatar' src={info.avatar} alt={`Avatar ${info.name}`} />
         </div>
-        <div className={`avatar-name ${audience ? 'audience' : ''}`}>{info.name}</div>
+        <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
       </li>
     </DropdownMenuContainer>);
 
