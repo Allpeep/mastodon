@@ -20,22 +20,13 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let { enterRoom, leaveRoom, setProps } = api;
   let [
     myIdentity,
-    speaking,
     peers,
-    peerState,
-    iSpeaker,
-    iModerator,
     iPresenter,
-    reactions,
-    identities,
-    room,
-    myPeerState,
     myVideo,
     remoteVideoStreams,
+    { speakers },
   ] = use(state, [
-    'myIdentity', 'speaking', 'peers', 'peerState', 'iAmSpeaker',
-    'iAmModerator', 'iAmPresenter', 'reactions', 'identities', 'room',
-    'myPeerState', 'myVideo', 'remoteVideoStreams']);
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room']);
 
   useEffect(() => {
     async function enter() {
@@ -60,11 +51,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     };
   }, []);
 
-  let {
-    speakers,
-    moderators,
-  } = state.room || {};
-
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
   let audiencePeers = peers.filter(id => !stagePeers.includes(id));
 
@@ -80,26 +66,16 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
         <ul className='listwrap'>
           {state.iAmSpeaker && <JamAvatar
             roomId={roomId}
-            api={api}
             key={myIdentity.info.id}
             peerId={myIdentity.info.id}
-            {...{ speaking }}
-            canSpeak
-            peerState={myPeerState}
-            info={myIdentity.info}
           />
           }
           {stagePeers.map(peerId => {
 
             return (<JamAvatar
               roomId={roomId}
-              api={api}
               key={peerId}
-              {...{ speaking }}
-              {...{ peerId, peerState, reactions }}
-              canSpeak
-              peerState={peerState[peerId]}
-              info={identities[peerId] || { peerId }}
+              peerId={peerId}
             />);
 
           })}
@@ -112,11 +88,8 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           {!state.iAmSpeaker &&
             <JamAvatar
               roomId={roomId}
-              api={api}
-              {...{ reactions, room }}
+              key={myIdentity.info.id}
               peerId={myIdentity.info.id}
-              peerState={myPeerState}
-              info={myIdentity.info}
             />
           }
 
@@ -125,13 +98,8 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             return (
               <JamAvatar
                 roomId={roomId}
-                api={api}
                 key={peerId}
-                {...{ speaking }}
-                {...{ peerId, peerState, reactions }}
-                audience
-                peerState={peerState[peerId]}
-                info={identities[peerId]}
+                peerId={peerId}
               />
             )
           })}
@@ -140,6 +108,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
     </div>
   );
-}
+};
 
 export default JamRoom;
