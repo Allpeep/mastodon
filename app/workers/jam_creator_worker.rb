@@ -28,6 +28,7 @@ class JamCreatorWorker
     room_config = (jam_config['defaultRoom'] || {}).merge({
       name: 'Jam',
       description: '',
+      presenters: [],
       speakers: speakers.map(&:jam_identity),
       moderators: [creator.jam_identity],
       # access: {

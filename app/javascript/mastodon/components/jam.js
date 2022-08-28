@@ -2,8 +2,7 @@ import React from 'react';
 import Avatar from 'mastodon/components/avatar';
 import { debounce } from 'lodash';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { importDefaultIdentity } from 'jam-core';
-import { JamProvider, useJam, use } from 'jam-core-react';
+import { JamProvider } from 'jam-core-react';
 import JamRoom from './jam_room';
 
 
@@ -20,10 +19,6 @@ export default class Jam extends React.PureComponent {
     isIdentitySet: false,
     inRoom: false,
   };
-
-  // componentWillReceiveProps (nextProps) {
-  //   nextProps;
-  // }
 
 
   componentDidMount() {
@@ -95,10 +90,19 @@ export default class Jam extends React.PureComponent {
 
 
     return (
-      // <JamProvider options={{ jamConfig }}>
-      //   <JamRoom speakers={jam.get('speakers')} />
-      // </JamProvider>
-      <JamProvider options={{ jamConfig: { urls: { pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry` } } }}>
+      <JamProvider options={{
+        jamConfig: {
+          urls: {
+            pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry`,
+            stun: `stun:${jam.get('jam_host')}:3478`,
+            turn: `turn:${jam.get('jam_host')}:3478`,
+            turnCredentials: {
+              username: 'test',
+              credential: 'yieChoi0PeoKo8ni',
+            },
+          },
+        }, debug: true }}
+      >
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
         {/* <ColorPalette></ColorPalette> */}
       </JamProvider>
@@ -106,42 +110,7 @@ export default class Jam extends React.PureComponent {
 
   }
 
-  renderJamFrame = (jam, account) => {
-
-    const jamConfig = {
-      ux: {
-        //autoRejoin: true,
-        //autoJoin: true,
-        noLeave: true,
-        //userInteracted: true,
-      },
-      identity: {
-        name: account.get('display_name') || account.get('username'),
-        avatar: account.get('avatar_static'),
-      },
-      keys: {
-        seed: jam.get('jam_seed'),
-      },
-    };
-
-    console.log(account.get('username'))
-    console.log(account.get('avatar_static'))
-
-    const jamHash = window.btoa(JSON.stringify(jamConfig));
-
-    return (<div><button className={'status__content__spoiler-link'} onClick={this.leaveRoom}>Leave room</button><iframe
-      title={'Jam'}
-      className={'jam__iframe'}
-      allow='microphone;*'
-      src={`${jam.get('server_url')}/${jam.get('room_id')}?debug=yes#${jamHash}`}
-    /></div>);
-
-  }
-
-
-
   render() {
-
 
     const { jam, account } = this.props;
 
