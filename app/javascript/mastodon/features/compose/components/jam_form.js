@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl';
 class JamForm extends ImmutablePureComponent {
 
     static propTypes = {
-        jam: PropTypes.bool,
+        jam: PropTypes.object,
         title: PropTypes.string,
         onChangeTitle: PropTypes.func.isRequired,
     };

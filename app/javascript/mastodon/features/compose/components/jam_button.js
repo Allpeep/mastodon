@@ -20,7 +20,7 @@ class JamButton extends React.PureComponent {
   static propTypes = {
     disabled: PropTypes.bool,
     unavailable: PropTypes.bool,
-    active: PropTypes.bool,
+    active: PropTypes.object,
     onClick: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
   };

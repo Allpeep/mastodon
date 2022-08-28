@@ -103,6 +103,10 @@ const initialPoll = ImmutableMap({
   multiple: false,
 });
 
+const initialJam = ImmutableMap({
+  title: 'Jam',
+})
+
 function statusToTextMentions(state, status) {
   let set = ImmutableOrderedSet([]);
 
@@ -516,11 +520,11 @@ export default function compose(state = initialState, action) {
         }
       });
     case COMPOSE_JAM_ADD:
-      return state.set('jam', true);
+      return state.set('jam', initialJam);
     case COMPOSE_JAM_REMOVE:
-      return state.set('jam', false);
+      return state.set('jam', null);
     case COMPOSE_JAM_TITLE_CHANGE:
-      return state.set(['jam', 'title'], action.title);
+      return state.setIn(['jam', 'title'], action.title);
     case COMPOSE_POLL_ADD:
       return state.set('poll', initialPoll);
     case COMPOSE_POLL_REMOVE:
