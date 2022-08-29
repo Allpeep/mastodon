@@ -25,8 +25,9 @@ class JamCreatorWorker
     jam_host = jam.jam_host
     creator = status.account
 
-    room_config = (jam_config['defaultRoom'] || {}).merge({
-      name: 'Jam',
+    room_config = (jam_config['defaultRoom'] || {}).merge(
+      jam.room_config,
+      {
       description: '',
       presenters: [],
       speakers: speakers.map(&:jam_identity),

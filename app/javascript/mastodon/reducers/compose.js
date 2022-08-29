@@ -104,7 +104,7 @@ const initialPoll = ImmutableMap({
 });
 
 const initialJam = ImmutableMap({
-  title: 'Jam',
+  name: 'Jam',
 })
 
 function statusToTextMentions(state, status) {
@@ -524,7 +524,7 @@ export default function compose(state = initialState, action) {
     case COMPOSE_JAM_REMOVE:
       return state.set('jam', null);
     case COMPOSE_JAM_TITLE_CHANGE:
-      return state.setIn(['jam', 'title'], action.title);
+      return state.setIn(['jam', 'name'], action.name);
     case COMPOSE_POLL_ADD:
       return state.set('poll', initialPoll);
     case COMPOSE_POLL_REMOVE:

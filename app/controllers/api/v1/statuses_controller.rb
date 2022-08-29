@@ -129,7 +129,9 @@ class Api::V1::StatusesController < Api::BaseController
       :visibility,
       :language,
       :scheduled_at,
-      :jam,
+      jam: [
+        :name
+      ],
       media_ids: [],
       media_attributes: [
         :id,

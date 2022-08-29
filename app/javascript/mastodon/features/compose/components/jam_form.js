@@ -8,7 +8,7 @@ class JamForm extends ImmutablePureComponent {
 
     static propTypes = {
         jam: PropTypes.object,
-        title: PropTypes.string,
+        name: PropTypes.string,
         onChangeTitle: PropTypes.func.isRequired,
     };
 
@@ -26,7 +26,7 @@ class JamForm extends ImmutablePureComponent {
         return (
             <div className='jam-form'>
 
-                <input placeholder='Jam room title' className='jam-form-input' value={this.props.title} onChange={this.handleChange} />
+                <input placeholder='Jam room title' className='jam-form-input' value={this.props.name} onChange={this.handleChange} />
 
             </div>
         );
