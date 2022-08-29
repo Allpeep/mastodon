@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 
 import Jam from 'mastodon/components/jam';
 import { fetchJam } from 'mastodon/actions/jams';
-import { me } from '../initial_state'
+import { me } from '../initial_state';
 
 const mapDispatchToProps = (dispatch, { jamId }) => ({
   refresh: debounce(
