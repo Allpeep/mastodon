@@ -26,7 +26,6 @@ import PictureInPicture from 'mastodon/features/picture_in_picture';
 import {
   Compose,
   Status,
-  Jam,
   GettingStarted,
   KeyboardShortcuts,
   PublicTimeline,
@@ -194,8 +193,6 @@ class SwitchingColumnsArea extends React.PureComponent {
           <WrappedRoute path='/domain_blocks' component={DomainBlocks} content={children} />
           <WrappedRoute path='/mutes' component={Mutes} content={children} />
           <WrappedRoute path='/lists' component={Lists} content={children} />
-
-          <WrappedRoute path='/jams/:jamId' component={Jam} content={children} />
 
           <WrappedRoute component={GenericNotFound} content={children} />
         </WrappedSwitch>
