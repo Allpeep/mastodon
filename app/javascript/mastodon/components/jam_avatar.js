@@ -73,7 +73,7 @@ export const JamAvatar = ({
       size={18}
       direction='right'
     >
-      <li key={peerId}>
+      <button className='avatar-list-item' key={peerId}>
         <div className={`avatar-container ${isSpeaker ? '' : 'audience'}`}>
           <SpeakerRing peerId={peerId} />
           <img className='avatar' src={info.avatar} alt={`Avatar ${info.name}`} />
@@ -82,7 +82,7 @@ export const JamAvatar = ({
           }
         </div>
         <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
-      </li>
+      </button>
     </DropdownMenuContainer>);
 
 };

@@ -43,6 +43,12 @@
 //   padding-bottom: 1rem;
 // }
 
+.avatar-list-item {
+  background-color: transparent;
+  border: none;
+  display: list-item;
+}
+
 .avatar-container {
   position: relative;
   margin: 3px;
