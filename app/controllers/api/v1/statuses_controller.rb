@@ -111,7 +111,9 @@ class Api::V1::StatusesController < Api::BaseController
       :visibility,
       :language,
       :scheduled_at,
-      :jam,
+      jam: [
+        :name
+      ],
       media_ids: [],
       poll: [
         :multiple,

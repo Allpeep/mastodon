@@ -694,10 +694,10 @@ export function removeJam() {
   };
 };
 
-export function changeJamTitle(title) {
+export function changeJamTitle(name) {
   return {
     type: COMPOSE_JAM_TITLE_CHANGE,
-    title,
+    name,
   }
 }
 

@@ -5,12 +5,12 @@ import { changeJamTitle } from '../../../actions/compose';
 
 const mapStateToProps = state => ({
     jam: state.getIn(['compose', 'jam']),
-    title: state.getIn(['compose', 'jam', 'title']),
+    name: state.getIn(['compose', 'jam', 'name']),
 });
 
 const mapDispatchToProps = dispatch => ({
-    onChangeTitle(title) {
-        dispatch(changeJamTitle(title));
+    onChangeTitle(name) {
+        dispatch(changeJamTitle(name));
     },
 });
 
