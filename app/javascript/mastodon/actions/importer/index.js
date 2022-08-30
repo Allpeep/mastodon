@@ -5,7 +5,7 @@ export const ACCOUNTS_IMPORT = 'ACCOUNTS_IMPORT';
 export const STATUS_IMPORT   = 'STATUS_IMPORT';
 export const STATUSES_IMPORT = 'STATUSES_IMPORT';
 export const POLLS_IMPORT    = 'POLLS_IMPORT';
-export const JAM_IMPORT    = 'JAMS_IMPORT';
+export const JAM_IMPORT    = 'JAM_IMPORT';
 export const JAMS_IMPORT    = 'JAMS_IMPORT';
 
 function pushUnique(array, object) {
