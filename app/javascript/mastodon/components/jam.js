@@ -1,9 +1,9 @@
 import React from 'react';
 import Avatar from 'mastodon/components/avatar';
-import { debounce } from 'lodash';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { JamProvider } from 'jam-core-react';
 import JamRoom from './jam_room';
+import PropTypes from 'prop-types';
 
 
 export default class Jam extends React.PureComponent {
@@ -11,36 +11,22 @@ export default class Jam extends React.PureComponent {
   static propTypes = {
     jam: ImmutablePropTypes.map,
     account: ImmutablePropTypes.map,
+    enterJam: PropTypes.func,
+    leaveJam: PropTypes.func,
   };
 
   static defaultProps = {};
 
-  state = {
-    isIdentitySet: false,
-    inRoom: false,
-  };
-
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize, { passive: true });
-  }
-
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  _setDimensions() {
-    const width = this.node.offsetWidth;
-
-    this.setState({ width });
+    // pictureInPicture
   }
 
   enterRoom = (e) => {
     e.preventDefault();
 
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const inRoom = true;
-      this.setState({ inRoom });
+      const { enterJam } = this.props;
+      enterJam();
     }
   }
 
@@ -48,26 +34,8 @@ export default class Jam extends React.PureComponent {
     e.preventDefault();
 
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const inRoom = false;
-      this.setState({ inRoom });
-    }
-  }
-
-
-  handleResize = debounce(() => {
-    if (this.node) {
-      this._setDimensions();
-    }
-  }, 250, {
-    trailing: true,
-  });
-
-
-  setRef = c => {
-    this.node = c;
-
-    if (this.node) {
-      this._setDimensions();
+      const { leaveJam } = this.props;
+      leaveJam();
     }
   }
 
@@ -120,7 +88,7 @@ export default class Jam extends React.PureComponent {
 
     const speakers = jam.get('speakers');
 
-    if (this.state.inRoom) {
+    if (!!jam.get('entered')) {
       return this.renderJamRoom(jam, account);
     } else {
       return this.renderJamLobby(speakers);
