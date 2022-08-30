@@ -5,6 +5,24 @@ export const JAM_FETCH_REQUEST = 'JAM_FETCH_REQUEST';
 export const JAM_FETCH_SUCCESS = 'JAM_FETCH_SUCCESS';
 export const JAM_FETCH_FAIL    = 'JAM_FETCH_FAIL';
 
+export const JAM_ENTER    = 'JAM_ENTER';
+export const JAM_LEAVE    = 'JAM_LEAVE';
+
+export const enter = (jamId) => (dispatch) => {
+  dispatch({
+    type: JAM_ENTER,
+    jamId,
+  });
+};
+
+export const leave = (jamId) => (dispatch) => {
+  dispatch({
+    type: JAM_LEAVE,
+    jamId,
+  });
+};
+
+
 export const fetchJam = (id)  => {
   return (dispatch, getState) => {
     const skipLoading = getState().getIn(['jams', id], null) !== null;
@@ -48,5 +66,12 @@ export const fetchJamFail = (id, error, skipLoading) => {
     error,
     skipLoading,
     skipAlert: true,
+  };
+};
+
+export const enterJam = (jam) => {
+  return {
+    type: JAM_ENTER,
+    jam,
   };
 };
