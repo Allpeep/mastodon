@@ -21,8 +21,10 @@ export const JamAvatar = ({
     myIdentity,
     identities,
     { moderators, speakers, presenters },
+    handRaised,
+    peerState
   ] = use(state, [
-    'iAmModerator', 'myIdentity', 'identities', 'room']);
+    'iAmModerator', 'myIdentity', 'identities', 'room', 'handRaised', 'peerState']);
 
   const { addPresenter, addSpeaker, addModerator, removeSpeaker, removeModerator, removePresenter } = api;
 
@@ -62,7 +64,8 @@ export const JamAvatar = ({
       menu.push({ text: 'Remove presenter', action: handleRemovePresenter });
     }
   }
-  const info = isMe ? myIdentity.info : identities[peerId] || { id: peerId};
+  const info = isMe ? myIdentity.info : identities[peerId] || { id: peerId };
+  const isHandRaised = isMe ? handRaised : peerState[peerId]?.handRaised;
 
   return (
     <DropdownMenuContainer
@@ -74,6 +77,9 @@ export const JamAvatar = ({
         <div className={`avatar-container ${isSpeaker ? '' : 'audience'}`}>
           <SpeakerRing peerId={peerId} />
           <img className='avatar' src={info.avatar} alt={`Avatar ${info.name}`} />
+          {isHandRaised &&
+          <div className='jam-hand'>✋</div>
+          }
         </div>
         <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
       </li>

@@ -19,6 +19,19 @@
   margin-right: 0.25rem;
 }
 
+.jam-action-bar {
+  background-color: darken($ui-base-color, 2%);
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+
+
+  button {
+    margin: 0.5rem;
+  }
+}
+
 .room-container {
   padding-top: 0.5rem;
   padding-bottom: 1rem;
@@ -35,6 +48,7 @@
   margin: 3px;
   width: 3rem;
   height: 3rem;
+
   @media (min-width: 768px) {
     width: 5rem;
     height: 5rem;
@@ -83,6 +97,21 @@
   border-width: 3px;
   left: -3px;
   top: -3px;
+}
+
+.jam-hand {
+  display: flex;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-size: 0.75rem;
+  border-style: groove;
+  border-color: darken($ui-base-color, 5%);
+  border-width: 2px;
+  background-color: darken($ui-base-color, 3%);
+  border-radius: 9999px;
 }
 
 .listwrap {

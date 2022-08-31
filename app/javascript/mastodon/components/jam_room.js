@@ -25,8 +25,9 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     myVideo,
     remoteVideoStreams,
     { speakers },
+    handRaised
   ] = use(state, [
-    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room']);
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised']);
 
   useEffect(() => {
     async function enter() {
@@ -48,6 +49,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
     return () => {
       leaveRoom();
+      console.log("left room")
     };
   }, []);
 
@@ -57,7 +59,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   return (
     <div>
-      <div className='buttonflex'><button className='jam-button room-button' onClick={handleleaveRoom}>Leave Room</button></div>
       <div className='room-container'>
         <div className='jam-video-container'>
           {iPresenter && <JamVideo stream={myVideo} />}
@@ -104,6 +105,12 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             )
           })}
         </ul>
+
+        <div className='jam-action-bar'>
+          <button className='button room-button' onClick={handleleaveRoom}>Leave Room</button>
+          <button className='button button-alternative' onClick={() => setProps('handRaised', !handRaised)}>{handRaised? 'Stop raising hand' : '✋ Raise hand'}</button>
+          <button className='button button-alternative'>😄</button>
+        </div>
       </div>
 
     </div>
