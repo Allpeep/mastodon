@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
-import JamContainer from 'mastodon/containers/jam_container';
 import Icon from 'mastodon/components/icon';
 import { autoPlayGif, languages as preloadedLanguages, translationEnabled } from 'mastodon/initial_state';
 

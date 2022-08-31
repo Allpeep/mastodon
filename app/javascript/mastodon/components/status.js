@@ -12,6 +12,7 @@ import Card from '../features/status/components/card';
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import { MediaGallery, Video, Audio } from '../features/ui/util/async-components';
+import JamContainer from '../containers/jam_container';
 import { HotKeys } from 'react-hotkeys';
 import classNames from 'classnames';
 import Icon from 'mastodon/components/icon';
@@ -99,6 +100,7 @@ class Status extends ImmutablePureComponent {
     cachedMediaWidth: PropTypes.number,
     scrollKey: PropTypes.string,
     deployPictureInPicture: PropTypes.func,
+    deployFloatingJam: PropTypes.func,
     pictureInPicture: ImmutablePropTypes.contains({
       inUse: PropTypes.bool,
       available: PropTypes.bool,
@@ -219,6 +221,14 @@ class Status extends ImmutablePureComponent {
 
     deployPictureInPicture(status, type, mediaProps);
   };
+
+  handleDeployFloatingJam = (jam) => {
+    const { deployFloatingJam } = this.props;
+    const status = this._properStatus();
+
+    deployFloatingJam(status, jam);
+  }
+
 
   handleHotkeyReply = e => {
     e.preventDefault();
@@ -487,6 +497,11 @@ class Status extends ImmutablePureComponent {
           sensitive={status.get('sensitive')}
         />
       );
+    } else if (!!status.get('jam')) {
+      media = (<JamContainer
+        jamId={status.get('jam')}
+        deployFloatingJam={pictureInPicture.get('available') ? this.handleDeployFloatingJam : undefined}
+      />);
     }
 
     if (account === undefined || account === null) {

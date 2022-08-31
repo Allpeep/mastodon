@@ -1,5 +1,6 @@
 // @ts-check
 
+export const FLOATING_JAM_DEPLOY = 'FLOATING_JAM_DEPLOY';
 export const PICTURE_IN_PICTURE_DEPLOY = 'PICTURE_IN_PICTURE_DEPLOY';
 export const PICTURE_IN_PICTURE_REMOVE = 'PICTURE_IN_PICTURE_REMOVE';
 
@@ -32,6 +33,25 @@ export const deployPictureInPicture = (statusId, accountId, playerType, props) =
         accountId,
         playerType,
         props,
+      });
+    }
+  };
+};
+
+/**
+ * @param {string} statusId
+ * @param {string} accountId
+ * @param {string} jamId
+ * @return {object}
+ */
+export const deployFloatingJam = (statusId, accountId, jamId) => {
+  return (dispatch, getState) => {
+    if (getState().hasIn(['statuses', statusId])) {
+      dispatch({
+        type: FLOATING_JAM_DEPLOY,
+        statusId,
+        accountId,
+        jamId,
       });
     }
   };

@@ -6,6 +6,7 @@ import Audio from 'mastodon/features/audio';
 import { removePictureInPicture } from 'mastodon/actions/picture_in_picture';
 import Header from './components/header';
 import Footer from './components/footer';
+import JamContainer from '../../containers/jam_container';
 
 const mapStateToProps = state => ({
   ...state.get('picture_in_picture'),
@@ -17,6 +18,7 @@ class PictureInPicture extends React.Component {
   static propTypes = {
     statusId: PropTypes.string,
     accountId: PropTypes.string,
+    jamId: PropTypes.string,
     type: PropTypes.string,
     src: PropTypes.string,
     muted: PropTypes.bool,
@@ -35,9 +37,9 @@ class PictureInPicture extends React.Component {
   };
 
   render () {
-    const { type, src, currentTime, accountId, statusId } = this.props;
+    const { type, src, currentTime, accountId, statusId, jamId } = this.props;
 
-    if (!currentTime) {
+    if (!(type === 'jam') && !currentTime) {
       return null;
     }
 
@@ -69,6 +71,8 @@ class PictureInPicture extends React.Component {
           autoPlay
         />
       );
+    } else if (type === 'jam') {
+      player = <JamContainer jamId={jamId} />;
     }
 
     return (
