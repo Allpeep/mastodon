@@ -27,6 +27,15 @@ Rails.application.configure do
     end
   end
 
+  config.x.jam_proxy_base_url = ENV.fetch('JAM_PROXY_BASE_URL') do
+    if Rails.env.production?
+      "http#{https ? 's' : ''}://#{web_host}"
+    else
+      "http://#{ENV['REMOTE_DEV'] == 'true' ? host.split(':').first : 'localhost'}:8000"
+    end
+  end
+
+
   unless Rails.env.test?
     config.hosts << host if host.present?
     config.hosts << web_host if web_host.present?

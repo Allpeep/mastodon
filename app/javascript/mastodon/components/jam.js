@@ -11,6 +11,7 @@ export default class Jam extends React.PureComponent {
   static propTypes = {
     jam: ImmutablePropTypes.map,
     account: ImmutablePropTypes.map,
+    jamProxyBaseUrl: PropTypes.string,
     enterJam: PropTypes.func,
     leaveJam: PropTypes.func,
     deployFloatingJam: PropTypes.func,
@@ -69,7 +70,7 @@ export default class Jam extends React.PureComponent {
       <JamProvider options={{
         jamConfig: {
           urls: {
-            pantry: `http://localhost:8000/jam-proxy/${jam.get('jam_host')}/_/pantry`,
+            pantry: `${this.props.jamProxyBaseUrl}/jam-proxy/${jam.get('jam_host')}/_/pantry`,
             stun: `stun:${jam.get('jam_host')}:3478`,
             turn: `turn:${jam.get('jam_host')}:3478`,
             turnCredentials: {
