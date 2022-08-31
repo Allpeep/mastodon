@@ -55,7 +55,7 @@ export default class Jam extends React.PureComponent {
         </ul>
       </div>
       <div className='jam-action-bar'>
-        <button className={'button button--block'} onClick={this.enterRoom}>Join Jam</button>
+        <button className={'button'} onClick={this.enterRoom}>Join Jam</button>
       </div>
     </div>
     );
