@@ -39,7 +39,7 @@ import { initBlockModal } from '../actions/blocks';
 import { initBoostModal } from '../actions/boosts';
 import { initReport } from '../actions/reports';
 import { openModal } from '../actions/modal';
-import { deployPictureInPicture } from '../actions/picture_in_picture';
+import { deployPictureInPicture, deployFloatingJam } from '../actions/picture_in_picture';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import { boostModal, deleteModal } from '../initial_state';
 import { showAlertForError } from '../actions/alerts';
@@ -219,6 +219,11 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
   deployPictureInPicture (status, type, mediaProps) {
     dispatch(deployPictureInPicture(status.get('id'), status.getIn(['account', 'id']), type, mediaProps));
   },
+
+  deployFloatingJam (status, jam) {
+    dispatch(deployFloatingJam(status.get('id'), status.getIn(['account', 'id']), jam.get('id')));
+  },
+
 
 });
 

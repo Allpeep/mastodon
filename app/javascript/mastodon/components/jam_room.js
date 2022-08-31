@@ -1,70 +1,120 @@
-import React from 'react';
-import Avatar from 'mastodon/components/avatar';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 import { useJam, use } from 'jam-core-react';
+import { JamAvatar } from './jam_avatar';
+import { importDefaultIdentity } from 'jam-core';
 
+const videoRef = React.createRef();
 
-export default class JamRoom extends React.PureComponent {
+const JamVideo = ({ stream }) => {
 
-  static propTypes = {
-    speakers: ImmutablePropTypes.list,
-  };
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.srcObject = stream;
+  }, [stream, videoRef]);
+  return (
+    <video ref={videoRef} autoPlay />
+  );
+};
 
-
-  static defaultProps = {};
-
-  state = {
-    inRoom: false,
-  };
-
-
-  handleEnterRoom = (e) => {
-    e.preventDefault();
-    console.log('Entering room');
-
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const inRoom = true;
-      this.setState({ inRoom });
-    }
-  }
-
-  renderJamRoom() {
-
-  }
-
-  renderJamLobby(speakers) {
-    return (<div className={'jam-room-outside'}>
-      <button onClick={this.enterRoom}>Enter room</button>
-      <ul>
-        {speakers.map((speaker) => (
-
-          <li key={speaker.get('acct')}>
-            <div><Avatar account={speaker} size={24} /></div>
-          </li>
-        ))}
-      </ul>
-    </div>);
-  }
-
-  render() {
-    let { inRoom } = this.state;
-    let { speakers } = this.props;
-
-    return inRoom ? (<Room />) : this.renderJamLobby(speakers);
-
-
-  };
-
-
-}
-
-function Room() {
+const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let [state, api] = useJam();
-  let { enterRoom } = api;
-  let [myIdentity, roomId] = use(state, ['myIdentity', 'roomId']);
-  return (<div>
-    <h3>Test</h3>
-  </div>);
-}
+  let { enterRoom, leaveRoom, setProps } = api;
+  let [
+    myIdentity,
+    peers,
+    iPresenter,
+    myVideo,
+    remoteVideoStreams,
+    { speakers },
+    handRaised
+  ] = use(state, [
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised']);
 
+  useEffect(() => {
+    async function enter() {
+      await importDefaultIdentity(
+        {
+          info: {
+            name: account.get('display_name') || account.get('username'),
+            avatar: account.get('avatar_static'),
+          },
+          seed: jam.get('jam_seed'),
+        });
+
+      await setProps({ userInteracted: true });
+      await setProps('roomId', roomId);
+      await enterRoom(roomId);
+
+    }
+    enter();
+
+    return () => {
+      leaveRoom();
+      console.log("left room")
+    };
+  }, []);
+
+  let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
+  let audiencePeers = peers.filter(id => !stagePeers.includes(id));
+
+
+  return (
+    <div>
+      <div className='room-container'>
+        <div className='jam-video-container'>
+          {iPresenter && <JamVideo stream={myVideo} />}
+          {remoteVideoStreams.length > 0 && <JamVideo stream={remoteVideoStreams[0].stream} />}
+        </div>
+        <ul className='listwrap'>
+          {state.iAmSpeaker && <JamAvatar
+            roomId={roomId}
+            key={myIdentity.info.id}
+            peerId={myIdentity.info.id}
+          />
+          }
+          {stagePeers.map(peerId => {
+
+            return (<JamAvatar
+              roomId={roomId}
+              key={peerId}
+              peerId={peerId}
+            />);
+
+          })}
+        </ul>
+
+        <div className='jam-audience-title'>
+          Audience
+        </div>
+        <ul className='listwrap audiencelist' >
+          {!state.iAmSpeaker &&
+            <JamAvatar
+              roomId={roomId}
+              key={myIdentity.info.id}
+              peerId={myIdentity.info.id}
+            />
+          }
+
+
+          {audiencePeers.map(peerId => {
+            return (
+              <JamAvatar
+                roomId={roomId}
+                key={peerId}
+                peerId={peerId}
+              />
+            )
+          })}
+        </ul>
+
+        <div className='jam-action-bar'>
+          <button className='button room-button' onClick={handleleaveRoom}>Leave Room</button>
+          <button className='button button-alternative' onClick={() => setProps('handRaised', !handRaised)}>{handRaised? 'Stop raising hand' : '✋ Raise hand'}</button>
+          <button className='button button-alternative'>😄</button>
+        </div>
+      </div>
+
+    </div>
+  );
+};
+
+export default JamRoom;

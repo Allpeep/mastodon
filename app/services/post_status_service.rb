@@ -65,11 +65,11 @@ class PostStatusService < BaseService
 
     ApplicationRecord.transaction do
       @status = @account.statuses.create!(status_attributes)
+      process_hashtags_service.call(@status)
+      process_mentions_service.call(@status)
       JamCreatorWorker.new.perform(@status.id) if @status.jam.present?
     end
 
-    process_hashtags_service.call(@status)
-    process_mentions_service.call(@status)
   end
 
   def schedule_status!
@@ -189,12 +189,13 @@ class PostStatusService < BaseService
   end
 
   def jam_attributes
-    return unless @options[:jam]
-
+    return if @options[:jam].blank?
+    
     @options[:jam] = {
       room_id: SecureRandom.base36(16),
       jam_host: Rails.configuration.x.jam_host,
-    }
+      room_config: @options[:jam]
+  }
   end
 
 

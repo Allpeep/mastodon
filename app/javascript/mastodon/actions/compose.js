@@ -60,6 +60,7 @@ export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
 
 export const COMPOSE_JAM_ADD             = 'COMPOSE_JAM_ADD';
 export const COMPOSE_JAM_REMOVE          = 'COMPOSE_JAM_REMOVE';
+export const COMPOSE_JAM_TITLE_CHANGE    = 'COMPOSE_JAM_TITLE_CHANGE';
 
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
@@ -506,15 +507,15 @@ const fetchComposeSuggestionsTags = throttle((dispatch, getState, token) => {
 export function fetchComposeSuggestions(token) {
   return (dispatch, getState) => {
     switch (token[0]) {
-    case ':':
-      fetchComposeSuggestionsEmojis(dispatch, getState, token);
-      break;
-    case '#':
-      fetchComposeSuggestionsTags(dispatch, getState, token);
-      break;
-    default:
-      fetchComposeSuggestionsAccounts(dispatch, getState, token);
-      break;
+      case ':':
+        fetchComposeSuggestionsEmojis(dispatch, getState, token);
+        break;
+      case '#':
+        fetchComposeSuggestionsTags(dispatch, getState, token);
+        break;
+      default:
+        fetchComposeSuggestionsAccounts(dispatch, getState, token);
+        break;
     }
   };
 };
@@ -693,6 +694,12 @@ export function removeJam() {
   };
 };
 
+export function changeJamTitle(name) {
+  return {
+    type: COMPOSE_JAM_TITLE_CHANGE,
+    name,
+  }
+}
 
 export function addPoll() {
   return {
