@@ -13,12 +13,15 @@ export default class Jam extends React.PureComponent {
     account: ImmutablePropTypes.map,
     enterJam: PropTypes.func,
     leaveJam: PropTypes.func,
+    deployFloatingJam: PropTypes.func,
   };
 
   static defaultProps = {};
 
   componentWillUnmount() {
-    // pictureInPicture
+    if (this.props.jam.get('entered') && this.props.deployFloatingJam) {
+      this.props.deployFloatingJam(this.props.jam);
+    }
   }
 
   enterRoom = (e) => {
