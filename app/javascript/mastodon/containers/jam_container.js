@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch, { jamId }) => ({
 const mapStateToProps = (state, { jamId }) => ({
   jam: state.getIn(['jams', jamId]),
   account: state.getIn(['accounts', me]),
+  jamProxyBaseUrl: state.getIn(['meta', 'jam_proxy_base_url']),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Jam);
