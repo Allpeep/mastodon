@@ -1,4 +1,5 @@
 import { JAM_IMPORT, JAMS_IMPORT } from 'mastodon/actions/importer';
+import { JAM_ENTER, JAM_LEAVE } from 'mastodon/actions/jams';
 import { Map as ImmutableMap, fromJS } from 'immutable';
 
 const initialState = ImmutableMap();
@@ -11,6 +12,10 @@ export default function jams(state = initialState, action) {
     return importJams(state, action.jams);
   case JAM_IMPORT:
     return state.set(action.jam.id, fromJS(action.jam));
+  case JAM_ENTER:
+    return state.setIn([action.jamId, 'entered'], true);
+  case JAM_LEAVE:
+    return state.setIn([action.jamId, 'entered'], false);
   default:
     return state;
   }
