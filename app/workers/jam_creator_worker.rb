@@ -6,13 +6,6 @@ class JamCreatorWorker
 
   sidekiq_options queue: 'pull', retry: 3
 
-  EMPTY_ROOM = {
-    name: '',
-    description: '',
-    speakers: [],
-    moderators: [],
-  }
-
 
   def perform(status_id)
     status = Status.find(status_id)
