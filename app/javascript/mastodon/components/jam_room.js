@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useJam, use } from 'jam-core-react';
 import { JamAvatar } from './jam_avatar';
 import { importDefaultIdentity } from 'jam-core';
+
+const reactionEmojis = ['❤️', '💯', '😂', '😅', '😳', '🤔'];
 
 const videoRef = React.createRef();
 
@@ -16,8 +18,11 @@ const JamVideo = ({ stream }) => {
 };
 
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
+
+  let [reactionshow, setReactionshow] = useState(false)
+
   let [state, api] = useJam();
-  let { enterRoom, leaveRoom, setProps } = api;
+  let { enterRoom, leaveRoom, setProps, sendReaction } = api;
   let [
     myIdentity,
     peers,
@@ -25,9 +30,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     myVideo,
     remoteVideoStreams,
     { speakers },
-    handRaised
+    handRaised,
+    micMuted,
+    iAmSpeaker
   ] = use(state, [
-    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised']);
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker']);
 
   useEffect(() => {
     async function enter() {
@@ -108,8 +115,24 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
         <div className='jam-action-bar'>
           <button className='button room-button' onClick={handleleaveRoom}>Leave Room</button>
-          <button className='button button-alternative' onClick={() => setProps('handRaised', !handRaised)}>{handRaised? 'Stop raising hand' : '✋ Raise hand'}</button>
-          <button className='button button-alternative'>😄</button>
+          <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
+            {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
+          </button>
+          <button className='button button-alternative' onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          {reactionshow &&
+            <div className='reaction-list'>
+              {
+                reactionEmojis.map((emoji) => (
+                  <button onClick={() => sendReaction(emoji)} key={emoji}>
+                    {emoji}
+                  </button>
+                ))
+              }
+            </div>
+          }
+          {iAmSpeaker &&
+            <button className={`button ${micMuted? 'button-alternative-2' : 'button-alternative'}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+          }
         </div>
       </div>
 
