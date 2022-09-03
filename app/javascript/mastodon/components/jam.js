@@ -43,7 +43,8 @@ export default class Jam extends React.PureComponent {
     }
   }
 
-  renderJamLobby = (speakers) => {
+  renderJamLobby = (jam) => {
+    const speakers = jam.get('speakers');
     return (<div>
       <div className={'jam-room-outside'}>
         <ul>
@@ -90,15 +91,7 @@ export default class Jam extends React.PureComponent {
 
     const { jam, account } = this.props;
 
-    const speakers = jam.get('speakers');
-
-    if (!!jam.get('entered')) {
-      return this.renderJamRoom(jam, account);
-    } else {
-      return this.renderJamLobby(speakers);
-    }
-
-
+    return !!jam.get('entered') ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
   };
 
 }
