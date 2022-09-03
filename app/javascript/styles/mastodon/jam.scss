@@ -5,8 +5,6 @@
 
 .jam-room-outside ul {
   max-width: 65%;
-  background-color: $ui-base-color;
-  border-radius: 0.5rem;
   padding: 1rem;
   padding-top: 0rem;
   display: flex;
@@ -20,9 +18,7 @@
 }
 
 .jam-action-bar {
-  background-color: darken($ui-base-color, 2%);
   margin-top: 1rem;
-  border-radius: 0.5rem;
   padding: 0.5rem;
   display: flex;
 
@@ -174,6 +170,7 @@
 
   video {
     height: 200px;
+    width: 100%;
     border-radius: 4px;
   }
 }
