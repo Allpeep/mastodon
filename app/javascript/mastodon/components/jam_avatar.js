@@ -1,7 +1,9 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import DropdownMenuContainer from '../containers/dropdown_menu_container';
 import { use, useJam } from 'jam-core-react';
+import animateEmoji from '../utils/animate-emoji';
 
+const reactionEmojis = ['❤️', '💯', '😂', '😅', '😳', '🤔'];
 
 const SpeakerRing = ({peerId}) => {
   let [state] = useJam();
@@ -22,9 +24,11 @@ export const JamAvatar = ({
     identities,
     { moderators, speakers, presenters },
     handRaised,
-    peerState
+    peerState,
+    reactions,
+    micMuted
   ] = use(state, [
-    'iAmModerator', 'myIdentity', 'identities', 'room', 'handRaised', 'peerState']);
+    'iAmModerator', 'myIdentity', 'identities', 'room', 'handRaised', 'peerState', 'reactions', 'micMuted']);
 
   const { addPresenter, addSpeaker, addModerator, removeSpeaker, removeModerator, removePresenter } = api;
 
@@ -66,7 +70,9 @@ export const JamAvatar = ({
   }
   const info = isMe ? myIdentity.info : identities[peerId] || { id: peerId };
   const isHandRaised = isMe ? handRaised : peerState[peerId]?.handRaised;
-
+  const reactions_ = reactions[peerId];
+  const ismicMuted = isMe? micMuted : peerState[peerId]?.micMuted;
+  
   return (
     <DropdownMenuContainer
       items={menu}
@@ -77,9 +83,15 @@ export const JamAvatar = ({
         <div className={`avatar-container ${isSpeaker ? '' : 'audience'}`}>
           <SpeakerRing peerId={peerId} />
           <img className='avatar' src={info.avatar} alt={`Avatar ${info.name}`} />
+          <Reactions
+            reactions={reactions_}
+            className='reaction'
+          />
           {isHandRaised &&
           <div className='jam-hand'>✋</div>
           }
+          {(ismicMuted && isSpeaker) &&
+          <div className='jam-mute'>🔇</div>}
         </div>
         <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
       </button>
@@ -88,4 +100,36 @@ export const JamAvatar = ({
 };
 
 
+function Reactions({reactions, className}) {
+  if (!reactions) return null;
+  return (
+    <>
+      {reactions.map(
+        ([r, id]) =>
+          reactionEmojis.includes(r) && (
+            <AnimatedEmoji
+              key={id}
+              emoji={r}
+              className={className}
+              style={{
+                alignSelf: 'center',
+              }}
+            />
+          )
+      )}
+    </>
+  );
+}
+
+function AnimatedEmoji({emoji, ...props}) {
+  let [element, setElement] = useState(null);
+  useEffect(() => {
+    if (element) animateEmoji(element);
+  }, [element]);
+  return (
+    <div ref={setElement} {...props}>
+      {emoji}
+    </div>
+  );
+}
 
