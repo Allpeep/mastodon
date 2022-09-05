@@ -53,11 +53,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
     }
     enter();
-
-    return () => {
-      leaveRoom();
-      console.log("left room")
-    };
   }, []);
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
