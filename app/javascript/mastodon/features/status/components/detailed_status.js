@@ -187,9 +187,6 @@ class DetailedStatus extends ImmutablePureComponent {
     } else if (status.get('spoiler_text').length === 0 && status.get('card')) {
       media = <Card sensitive={status.get('sensitive')} onOpenMedia={this.props.onOpenMedia} card={status.get('card', null)} />;
     } else if (!!status.get('jam')) {
-
-      console.log('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ');
-      console.log(status.toJS());
       media = (<JamContainer
         jamId={status.get('jam')}
         deployFloatingJam={pictureInPicture.get('available') ? this.handleDeployFloatingJam : undefined}
