@@ -54,7 +54,7 @@ export const JamAvatar = ({
     if(isModerator) {
       menu.push({ text: 'Remove moderator', action: handleRemoveModerator });
     } else {
-      menu.push({ text: 'Make moderator', action: handleMakeModerator() });
+      menu.push({ text: 'Make moderator', action: handleMakeModerator });
     }
     if(isSpeaker) {
       menu.push({ text: 'Remove speaker', action: handleRemoveSpeaker });
