@@ -17,6 +17,7 @@ import Icon from 'mastodon/components/icon';
 import AnimatedNumber from 'mastodon/components/animated_number';
 import PictureInPicturePlaceholder from 'mastodon/components/picture_in_picture_placeholder';
 import EditedTimestamp from 'mastodon/components/edited_timestamp';
+import JamContainer from "../../../containers/jam_container";
 
 const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
@@ -185,6 +186,11 @@ class DetailedStatus extends ImmutablePureComponent {
       }
     } else if (status.get('spoiler_text').length === 0) {
       media = <Card sensitive={status.get('sensitive')} onOpenMedia={this.props.onOpenMedia} card={status.get('card', null)} />;
+    } else if (!!status.get('jam')) {
+      media = (<JamContainer
+        jamId={status.get('jam')}
+        deployFloatingJam={pictureInPicture.get('available') ? this.handleDeployFloatingJam : undefined}
+      />);
     }
 
     if (status.get('application')) {
