@@ -18,13 +18,20 @@ const JamVideo = ({ stream }) => {
   );
 };
 
-const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
+const JamRoom = ({ roomId, handleleaveRoom, jam, account, instance, setInstance }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
   let [selectedmic, setSelectedmic] = useState('Default')
 
   let [state, api] = useJam();
   let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
+
+
+  console.log(instance, " CURRENT INSTANCE")
+  if(!instance) {
+    setInstance(jamInstance)
+  }
+
   let [
     myIdentity,
     peers,
