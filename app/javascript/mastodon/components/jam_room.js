@@ -17,18 +17,13 @@ const JamVideo = ({ stream }) => {
   );
 };
 
-const JamRoom = ({ roomId, handleleaveRoom, jam, account, instance, setInstance }) => {
+const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
 
 
   let jamInstance = useJam();
   let [state, api] = jamInstance;
-
-  console.log(instance, " CURRENT INSTANCE")
-  if(!instance) {
-    setInstance(jamInstance)
-  }
 
   let { enterRoom, leaveRoom, setProps, sendReaction } = api;
   let [
