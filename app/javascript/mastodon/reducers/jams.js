@@ -18,7 +18,7 @@ export default function jams(state = initialState, action) {
     return state.setIn([action.jamId, 'entered'], false);
   case JAM_INSTANCE_SET:
     console.log(action.instance + " ACTION INSTANCE")
-    return state.set('jamInstance', fromJS(action.instance))
+    return state.set('jamInstance', action.instance)
   default:
     return state;
   }
