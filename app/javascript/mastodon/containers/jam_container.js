@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
+import { createJam } from 'jam-core';
 
 import Jam from 'mastodon/components/jam';
 import { fetchJam } from 'mastodon/actions/jams';
@@ -21,16 +22,34 @@ const mapDispatchToProps = (dispatch, { jamId }) => ({
     dispatch(setJamInstance(null));
     dispatch(leave(jamId));
   },
-  setInstance: (instance) => {
-    dispatch(setJamInstance(instance))
-  }
 });
 
-const mapStateToProps = (state, { jamId }) => ({
-  jam: state.getIn(['jams', jamId]),
-  account: state.getIn(['accounts', me]),
-  jamProxyBaseUrl: state.getIn(['meta', 'jam_proxy_base_url']),
-  jamInstance: state.get('jamInstance'),
-});
+
+
+const mapStateToProps = (state, { jamId }) => {
+  const jam = state.getIn(['jams', jamId]);
+  const jamProxyBaseUrl = state.getIn(['meta', 'jam_proxy_base_url'])
+
+  if(!state.get('jamInstance')) {
+    state.set('jamInstance', createJam({
+      jamConfig: {
+        urls: {
+          pantry: `${jamProxyBaseUrl}/jam-proxy/${jam.get('jam_host')}/_/pantry`,
+          stun: `stun:${jam.get('jam_host')}:3478`,
+          turn: `turn:${jam.get('jam_host')}:3478`,
+          turnCredentials: {
+            username: 'test',
+            credential: 'yieChoi0PeoKo8ni',
+          },
+        },
+      }, debug: true,
+    }));
+  }
+  return {
+    jam,
+    account: state.getIn(['accounts', me]),
+    jamInstance: state.get('jamInstance'),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Jam);

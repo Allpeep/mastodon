@@ -18,7 +18,7 @@ const JamVideo = ({ stream }) => {
   );
 };
 
-const JamRoom = ({ roomId, handleleaveRoom, jam, account, instance, setInstance }) => {
+const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
   let [selectedmic, setSelectedmic] = useState('Default')
@@ -26,11 +26,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account, instance, setInstance 
   let [state, api] = useJam();
   let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
 
-
-  console.log(instance, " CURRENT INSTANCE")
-  if(!instance) {
-    setInstance(jamInstance)
-  }
 
   let [
     myIdentity,

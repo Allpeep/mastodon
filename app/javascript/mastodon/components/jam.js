@@ -11,12 +11,10 @@ export default class Jam extends React.PureComponent {
   static propTypes = {
     jam: ImmutablePropTypes.map,
     account: ImmutablePropTypes.map,
-    jamProxyBaseUrl: PropTypes.string,
     enterJam: PropTypes.func,
     leaveJam: PropTypes.func,
     deployFloatingJam: PropTypes.func,
     jamInstance: PropTypes.object,
-    setInstance: PropTypes.func,
   };
 
   static defaultProps = {};
@@ -43,10 +41,6 @@ export default class Jam extends React.PureComponent {
       const { leaveJam } = this.props;
       leaveJam();
     }
-  }
-
-  setJamInstance = (instance) => {
-    this.props.setInstance(instance)
   }
 
   renderJamLobby = (jam) => {
@@ -90,31 +84,13 @@ export default class Jam extends React.PureComponent {
 
   renderJamRoom = (jam, account) => {
 
-    let state, api = undefined;
-    if (this.props.jamInstance) {
-      [state, api] = this.props.jamInstance;
-    }
-
-    console.log(state, api, "state and api");
+    const [state, api] = this.props.jamInstance;
 
     return (
       <JamProvider
-        options={{
-        jamConfig: {
-          urls: {
-            pantry: `${this.props.jamProxyBaseUrl}/jam-proxy/${jam.get('jam_host')}/_/pantry`,
-            stun: `stun:${jam.get('jam_host')}:3478`,
-            turn: `turn:${jam.get('jam_host')}:3478`,
-            turnCredentials: {
-              username: 'test',
-              credential: 'yieChoi0PeoKo8ni',
-            },
-          },
-        }, debug: true,
-      }}
         state={state} api={api}
       >
-        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} instance={this.props.jamInstance} setInstance={this.setJamInstance} />
+        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
       </JamProvider>
     );
 
