@@ -15,6 +15,8 @@ export default class Jam extends React.PureComponent {
     enterJam: PropTypes.func,
     leaveJam: PropTypes.func,
     deployFloatingJam: PropTypes.func,
+    jamInstance: PropTypes.object,
+    setInstance: PropTypes.func,
   };
 
   static defaultProps = {};
@@ -42,6 +44,10 @@ export default class Jam extends React.PureComponent {
       leaveJam();
     }
   }
+  
+  setJamInstance = (instance) => {
+    this.props.setInstance(instance)
+  }
 
   renderJamLobby = (jam) => {
     const speakers = jam.get('speakers');
@@ -66,6 +72,12 @@ export default class Jam extends React.PureComponent {
 
   renderJamRoom = (jam, account) => {
 
+    let state, api = undefined;
+    if (this.props.jamInstance) {
+      [state, api] = this.props.jamInstance;
+    }
+
+    console.log(state, api, "state and api");
 
     return (
       <JamProvider options={{
@@ -79,9 +91,11 @@ export default class Jam extends React.PureComponent {
               credential: 'yieChoi0PeoKo8ni',
             },
           },
-        }, debug: true }}
+        }, debug: true
+      }}
+        state={state} api={api}
       >
-        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
+        <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} instance={this.props.jamInstance} setInstance={this.setJamInstance} />
       </JamProvider>
     );
 
