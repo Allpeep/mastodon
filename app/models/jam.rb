@@ -9,6 +9,7 @@
 #  updated_at  :datetime         not null
 #  jam_host    :string
 #  room_config :jsonb
+#  schedule    :datetime
 #
 class Jam < ApplicationRecord
   belongs_to :status

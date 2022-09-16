@@ -39,6 +39,7 @@ import {
   COMPOSE_JAM_ADD,
   COMPOSE_JAM_REMOVE,
   COMPOSE_JAM_TITLE_CHANGE,
+  COMPOSE_JAM_SCHEDULE_CHANGE,
   COMPOSE_POLL_ADD,
   COMPOSE_POLL_REMOVE,
   COMPOSE_POLL_OPTION_ADD,
@@ -104,7 +105,8 @@ const initialPoll = ImmutableMap({
 });
 
 const initialJam = ImmutableMap({
-  name: 'Jam',
+  name: '',
+  schedule: null,
 })
 
 function statusToTextMentions(state, status) {
@@ -525,6 +527,8 @@ export default function compose(state = initialState, action) {
       return state.set('jam', null);
     case COMPOSE_JAM_TITLE_CHANGE:
       return state.setIn(['jam', 'name'], action.name);
+    case COMPOSE_JAM_SCHEDULE_CHANGE:
+      return state.setIn(['jam', 'schedule'], action.schedule);
     case COMPOSE_POLL_ADD:
       return state.set('poll', initialPoll);
     case COMPOSE_POLL_REMOVE:

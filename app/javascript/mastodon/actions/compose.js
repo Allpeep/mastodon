@@ -65,6 +65,7 @@ export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
 export const COMPOSE_JAM_ADD             = 'COMPOSE_JAM_ADD';
 export const COMPOSE_JAM_REMOVE          = 'COMPOSE_JAM_REMOVE';
 export const COMPOSE_JAM_TITLE_CHANGE    = 'COMPOSE_JAM_TITLE_CHANGE';
+export const COMPOSE_JAM_SCHEDULE_CHANGE = 'COMPOSE_JAM_SCHEDULE_CHANGE';
 
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
@@ -770,6 +771,13 @@ export function changeJamTitle(name) {
   return {
     type: COMPOSE_JAM_TITLE_CHANGE,
     name,
+  }
+}
+
+export function changeJamSchedule(date) {
+  return {
+    type: COMPOSE_JAM_SCHEDULE_CHANGE,
+    schedule: date
   }
 }
 

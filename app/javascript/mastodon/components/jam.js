@@ -45,6 +45,13 @@ export default class Jam extends React.PureComponent {
 
   renderJamLobby = (jam) => {
     const speakers = jam.get('speakers');
+    const sched = jam.get('schedule')?.slice(0, 16);
+    const now = new Date().toISOString().slice(0, 16)
+
+    let validsched = true;
+    if(sched)
+    validsched = now > sched;
+
     return (<div>
       <div className={'jam-room-outside'}>
         <ul>
@@ -57,7 +64,11 @@ export default class Jam extends React.PureComponent {
         </ul>
       </div>
       <div className='jam-action-bar'>
-        <button className={'button'} onClick={this.enterRoom}>Join Jam</button>
+        {validsched ?
+          <button className={'button'} onClick={this.enterRoom}>Join Jam</button> :
+          <PreSchedLobby schedule={sched} enterRoom={this.enterRoom} />
+        }
+
       </div>
     </div>
     );
@@ -94,4 +105,17 @@ export default class Jam extends React.PureComponent {
     return !!jam.get('entered') ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
   };
 
+}
+
+
+function PreSchedLobby({ schedule, enterRoom }) {
+  // add countdown ting
+
+  return (
+    <div>
+      🗓 scheduled for {schedule?.slice(8,10)}.{schedule?.slice(5,7)}.{schedule?.slice(0,4)}{" "} {schedule?.slice(11,)}
+    </div>
+
+
+  )
 }
