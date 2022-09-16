@@ -546,6 +546,7 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "jam_host"
     t.jsonb "room_config"
+    t.datetime "schedule"
   end
 
   create_table "list_accounts", force: :cascade do |t|
