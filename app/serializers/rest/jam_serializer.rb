@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class REST::JamSerializer < ActiveModel::Serializer
-  attributes :id, :room_id, :speakers, :jam_seed, :jam_host
+  attributes :id, :room_id, :speakers, :jam_seed, :jam_host, :schedule
 
   has_many :speakers, serializer: REST::AccountSerializer
 
