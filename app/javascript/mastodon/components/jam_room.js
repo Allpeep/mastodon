@@ -31,7 +31,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     iPresenter,
     myVideo,
     remoteVideoStreams,
-    { speakers },
+    { speakers, schedule },
     handRaised,
     micMuted,
     iAmSpeaker,
@@ -42,21 +42,21 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   useEffect(() => {
     async function enter() {
-      await importDefaultIdentity(
-        {
-          info: {
-            name: account.get('display_name') || account.get('username'),
-            avatar: account.get('avatar_static'),
-          },
-          seed: jam.get('jam_seed'),
-        });
+        await importDefaultIdentity(
+          {
+            info: {
+              name: account.get('display_name') || account.get('username'),
+              avatar: account.get('avatar_static'),
+            },
+            seed: jam.get('jam_seed'),
+          });
 
-      await setProps({ userInteracted: true });
-      await setProps('roomId', roomId);
-      await enterRoom(roomId);
+        await setProps({ userInteracted: true });
+        await setProps('roomId', roomId);
+        await enterRoom(roomId);
 
-    }
-    enter();
+      }
+      enter();
   }, []);
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
