@@ -21,6 +21,7 @@ const JamVideo = ({ stream }) => {
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
+  let [selectedmic, setSelectedmic] = useState('Default')
 
   let [state, api] = useJam();
   let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
@@ -63,7 +64,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let mics = []
 
   availableMicrophones?.forEach((mic) => {
-    mics.push({text: `${mic.label}`, action: () => selectMicrophone(mic)});
+    mics.push({text: `${mic.label}`, action: () => {selectMicrophone(mic); setSelectedmic(mic.label)}});
   });
 
   return (
@@ -120,7 +121,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className='button button-alternative' onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          <button className={`button button-alternative${reactionshow? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
           {reactionshow &&
             <div className='reaction-list'>
               {
@@ -133,12 +134,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button ${micMuted? 'button-alternative-2' : 'button-alternative'}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+            <button className={`button button-alternative${micMuted? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
           {(availableMicrophones.length >= 1) &&
           <DropdownMenuContainer direction='up' size={18} items={mics}>
-            <button className={`button button-alternative`}>Change Mic</button>
-
+            <button className={`button button-alternative`}>🎤 {selectedmic}</button>
             </ DropdownMenuContainer>}
         </div>
       </div>
