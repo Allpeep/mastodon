@@ -6464,21 +6464,21 @@ istanbul-reports@^3.1.3:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-jam-core-react@^0.5.0:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/jam-core-react/-/jam-core-react-0.5.5.tgz#22e4759f5d0fdb85b33035499543f26bca3cf346"
-  integrity sha512-mRyHwS2poO/oQNf5wb5ZP1SD3ZM/3lQu1aEKz2JULZfU46OYm1UXAVTyoiHLk6rmyxjbgCod+QHPw7jEZs7gbQ==
+jam-core-react@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jam-core-react/-/jam-core-react-0.5.6.tgz#442d8d78351f97fa79acc044a1bc1b9dce291dab"
+  integrity sha512-mlWTs+GRrXjopkib6bnO6+yQ/NmY87ZiuHfEwP5BORQNYzp1gA6LXXGOuIDRrQQkPnvQwVNyQTTpI+OykcQKRQ==
   dependencies:
     fast-base64 "^0.1.8"
-    jam-core "0.5.5"
+    jam-core "0.5.6"
     minimal-state "^5.6.0"
     use-minimal-state "^3.5.0"
     watsign "^0.1.8"
 
-jam-core@0.5.5, jam-core@^0.5.0:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/jam-core/-/jam-core-0.5.5.tgz#f127e3f44652cfdc72ca30e9d929fb40da4c32b8"
-  integrity sha512-ByyvVJ6c1bKEbMTWo22yTkGW/blC4VYu6hDIesicuDMPnTJM4TRNT65t38paA5evmNOrWy8xbmJNaw6r2TpxSA==
+jam-core@0.5.6, jam-core@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jam-core/-/jam-core-0.5.6.tgz#eebea4dc67c0e5a59ebb312a703a55abd77707c4"
+  integrity sha512-Ebp0ngHJdiSomXMy/BGLl1pggd8SCqPvcmURfmtcejErC4ZCjpsuU5HJ9azjz4ypgcoSviFfgRsaY9LpbnpyIg==
   dependencies:
     fast-base64 "^0.1.8"
     mediasoup-client "^3.6.31"
