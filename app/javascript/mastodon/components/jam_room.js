@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useJam, use } from 'jam-core-react';
 import { JamAvatar } from './jam_avatar';
 import { importDefaultIdentity } from 'jam-core';
+import DropdownMenuContainer from '../containers/dropdown_menu_container';
 
 const reactionEmojis = ['❤️', '💯', '😂', '😅', '😳', '🤔'];
 
@@ -21,11 +22,8 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
 
-
-  let jamInstance = useJam();
-  let [state, api] = jamInstance;
-
-  let { enterRoom, leaveRoom, setProps, sendReaction } = api;
+  let [state, api] = useJam();
+  let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
   let [
     myIdentity,
     peers,
@@ -35,9 +33,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     { speakers },
     handRaised,
     micMuted,
-    iAmSpeaker
+    iAmSpeaker,
+    availableMicrophones
   ] = use(state, [
-    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker']);
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
+    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker','availableMicrophones']);
 
   useEffect(() => {
     async function enter() {
@@ -60,7 +60,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
   let audiencePeers = peers.filter(id => !stagePeers.includes(id));
+  let mics = []
 
+  availableMicrophones?.forEach((mic) => {
+    mics.push({text: `${mic.label}`, action: () => selectMicrophone(mic)});
+  });
 
   return (
     <div>
@@ -131,6 +135,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           {iAmSpeaker &&
             <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
+          {(availableMicrophones.length >= 1) &&
+          <DropdownMenuContainer direction='up' size={18} items={mics}>
+            <button className={`button button-alternative`}>Change Mic</button>
+
+            </ DropdownMenuContainer>}
         </div>
       </div>
 
