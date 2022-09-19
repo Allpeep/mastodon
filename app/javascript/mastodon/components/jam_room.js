@@ -44,21 +44,21 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   useEffect(() => {
     async function enter() {
-        await importDefaultIdentity(
-          {
-            info: {
-              name: account.get('display_name') || account.get('username'),
-              avatar: account.get('avatar_static'),
-            },
-            seed: jam.get('jam_seed'),
-          });
+      await importDefaultIdentity(
+        {
+          info: {
+            name: account.get('display_name') || account.get('username'),
+            avatar: account.get('avatar_static'),
+          },
+          seed: jam.get('jam_seed'),
+        });
 
-        await setProps({ userInteracted: true });
-        await setProps('roomId', roomId);
-        await enterRoom(roomId);
+      await setProps({ userInteracted: true });
+      await setProps('roomId', roomId);
+      await enterRoom(roomId);
 
-      }
-      enter();
+    }
+    enter();
   }, []);
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
@@ -123,7 +123,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className={`button button-alternative${reactionshow? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          <button className={`button button-alternative${reactionshow ? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
           {reactionshow &&
             <div className='reaction-list'>
               {
@@ -136,7 +136,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button button-alternative${micMuted? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+            <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
           <br />
           {(availableMicrophones.length >= 1) &&
