@@ -77,10 +77,3 @@ export const enterJam = (jam) => {
     jam,
   };
 };
-
-export const setJamInstance = (instance) => {
-  return {
-    type: JAM_INSTANCE_SET,
-    instance
-  }
-}
