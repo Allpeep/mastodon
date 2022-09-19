@@ -254,12 +254,15 @@
   border: 1px solid #dbdbdb;
   border-radius: 4px;
   padding: 6px 10px;
-
-  div {
-    border-top: 1px solid darken($simple-background-color, 8%);
-  }
 }
 
+.jam-form-input {
+  margin-bottom: 6px;
+}
+
+#jam-time {
+  margin-right: 12px;
+}
 
 .jam-form-input {
   margin-bottom: 6px;
