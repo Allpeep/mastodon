@@ -5,6 +5,10 @@ import { injectIntl } from 'react-intl';
 
 @injectIntl
 class JamForm extends ImmutablePureComponent {
+    constructor(props) {
+        super(props);
+        this.state = { scheduling: false };
+    }
 
     static propTypes = {
         jam: PropTypes.object,
@@ -32,12 +36,18 @@ class JamForm extends ImmutablePureComponent {
         return (
             <div className='jam-form'>
                 <input placeholder='Jam room title' className='jam-form-input' value={this.props.name} onChange={this.handleChange} />
-                <div>
-                    Set optional Date for the Room
-                </div>
-                <input type="datetime-local" id="jam-time"
-                    name="jam-time" value={schedule} onChange={this.handleScheduleChange}
-                    min={currentDate} />
+                {this.state.scheduling ?
+                    <div style={{display:'flex'}}>
+                        <input type="datetime-local" id="jam-time"
+                            name="jam-time" value={schedule} onChange={this.handleScheduleChange}
+                            min={currentDate} />
+
+                        <button className='button button-alternative' onClick={() => { this.setState({ scheduling: false }); this.props.onChangeSchedule(null); }}>❌</button>
+                    </div>
+                    :
+
+                    <button className='button button-alternative' onClick={() => this.setState({ scheduling: true })}>🗓 schedule</button>
+                }
             </div>
         );
     }
