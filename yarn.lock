@@ -6452,6 +6452,37 @@ jake@^10.8.5:
     filelist "^1.0.1"
     minimatch "^3.0.4"
 
+jam-core-react@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jam-core-react/-/jam-core-react-0.5.6.tgz#442d8d78351f97fa79acc044a1bc1b9dce291dab"
+  integrity sha512-mlWTs+GRrXjopkib6bnO6+yQ/NmY87ZiuHfEwP5BORQNYzp1gA6LXXGOuIDRrQQkPnvQwVNyQTTpI+OykcQKRQ==
+  dependencies:
+    fast-base64 "^0.1.8"
+    jam-core "0.5.6"
+    minimal-state "^5.6.0"
+    use-minimal-state "^3.5.0"
+    watsign "^0.1.8"
+
+jam-core@0.5.6, jam-core@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/jam-core/-/jam-core-0.5.6.tgz#eebea4dc67c0e5a59ebb312a703a55abd77707c4"
+  integrity sha512-Ebp0ngHJdiSomXMy/BGLl1pggd8SCqPvcmURfmtcejErC4ZCjpsuU5HJ9azjz4ypgcoSviFfgRsaY9LpbnpyIg==
+  dependencies:
+    fast-base64 "^0.1.8"
+    mediasoup-client "^3.6.31"
+    minimal-state "^5.6.0"
+    ua-parser-js "^0.7.24"
+    watsign "^0.1.8"
+
+jest-changed-files@^28.0.2:
+  version "28.0.2"
+  resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-28.0.2.tgz#7d7810660a5bd043af9e9cfbe4d58adb05e91531"
+  integrity sha512-QX9u+5I2s54ZnGoMEjiM2WeBvJR2J7w/8ZUmH2um/WLAuGAYFQcsVXY9+1YL6k0H/AGUdH8pXUAv6erDqEsvIA==
+
+jest-changed-files@^29.2.0:
+  version "29.2.0"
+  resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-29.2.0.tgz#b6598daa9803ea6a4dce7968e20ab380ddbee289"
+  integrity sha512-qPVmLLyBmvF5HJrY7krDisx6Voi8DmlV3GZYX0aFNbaQsZeoz1hfxcCMbqDGuQCxU1dJy9eYc2xscE8QrCCYaA==
 jest-changed-files@^29.4.0:
   version "29.4.0"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-29.4.0.tgz#ac2498bcd394228f7eddcadcf928b3583bf2779d"
