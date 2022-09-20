@@ -8,8 +8,6 @@ export const JAM_FETCH_FAIL    = 'JAM_FETCH_FAIL';
 export const JAM_ENTER         = 'JAM_ENTER';
 export const JAM_LEAVE         = 'JAM_LEAVE';
 
-export const JAM_INSTANCE_SET  = 'JAM_INSTANCE_SET';
-
 export const enter = (jamId) => (dispatch) => {
   dispatch({
     type: JAM_ENTER,
