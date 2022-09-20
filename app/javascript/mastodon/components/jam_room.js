@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useJam, use } from 'jam-core-react';
 import { JamAvatar } from './jam_avatar';
 import { importDefaultIdentity } from 'jam-core';
+import DropdownMenuContainer from '../containers/dropdown_menu_container';
 
 const reactionEmojis = ['❤️', '💯', '😂', '😅', '😳', '🤔'];
 
@@ -20,12 +21,10 @@ const JamVideo = ({ stream }) => {
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
+  let [selectedmic, setSelectedmic] = useState('Default')
 
-
-  let jamInstance = useJam();
-  let [state, api] = jamInstance;
-
-  let { enterRoom, leaveRoom, setProps, sendReaction } = api;
+  let [state, api] = useJam();
+  let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
   let [
     myIdentity,
     peers,
@@ -35,9 +34,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     { speakers },
     handRaised,
     micMuted,
-    iAmSpeaker
+    iAmSpeaker,
+    availableMicrophones
   ] = use(state, [
-    'myIdentity', 'peers', 'iAmPresenter', 'myVideo', 'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker']);
+    'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
+    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker','availableMicrophones']);
 
   useEffect(() => {
     async function enter() {
@@ -60,7 +61,11 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
   let audiencePeers = peers.filter(id => !stagePeers.includes(id));
+  let mics = []
 
+  availableMicrophones?.forEach((mic) => {
+    mics.push({text: `${mic.label}`, action: () => {selectMicrophone(mic); setSelectedmic(mic.label)}});
+  });
 
   return (
     <div>
@@ -116,7 +121,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className={`button button-alternative${reactionshow ? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          <button className={`button button-alternative${reactionshow? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
           {reactionshow &&
             <div className='reaction-list'>
               {
@@ -129,8 +134,12 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+            <button className={`button button-alternative${micMuted? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
+          {(availableMicrophones.length >= 1) &&
+          <DropdownMenuContainer direction='up' size={18} items={mics}>
+            <button className={`button button-alternative`}>🎤 {selectedmic}</button>
+            </ DropdownMenuContainer>}
         </div>
       </div>
 
