@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
+import { createJam } from 'jam-core';
 
-import Jam from 'mastodon/components/jam';
-import { fetchJam } from 'mastodon/actions/jams';
+import Jam from '../components/jam';
+import { fetchJam } from '../actions/jams';
 import { me } from '../initial_state';
 import { enter, leave } from '../actions/jams';
 
@@ -20,13 +21,22 @@ const mapDispatchToProps = (dispatch, { jamId }) => ({
   leaveJam: () => {
     dispatch(leave(jamId));
   },
-
 });
 
-const mapStateToProps = (state, { jamId }) => ({
-  jam: state.getIn(['jams', jamId]),
-  account: state.getIn(['accounts', me]),
-  jamProxyBaseUrl: state.getIn(['meta', 'jam_proxy_base_url']),
-});
+
+
+const mapStateToProps = (state, { jamId }) => {
+  const jam = state.getIn(['jams', jamId]);
+
+  const jamHost = jam.get('jam_host');
+
+  const jamInstance = state.getIn(['jam_instances', jamHost]);
+
+  return {
+    jam,
+    account: state.getIn(['accounts', me]),
+    jamInstance,
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Jam);

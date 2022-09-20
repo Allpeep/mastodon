@@ -1,5 +1,5 @@
-import { JAM_IMPORT, JAMS_IMPORT } from 'mastodon/actions/importer';
-import { JAM_ENTER, JAM_LEAVE } from 'mastodon/actions/jams';
+import { JAM_IMPORT, JAMS_IMPORT } from '../actions/importer';
+import { JAM_ENTER, JAM_LEAVE } from '../actions/jams';
 import { Map as ImmutableMap, fromJS } from 'immutable';
 
 const initialState = ImmutableMap();

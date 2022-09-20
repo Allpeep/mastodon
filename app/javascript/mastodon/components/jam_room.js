@@ -21,7 +21,10 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
   let [reactionshow, setReactionshow] = useState(false)
 
-  let [state, api] = useJam();
+
+  let jamInstance = useJam();
+  let [state, api] = jamInstance;
+
   let { enterRoom, leaveRoom, setProps, sendReaction } = api;
   let [
     myIdentity,
@@ -113,7 +116,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className='button button-alternative' onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          <button className={`button button-alternative${reactionshow ? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
           {reactionshow &&
             <div className='reaction-list'>
               {
@@ -126,7 +129,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button ${micMuted? 'button-alternative-2' : 'button-alternative'}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+            <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
         </div>
       </div>
