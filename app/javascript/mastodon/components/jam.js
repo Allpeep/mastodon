@@ -14,7 +14,7 @@ export default class Jam extends React.PureComponent {
     enterJam: PropTypes.func,
     leaveJam: PropTypes.func,
     deployFloatingJam: PropTypes.func,
-    jamInstance: PropTypes.object,
+    jamInstance: PropTypes.array,
   };
 
   static defaultProps = {};
