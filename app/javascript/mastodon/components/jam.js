@@ -119,9 +119,8 @@ function PreSchedLobby({ schedule, enterRoom }) {
 
   return (
     <div style={{textAlign:'center'}}>
-      🗓 scheduled for {schedule.get('date')} {schedule.get('time') ? ` at ${schedule.get('time')}\nin ${schedule.get('timezone')}` : ''}
+      🗓 scheduled for {schedule.get('date')} {schedule.get('time') ? ` at ${schedule.get('time')}` : ''} <br />
+      {schedule.get('timezone')}
     </div>
-
-
   )
 }
