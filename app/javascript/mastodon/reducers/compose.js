@@ -106,7 +106,11 @@ const initialPoll = ImmutableMap({
 
 const initialJam = ImmutableMap({
   name: '',
-  schedule: null,
+  schedule: {
+    date: `${new Date().toISOString().split('T')[0]}`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  }
+,
 })
 
 function statusToTextMentions(state, status) {

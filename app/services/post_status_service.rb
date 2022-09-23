@@ -197,7 +197,6 @@ class PostStatusService < BaseService
       room_id: SecureRandom.base36(16),
       jam_host: Rails.configuration.x.jam_host,
       room_config: @options[:jam],
-      schedule: @options[:jam][:schedule]&.split("T")&.join(" ")
   }
   end
 
