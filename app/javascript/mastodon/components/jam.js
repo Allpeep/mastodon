@@ -87,8 +87,19 @@ export default class Jam extends React.PureComponent {
     const [state, api] = this.props.jamInstance;
 
     return (
-      <JamProvider
-        state={state} api={api}
+      <JamProvider options={{
+        jamConfig: {
+          urls: {
+            pantry: `${this.props.jamProxyBaseUrl}/jam-proxy/${jam.get('jam_host')}/_/pantry`,
+            stun: `stun:${jam.get('jam_host')}:3478`,
+            turn: `turn:${jam.get('jam_host')}:3478`,
+            turnCredentials: {
+              username: 'test',
+              credential: 'yieChoi0PeoKo8ni',
+            },
+          },
+        }, debug: true
+      }}
       >
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
       </JamProvider>
