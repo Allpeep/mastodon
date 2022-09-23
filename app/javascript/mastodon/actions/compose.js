@@ -702,10 +702,10 @@ export function changeJamTitle(name) {
   }
 }
 
-export function changeJamSchedule(date) {
+export function changeJamSchedule(schedule) {
   return {
     type: COMPOSE_JAM_SCHEDULE_CHANGE,
-    schedule: date
+    schedule,
   }
 }
 

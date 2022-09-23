@@ -13,8 +13,8 @@ const mapDispatchToProps = dispatch => ({
     onChangeTitle(name) {
         dispatch(changeJamTitle(name));
     },
-    onChangeSchedule(date) {
-        dispatch(changeJamSchedule(date))
+    onChangeSchedule(schedule) {
+        dispatch(changeJamSchedule(schedule))
     }
 });
 

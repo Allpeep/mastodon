@@ -44,13 +44,18 @@ export default class Jam extends React.PureComponent {
   }
 
   renderJamLobby = (jam) => {
+    const room_config = jam.get('room_config');
     const speakers = jam.get('speakers');
-    const sched = jam.get('schedule')?.slice(0, 16);
-    const now = new Date().toISOString().slice(0, 16)
+    let boo = false
+    let sched = null;
+    if (room_config) {
+      sched = room_config.get('schedule')
+      if (sched && (typeof sched != 'string')) {
+        boo = sched.get('date') ? true : false
+      }
+    }
+    // let validsched = true
 
-    let validsched = true;
-    if(sched)
-    validsched = now > sched;
 
     return (<div>
       <div className={'jam-room-outside'}>
@@ -64,8 +69,8 @@ export default class Jam extends React.PureComponent {
         </ul>
       </div>
       <div className='jam-action-bar'>
-        {validsched ?
-          <button className={'button'} onClick={this.enterRoom}>Join Jam</button> :
+        <button className={'button'} onClick={this.enterRoom}>Join Jam</button>
+        {boo &&
           <PreSchedLobby schedule={sched} enterRoom={this.enterRoom} />
         }
 
@@ -90,7 +95,8 @@ export default class Jam extends React.PureComponent {
               credential: 'yieChoi0PeoKo8ni',
             },
           },
-        }, debug: true }}
+        }, debug: true
+      }}
       >
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
       </JamProvider>
@@ -112,8 +118,8 @@ function PreSchedLobby({ schedule, enterRoom }) {
   // add countdown ting
 
   return (
-    <div>
-      🗓 scheduled for {schedule?.slice(8,10)}.{schedule?.slice(5,7)}.{schedule?.slice(0,4)}{" "} {schedule?.slice(11,)}
+    <div style={{textAlign:'center'}}>
+      🗓 scheduled for {schedule.get('date')} {schedule.get('time') ? ` at ${schedule.get('time')}\nin ${schedule.get('timezone')}` : ''}
     </div>
 
 
