@@ -34,12 +34,12 @@ class JamForm extends ImmutablePureComponent {
         const value = e.target.value;
         this.setState((prevState) => {
             const newState = {
-                schedule: {
+                scheduleCandidate: {
                     ...prevState.scheduleCandidate,
                     [name]: value,
                 }
             }
-            this.props.onChangeSchedule(newState.schedule)
+            this.props.onChangeSchedule(newState.scheduleCandidate)
             return newState
         }
         )

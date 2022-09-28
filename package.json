@@ -78,6 +78,7 @@
     "js-yaml": "^4.1.0",
     "jsdom": "^21.1.0",
     "lodash": "^4.17.21",
+    "luxon": "^3.0.4",
     "mark-loader": "^0.1.6",
     "marky": "^1.2.5",
     "mini-css-extract-plugin": "^1.6.2",
