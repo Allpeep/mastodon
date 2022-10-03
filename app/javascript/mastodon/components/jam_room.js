@@ -31,14 +31,14 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     iPresenter,
     myVideo,
     remoteVideoStreams,
-    { speakers },
+    { speakers, schedule },
     handRaised,
     micMuted,
     iAmSpeaker,
     availableMicrophones
   ] = use(state, [
     'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
-    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker','availableMicrophones']);
+    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones']);
 
   useEffect(() => {
     async function enter() {
@@ -64,7 +64,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let mics = []
 
   availableMicrophones?.forEach((mic) => {
-    mics.push({text: `${mic.label}`, action: () => {selectMicrophone(mic); setSelectedmic(mic.label)}});
+    mics.push({ text: `${mic.label}`, action: () => { selectMicrophone(mic); setSelectedmic(mic.label) } });
   });
 
   return (
@@ -121,7 +121,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className={`button button-alternative${reactionshow? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
+          <button className={`button button-alternative${reactionshow ? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
           {reactionshow &&
             <div className='reaction-list'>
               {
@@ -134,11 +134,12 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button button-alternative${micMuted? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
+            <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? '🔇' : '🔈'}</button>
           }
+          <br />
           {(availableMicrophones.length >= 1) &&
-          <DropdownMenuContainer direction='up' size={18} items={mics}>
-            <button className={`button button-alternative`}>🎤 {selectedmic}</button>
+            <DropdownMenuContainer direction='up' size={18} items={mics}>
+              <button className={`button button-alternative`}>🎤 {selectedmic}</button>
             </ DropdownMenuContainer>}
         </div>
       </div>

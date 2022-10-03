@@ -194,7 +194,7 @@ class PostStatusService < BaseService
     @options[:jam] = {
       room_id: SecureRandom.base36(16),
       jam_host: Rails.configuration.x.jam_host,
-      room_config: @options[:jam]
+      room_config: @options[:jam],
   }
   end
 

@@ -112,7 +112,12 @@ class Api::V1::StatusesController < Api::BaseController
       :language,
       :scheduled_at,
       jam: [
-        :name
+        :name,
+        schedule: [
+                :date,
+                :time,
+                :timezone
+              ],
       ],
       media_ids: [],
       poll: [
