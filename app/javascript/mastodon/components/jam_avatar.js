@@ -95,7 +95,7 @@ export const JamAvatar = ({
           {(ismicMuted && isSpeaker) &&
             <div className='jam-mute'>🔇</div>}
         </div>
-        <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{peerId.slice(0, 7)}</div>
+        <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
       </button>
     </DropdownMenuContainer>);
 
