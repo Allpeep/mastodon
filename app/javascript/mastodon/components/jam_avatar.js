@@ -1,11 +1,11 @@
-import React , {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import DropdownMenuContainer from '../containers/dropdown_menu_container';
 import { use, useJam } from 'jam-core-react';
 import animateEmoji from '../utils/animate-emoji';
 
 const reactionEmojis = ['❤️', '💯', '😂', '😅', '😳', '🤔'];
 
-const SpeakerRing = ({peerId}) => {
+const SpeakerRing = ({ peerId }) => {
   let [state] = useJam();
   let [speaking] = use(state, ['speaking']);
   let isSpeaking = speaking && speaking.has(peerId);
@@ -38,8 +38,10 @@ export const JamAvatar = ({
   const handleRemoveModerator = () => removeModerator(roomId, peerId);
   const handleRemovePresenter = () => removePresenter(roomId, peerId);
 
-  const handleMakePresenter = () => {
-    presenters.forEach((id) => removePresenter(roomId, id));
+  const handleMakePresenter = async () => {
+    for (let i = 0; i < presenters.length; i++) {
+      await removePresenter(roomId, presenters[i])
+    }
     return addPresenter(roomId, peerId);
   };
 
@@ -50,29 +52,29 @@ export const JamAvatar = ({
   const isMe = myIdentity.info.id === peerId;
 
   let menu = [];
-  if(iAmModerator) {
-    if(isModerator) {
+  if (iAmModerator) {
+    if (isModerator) {
       menu.push({ text: 'Remove moderator', action: handleRemoveModerator });
     } else {
       menu.push({ text: 'Make moderator', action: handleMakeModerator });
     }
-    if(isSpeaker) {
+    if (isSpeaker) {
       menu.push({ text: 'Remove speaker', action: handleRemoveSpeaker });
-      if(!isPresenter) {
+      if (!isPresenter) {
         menu.push({ text: 'Make presenter', action: handleMakePresenter });
       }
     } else {
       menu.push({ text: 'Make speaker', action: handleMakeSpeaker });
     }
-    if(isPresenter) {
+    if (isPresenter) {
       menu.push({ text: 'Remove presenter', action: handleRemovePresenter });
     }
   }
   const info = isMe ? myIdentity.info : identities[peerId] || { id: peerId };
   const isHandRaised = isMe ? handRaised : peerState[peerId]?.handRaised;
   const reactions_ = reactions[peerId];
-  const ismicMuted = isMe? micMuted : peerState[peerId]?.micMuted;
-  
+  const ismicMuted = isMe ? micMuted : peerState[peerId]?.micMuted;
+
   return (
     <DropdownMenuContainer
       items={menu}
@@ -88,19 +90,19 @@ export const JamAvatar = ({
             className='reaction'
           />
           {isHandRaised &&
-          <div className='jam-hand'>✋</div>
+            <div className='jam-hand'>✋</div>
           }
           {(ismicMuted && isSpeaker) &&
-          <div className='jam-mute'>🔇</div>}
+            <div className='jam-mute'>🔇</div>}
         </div>
-        <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{info.name}</div>
+        <div className={`avatar-name ${isSpeaker ? '' : 'audience'}`}>{peerId.slice(0, 7)}</div>
       </button>
     </DropdownMenuContainer>);
 
 };
 
 
-function Reactions({reactions, className}) {
+function Reactions({ reactions, className }) {
   if (!reactions) return null;
   return (
     <>
@@ -121,7 +123,7 @@ function Reactions({reactions, className}) {
   );
 }
 
-function AnimatedEmoji({emoji, ...props}) {
+function AnimatedEmoji({ emoji, ...props }) {
   let [element, setElement] = useState(null);
   useEffect(() => {
     if (element) animateEmoji(element);
