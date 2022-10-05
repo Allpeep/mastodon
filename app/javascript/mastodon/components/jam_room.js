@@ -33,7 +33,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     iPresenter,
     myVideo,
     remoteVideoStreams,
-    { speakers, schedule },
+    { speakers, schedule, presenters },
     handRaised,
     micMuted,
     iAmSpeaker,
@@ -73,8 +73,9 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     <div>
       <div className='room-container'>
         <div className='jam-video-container'>
-          {iPresenter && <JamVideo stream={myVideo} />}
-          {remoteVideoStreams.length > 0 && <JamVideo stream={remoteVideoStreams[0].stream} />}
+          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
+            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
+              null}
         </div>
         <ul className='listwrap'>
           {state.iAmSpeaker && <JamAvatar
