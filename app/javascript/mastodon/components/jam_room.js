@@ -20,13 +20,12 @@ const JamVideo = ({ stream }) => {
 
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
+
   let [reactionshow, setReactionshow] = useState(false)
   let [selectedmic, setSelectedmic] = useState('Default')
 
   let [state, api] = useJam();
-  let { enterRoom, selectMicrophone, setProps, sendReaction } = api;
-
-
+  let { enterRoom, leaveRoom, selectMicrophone, setProps, sendReaction } = api;
   let [
     myIdentity,
     peers,
@@ -37,10 +36,17 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     handRaised,
     micMuted,
     iAmSpeaker,
-    availableMicrophones
+    availableMicrophones,
   ] = use(state, [
     'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
     'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones']);
+
+
+  const leave = function(e) {
+    leaveRoom();
+    handleleaveRoom(e);
+  };
+
 
   useEffect(() => {
     async function enter() {
@@ -120,7 +126,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
         </ul>
 
         <div className='jam-action-bar'>
-          <button className='button room-button' onClick={handleleaveRoom}>Leave Room</button>
+          <button className='button room-button' onClick={leave}>Leave Room</button>
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
