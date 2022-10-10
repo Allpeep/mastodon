@@ -25,7 +25,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let [selectedmic, setSelectedmic] = useState('Default')
 
   let [state, api] = useJam();
-  let { enterRoom, leaveRoom, selectMicrophone, setProps, sendReaction } = api;
+  let { enterRoom, leaveRoom, selectMicrophone, setProps, sendReaction, startRecording, stopRecording, downloadRecording } = api;
   let [
     myIdentity,
     peers,
@@ -37,9 +37,26 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     micMuted,
     iAmSpeaker,
     availableMicrophones,
+    isRecording,
+    iAmModerator
   ] = use(state, [
     'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
-    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones']);
+    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones', 'isRecording', 'iAmModerator']);
+
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 100);
+      }, 100);
+    } else if (!isRecording) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isRecording]);
+
 
 
   const leave = function(e) {
@@ -79,6 +96,15 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     <div>
       <div className='room-container'>
         <div className='jam-video-container'>
+          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
+            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
+              null}
+          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
+            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
+              null}
+          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
+            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
+              null}
           {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
             presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
               null}
@@ -126,7 +152,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
         </ul>
 
         <div className='jam-action-bar'>
-          <button className='button room-button' onClick={leave}>Leave Room</button>
+          <button className='button room-button' onClick={(e)=> {if(isRecording) {stopRecording().then(()=> downloadRecording())};leave(e)}}>Leave Room</button>
           <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
@@ -151,11 +177,23 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             <button className={`button button-alternative`}>Change Mic</button>
 
             </ DropdownMenuContainer>}
+          {iAmModerator && <button className={`button button-alternative${isRecording ? '-2' : ''}`} onClick={() => {
+            if (isRecording) {
+              stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)})
+            } else {
+              startRecording();
+            }
+          }}>{isRecording ? `🟥 ${parseTimer(time)}` : "🔴 start recording"}</button>}
         </div>
       </div>
 
     </div>
   );
 };
+
+function parseTimer(time) {
+  return `${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${("0" + Math.floor((time / 1000) % 60)).slice(-2)}`
+}
+
 
 export default JamRoom;
