@@ -19,6 +19,11 @@ export default class Jam extends React.PureComponent {
 
   static defaultProps = {};
 
+  state = {
+    inRoom: this.props.jamInstance[0].inRoom,
+  };
+
+
   componentWillUnmount() {
     if (this.props.jam.get('entered') && this.props.deployFloatingJam) {
       this.props.deployFloatingJam(this.props.jam);
@@ -30,6 +35,7 @@ export default class Jam extends React.PureComponent {
 
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
       const { enterJam } = this.props;
+      this.state.inRoom = this.props.jam.get('room_id');
       enterJam();
     }
   }
@@ -39,6 +45,7 @@ export default class Jam extends React.PureComponent {
 
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
       const { leaveJam } = this.props;
+      this.state.inRoom = null;
       leaveJam();
     }
   }
@@ -99,7 +106,7 @@ export default class Jam extends React.PureComponent {
 
     const { jam, account } = this.props;
 
-    return !!jam.get('entered') ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
+    return (this.state.inRoom === jam.get('room_id')) ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
   };
 
 }
