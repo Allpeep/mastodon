@@ -60,220 +60,217 @@
   padding-top: 0.5rem;
   padding-bottom: 1rem;
   margin-top: 1rem;
-}
 
-// .audiencelist {
-//   background-color: darken($ui-base-color, 5%);
-//   padding-bottom: 1rem;
-// }
 
-.avatar-list-item {
-  background-color: transparent;
-  border: none;
-  display: list-item;
-}
-
-.avatar-container {
-  position: relative;
-  margin: 3px;
-  width: 3rem;
-  height: 3rem;
-
-  @media (min-width: 768px) {
-    width: 5rem;
-    height: 5rem;
+  .avatar-list-item {
+    background-color: transparent;
+    border: none;
+    display: list-item;
   }
 
-  &.audience {
-    width: 1.5rem;
-    height: 1.5rem;
+  .avatar-container {
+    position: relative;
+    margin: 3px;
+    width: 3rem;
+    height: 3rem;
 
     @media (min-width: 768px) {
-      width: 3rem;
-      height: 3rem;
+      width: 5rem;
+      height: 5rem;
+    }
+
+    &.audience {
+      width: 1.5rem;
+      height: 1.5rem;
+
+      @media (min-width: 768px) {
+        width: 3rem;
+        height: 3rem;
+      }
+
     }
 
   }
 
-}
+  .avatar-name {
+    text-align: center;
+    color: $dark-text-color;
+    font-size: x-small;
 
-.avatar-name {
-  text-align: center;
-  color: $dark-text-color;
-  font-size: x-small;
-
-  &.audience {
-    font-size: xx-small;
+    &.audience {
+      font-size: xx-small;
+    }
   }
-}
 
-.avatar-container:hover {
-  cursor: pointer;
-}
+  .avatar-container:hover {
+    cursor: pointer;
+  }
 
-.avatar,
-.speaker-ring {
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-
-
-.speaker-ring.active {
-  border-color: $dark-text-color;
-  border-style: solid;
-  border-width: 3px;
-  left: -3px;
-  top: -3px;
-}
-
-.reaction {
-  position: absolute;
-  display: flex;
-  background-color: transparent;
-  font-size: 3rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-}
-
-.jam-hand {
-  display: flex;
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-size: 0.75rem;
-  border-style: groove;
-  border-color: darken($ui-base-color, 5%);
-  border-width: 2px;
-  background-color: darken($ui-base-color, 3%);
-  border-radius: 9999px;
-}
-
-.jam-mute {
-  display: flex;
-  position: absolute;
-  bottom: -10px;
-  right: -10px;
-  padding-left: 2px;
-  padding-right: 2px;
-  font-size: 0.75rem;
-  border-style: groove;
-  border-color: darken($ui-base-color, 5%);
-  border-width: 2px;
-  background-color: darken($ui-base-color, 3%);
-  border-radius: 9999px;
-}
-
-.listwrap {
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-
-.jam-button {
-  padding-top: 0.25rem 1.5rem 0.25rem 1.5rem;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  color: #ffffff;
-  font-size: 1rem;
-  max-width: 350px;
-  height: 3rem;
-  border-radius: 1rem;
-  user-select: none;
-  background-color: $ui-highlight-color;
-  font-weight: 800;
-  border-style: none;
-  margin-left: auto;
-  margin-right: 2rem;
-}
-
-.room-button {
-  margin-top: -1.5rem;
-}
-
-.jam-button:hover {
-  background-color: lighten($ui-highlight-color, 2%);
-}
-
-.jam-button:active {
-  background-color: darken($ui-highlight-color, 2%);
-}
-
-.jam-audience-title {
-  color: darken($dark-text-color, 1%);
-  margin-left: 0.75rem;
-  font-size: smaller;
-}
-
-.buttonflex {
-  display: flex;
-}
-
-.jam-video-container {
-  margin-left: 0.75rem;
-  overflow: hidden;
-  text-align: center;
-
-  video {
-    height: 200px;
-    width: 100%;
+  .avatar,
+  .speaker-ring {
     border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
-}
 
 
-//Jam Poll
+  .speaker-ring.active {
+    border-color: $dark-text-color;
+    border-style: solid;
+    border-width: 3px;
+    left: -3px;
+    top: -3px;
+  }
 
-.jam-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 6px;
-  border-top: 1px solid darken($simple-background-color, 8%);
-}
+  .reaction {
+    position: absolute;
+    display: flex;
+    background-color: transparent;
+    font-size: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+  }
 
-.jam-form-input,
-#jam-time {
-  display: block;
-  box-sizing: border-box;
-  font-size: 14px;
-  color: #282c37;
-  outline: 0;
-  font-family: inherit;
-  background: #ffffff;
-  border: 1px solid #dbdbdb;
-  border-radius: 4px;
-  padding: 6px 10px;
-}
+  .jam-hand {
+    display: flex;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 0.75rem;
+    border-style: groove;
+    border-color: darken($ui-base-color, 5%);
+    border-width: 2px;
+    background-color: darken($ui-base-color, 3%);
+    border-radius: 9999px;
+  }
 
-.jam-form-input {
-  margin-bottom: 6px;
-}
+  .jam-mute {
+    display: flex;
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    font-size: 0.75rem;
+    border-style: groove;
+    border-color: darken($ui-base-color, 5%);
+    border-width: 2px;
+    background-color: darken($ui-base-color, 3%);
+    border-radius: 9999px;
+  }
 
-#jam-time {
-  margin-right: 12px;
-}
+  .listwrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0.75rem;
+    margin-top: 0.25rem;
+  }
 
-.jam-form-input {
-  margin-bottom: 6px;
-}
 
-#jam-time {
-  margin-right: 12px;
-}
+  .jam-button {
+    padding-top: 0.25rem 1.5rem 0.25rem 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+    font-size: 1rem;
+    max-width: 350px;
+    height: 3rem;
+    border-radius: 1rem;
+    user-select: none;
+    background-color: $ui-highlight-color;
+    font-weight: 800;
+    border-style: none;
+    margin-left: auto;
+    margin-right: 2rem;
+  }
 
-.jam-input:active {
-  border-color: purple;
+  .room-button {
+    margin-top: -1.5rem;
+  }
+
+  .jam-button:hover {
+    background-color: lighten($ui-highlight-color, 2%);
+  }
+
+  .jam-button:active {
+    background-color: darken($ui-highlight-color, 2%);
+  }
+
+  .jam-audience-title {
+    color: darken($dark-text-color, 1%);
+    margin-left: 0.75rem;
+    font-size: smaller;
+  }
+
+  .buttonflex {
+    display: flex;
+  }
+
+  .jam-video-container {
+    margin-left: 0.75rem;
+    overflow: hidden;
+    text-align: center;
+
+    video {
+      height: 200px;
+      width: 100%;
+      border-radius: 4px;
+    }
+  }
+
+
+  //Jam Poll
+
+  .jam-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    border-top: 1px solid darken($simple-background-color, 8%);
+  }
+
+  .jam-form-input,
+  #jam-time {
+    display: block;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #282c37;
+    outline: 0;
+    font-family: inherit;
+    background: #ffffff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 6px 10px;
+  }
+
+  .jam-form-input {
+    margin-bottom: 6px;
+  }
+
+  #jam-time {
+    margin-right: 12px;
+  }
+
+  .jam-form-input {
+    margin-bottom: 6px;
+  }
+
+  #jam-time {
+    margin-right: 12px;
+  }
+
+  .jam-input:active {
+    border-color: purple;
+  }
+
 }
 
 //ColorPalette
