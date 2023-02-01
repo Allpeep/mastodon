@@ -537,13 +537,6 @@ ActiveRecord::Schema.define(version: 2022_12_06_114142) do
     t.bigint "status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "jams", force: :cascade do |t|
-    t.string "room_id", null: false
-    t.bigint "status_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "jam_host"
     t.jsonb "room_config"
   end
