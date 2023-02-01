@@ -14,7 +14,7 @@ const JamVideo = ({ stream }) => {
     if (videoRef.current) videoRef.current.srcObject = stream;
   }, [stream, videoRef]);
   return (
-    <video ref={videoRef} autoPlay />
+    <video ref={videoRef} autoPlay playsInline />
   );
 };
 
