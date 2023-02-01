@@ -99,15 +99,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
             presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
               null}
-          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
-            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
-              null}
-          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
-            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
-              null}
-          {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
-            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
-              null}
         </div>
         <ul className='listwrap'>
           {state.iAmSpeaker && <JamAvatar
@@ -179,7 +170,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </ DropdownMenuContainer>}
           {iAmModerator && <button className={`button button-alternative${isRecording ? '-2' : ''}`} onClick={() => {
             if (isRecording) {
-              stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)})
+              stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)});
             } else {
               startRecording();
             }
