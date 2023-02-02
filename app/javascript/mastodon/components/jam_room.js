@@ -84,9 +84,9 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
     enter();
   }, []);
 
-  let stagePeers = (speakers ?? []).filter(id => peers.includes(id));
+  let stagePeers = (speakers || []).filter(id => peers.includes(id));
   let audiencePeers = peers.filter(id => !stagePeers.includes(id));
-  let mics = []
+  let mics = [];
 
   availableMicrophones?.forEach((mic) => {
     mics.push({ text: `${mic.label}`, action: () => { selectMicrophone(mic); setSelectedmic(mic.label) } });
@@ -167,14 +167,19 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <DropdownMenuContainer direction='up' size={18} items={mics}>
             <button className={`button button-alternative`}>Change Mic</button>
 
-            </ DropdownMenuContainer>}
-          {iAmModerator && <button className={`button button-alternative${isRecording ? '-2' : ''}`} onClick={() => {
-            if (isRecording) {
-              stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)});
-            } else {
-              startRecording();
-            }
-          }}>{isRecording ? `🟥 ${parseTimer(time)}` : "🔴 start recording"}</button>}
+          </DropdownMenuContainer>}
+          {iAmModerator && <button
+                              className={`button button-alternative${isRecording ? '-2' : ''}`}
+                              onClick={() => {
+                                          if (isRecording) {
+                                            stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)});
+                                          } else {
+                                            startRecording();
+                                          }
+                                        }}
+          >
+            {isRecording ? `🟥 ${parseTimer(time)}` : '🔴 start recording'}
+          </button>}
         </div>
       </div>
 
@@ -183,7 +188,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 };
 
 function parseTimer(time) {
-  return `${("0" + Math.floor((time / 60000) % 60)).slice(-2)}:${("0" + Math.floor((time / 1000) % 60)).slice(-2)}`
+  return `${('0' + Math.floor((time / 60000) % 60)).slice(-2)}:${('0' + Math.floor((time / 1000) % 60)).slice(-2)}`
 }
 
 
