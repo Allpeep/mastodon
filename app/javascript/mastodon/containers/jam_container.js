@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { debounce } from 'lodash';
-import { createJam } from 'jam-core';
 
 import Jam from '../components/jam';
 import { fetchJam } from '../actions/jams';
