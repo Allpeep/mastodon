@@ -54,12 +54,12 @@ export default class Jam extends React.PureComponent {
     const room_config = jam.get('room_config');
     const speakers = jam.get('speakers');
     let sched = null;
-    let invalidsched = false
+    let invalidsched = false;
     if (room_config) {
       sched = room_config.get('schedule')
-      if (sched && (typeof sched != 'string') && sched.get('date')) {
+      if (sched && (typeof sched !== 'string') && sched.get('date')) {
 
-        let now = DateTime.now()
+        let now = DateTime.now();
         let scheduledAt = DateTime.fromISO(`${sched.get('date')}T${sched.get('time') ? `${sched.get('time')}:00` : '00:00:00'}`, { zone: sched.get('timezone') })
 
         invalidsched = now < scheduledAt
@@ -67,24 +67,23 @@ export default class Jam extends React.PureComponent {
     }
 
     return (
-    <div>
-      <div className={'jam-room-outside'}>
-        <ul>
-          {speakers.map((speaker) => (
-
-            <li key={speaker.get('acct')}>
-              <div><Avatar account={speaker} size={48} /></div>
-            </li>
-          ))}
-        </ul>
+      <div>
+        <div className={'jam-room-outside'}>
+          <ul>
+            {speakers.map((speaker) => (
+              <li key={speaker.get('acct')}>
+                <div><Avatar account={speaker} size={48} /></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className='jam-action-bar'>
+          {invalidsched ?
+            <PreSchedLobby schedule={sched} enterRoom={this.enterRoom} /> :
+            <button className={'button'} onClick={this.enterRoom}>Join Jam</button>
+          }
+        </div>
       </div>
-      <div className='jam-action-bar'>
-        {invalidsched ?
-          <PreSchedLobby schedule={sched} enterRoom={this.enterRoom} /> :
-          <button className={'button'} onClick={this.enterRoom}>Join Jam</button>
-        }
-      </div>
-    </div>
     );
   }
 
@@ -94,8 +93,7 @@ export default class Jam extends React.PureComponent {
     const [state, api] = this.props.jamInstance;
 
     return (
-      <JamProvider state={state} api={api}
-      >
+      <JamProvider state={state} api={api}>
         <JamRoom roomId={jam.get('room_id')} handleleaveRoom={this.leaveRoom} jam={jam} account={account} />
       </JamProvider>
     );
