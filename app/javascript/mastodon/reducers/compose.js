@@ -49,7 +49,7 @@ import {
   INIT_MEDIA_EDIT_MODAL,
   COMPOSE_CHANGE_MEDIA_DESCRIPTION,
   COMPOSE_CHANGE_MEDIA_FOCUS,
-  COMPOSE_SET_STATUS,
+  COMPOSE_SET_STATUS, COMPOSE_CATEGORY_CHANGE,
 } from '../actions/compose';
 import { TIMELINE_DELETE } from '../actions/timelines';
 import { STORE_HYDRATE } from '../actions/store';
@@ -533,6 +533,8 @@ export default function compose(state = initialState, action) {
       return state.setIn(['jam', 'name'], action.name);
     case COMPOSE_JAM_SCHEDULE_CHANGE:
       return state.setIn(['jam', 'schedule'], action.schedule);
+    case COMPOSE_CATEGORY_CHANGE:
+      return state.set('category', action.category);
     case COMPOSE_POLL_ADD:
       return state.set('poll', initialPoll);
     case COMPOSE_POLL_REMOVE:
