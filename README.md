@@ -84,6 +84,17 @@ A **Vagrant** configuration is included for development purposes. To use it, com
 - Run `vagrant ssh -c "cd /vagrant && foreman start"`
 - Open `http://mastodon.local` in your browser
 
+## Local Development with Docker
+
+To do local development with docker you have to
+
+- Install Docker and Docker Compose
+- Copy `.env.compose.sample` to `.env` or add the content to your existing `.env` file
+- Run `docker compose run --rm web bundle exec rails db:migrate` (This will take a while because it first has to build the Docker image) 
+- Run `docker compose up`
+- Direct your browser to http://localhost:3000
+
+
 ## Contributing
 
 Mastodon is **free, open-source software** licensed under **AGPLv3**.
