@@ -52,3 +52,12 @@ RUN npm install -g npm@latest && \
 	apt-get update && \
 	apt-get install -y --no-install-recommends git libicu-dev libidn11-dev \
 	libpq-dev shared-mime-info
+
+
+ARG HOST_GID
+ARG HOST_UID
+ARG HOST_HOME
+ARG HOST_USER
+
+RUN groupadd -f --gid ${HOST_GID} mastodon
+RUN useradd -m -u $HOST_UID -g ${HOST_GID} -d $HOST_HOME $HOST_USER

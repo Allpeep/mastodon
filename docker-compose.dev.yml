@@ -18,12 +18,18 @@ services:
 
 
   web:
-    build: docker/mastodondev
-    image: mastodondev
+    build:
+      context: docker/mastodondev
+      args:
+        - HOST_UID=$UID
+        - HOST_GID=${GID:-$UID}
+        - HOST_HOME=$HOME
+        - HOST_USER=$USER
+    image: mastodon.local/mastodondev
     env_file: .env.dev
     user: "$UID:$GID"
     command: >
-      sh -c "bundle install && rm -f /mastodon/tmp/pids/server.pid && bundle exec rails s --environment=development --binding=0.0.0.0 -p 3000"
+      sh -c "yarn install && bundle install && rm -f /mastodon/tmp/pids/server.pid && bundle exec rails s --environment=development --binding=0.0.0.0 -p 3000"
     healthcheck:
       # prettier-ignore
       test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
@@ -36,11 +42,9 @@ services:
     volumes:
       - $PWD:/mastodon
       - $PWD/.home:$HOME
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
 
   streaming:
-    image: node
+    image: mastodon.local/mastodondev
     user: "$UID:$GID"
     env_file: .env.dev
     command: yarn run start
@@ -52,30 +56,29 @@ services:
     depends_on:
       - db
       - redis
+      - web
     working_dir: /mastodon
     volumes:
       - $PWD:/mastodon
       - $PWD/.home:$HOME
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
 
   webpack:
     build: docker/mastodondev
-    image: mastodondev
+    image: mastodon.local/mastodondev
     user: "$UID:$GID"
     env_file: .env.dev
-    command: sh -c "bundle install && ./bin/webpack-dev-server"
+    command: ./bin/webpack-dev-server
     ports:
       - '3035:3035'
     working_dir: /mastodon
     volumes:
       - $PWD:/mastodon
       - $PWD/.home:$HOME
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
+    depends_on:
+      - web
 
   jamproxy:
-    image: node
+    image: mastodon.local/mastodondev
     user: "$UID:$GID"
     env_file: .env.dev
     command: yarn run jamproxy
@@ -85,24 +88,22 @@ services:
     volumes:
       - $PWD:/mastodon
       - $PWD/.home:$HOME
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
-
+    depends_on:
+      - web
 
   sidekiq:
     build: docker/mastodondev
-    image: mastodondev
+    image: mastodon.local/mastodondev
     env_file: .env.dev
     user: "$UID:$GID"
-    command: sh -c "bundle install && bundle exec sidekiq"
+    command: bundle exec sidekiq
     depends_on:
       - db
       - redis
+      - web
     working_dir: /mastodon
     volumes:
       - $PWD:/mastodon
       - $PWD/.home:$HOME
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     healthcheck:
       test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
