@@ -67,8 +67,6 @@ export const COMPOSE_JAM_REMOVE          = 'COMPOSE_JAM_REMOVE';
 export const COMPOSE_JAM_TITLE_CHANGE    = 'COMPOSE_JAM_TITLE_CHANGE';
 export const COMPOSE_JAM_SCHEDULE_CHANGE = 'COMPOSE_JAM_SCHEDULE_CHANGE';
 
-export const COMPOSE_CATEGORY_CHANGE            = 'COMPOSE_CATEGORY_CHANGE';
-
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
 export const COMPOSE_POLL_OPTION_ADD      = 'COMPOSE_POLL_OPTION_ADD';
@@ -157,14 +155,9 @@ export function directCompose(account, routerHistory) {
 
 export function submitCompose(routerHistory) {
   return function (dispatch, getState) {
-
-    const category   = getState().getIn(['compose', 'category']);
-
-    const statusText = getState().getIn(['compose', 'text'], '');
-    const media      = getState().getIn(['compose', 'media_attachments']);
-    const statusId   = getState().getIn(['compose', 'id'], null);
-
-    const status = `${category} ${statusText}`;
+    const status   = getState().getIn(['compose', 'text'], '');
+    const media    = getState().getIn(['compose', 'media_attachments']);
+    const statusId = getState().getIn(['compose', 'id'], null);
 
     if ((!status || !status.length) && media.size === 0) {
       return;
@@ -787,14 +780,6 @@ export function changeJamSchedule(schedule) {
     schedule,
   }
 }
-
-export function changeCategory(category) {
-  return {
-    type: COMPOSE_CATEGORY_CHANGE,
-    category,
-  };
-}
-
 
 export function addPoll() {
   return {

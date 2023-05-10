@@ -15,7 +15,6 @@ class InitialStateSerializer < ActiveModel::Serializer
     store = {
       streaming_api_base_url: Rails.configuration.x.streaming_api_base_url,
       jam_proxy_base_url: Rails.configuration.x.jam_proxy_base_url,
-      categories: Rails.configuration.x.categories,
       hide_nav_item: Rails.configuration.x.hide_nav_item,
       access_token: object.token,
       locale: I18n.locale,
