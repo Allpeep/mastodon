@@ -11,7 +11,7 @@ class REST::JamSerializer < ActiveModel::Serializer
   end
 
   def jam_seed
-    scope.account.jam_seed
+    scope ? scope.account.jam_seed : nil
   end
 
 end
