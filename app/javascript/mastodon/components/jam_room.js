@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { useJam, use } from 'jam-core-react';
 import { JamAvatar } from './jam_avatar';
 import { importDefaultIdentity } from 'jam-core';
@@ -18,49 +20,53 @@ const JamVideo = ({ stream }) => {
   );
 };
 
+JamVideo.propTypes = {
+  stream: PropTypes.instanceOf(MediaStream),
+};
+
+
+
 const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
 
-  let [reactionshow, setReactionshow] = useState(false)
-  let [selectedmic, setSelectedmic] = useState('Default')
+  let [reactionShow, setReactionShow] = useState(false);
 
   let [state, api] = useJam();
-  let { enterRoom, leaveRoom, selectMicrophone, setProps, sendReaction, startRecording, stopRecording, downloadRecording } = api;
+  let { enterRoom, leaveRoom, selectMicrophone, setProps, sendReaction, startServerRecording, stopServerRecording, getRecordingsDownloadLink } = api;
   let [
     myIdentity,
     peers,
-    iPresenter,
     myVideo,
     remoteVideoStreams,
-    { speakers, schedule, presenters },
+    { speakers, presenters },
     handRaised,
     micMuted,
     iAmSpeaker,
     availableMicrophones,
-    isRecording,
-    iAmModerator
+    isServerRecording,
+    iAmModerator,
   ] = use(state, [
-    'myIdentity', 'peers', 'iAmPresenter', 'myVideo',
-    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones', 'isRecording', 'iAmModerator']);
+    'myIdentity', 'peers', 'myVideo',
+    'remoteVideoStreams', 'room', 'handRaised', 'micMuted', 'iAmSpeaker', 'availableMicrophones', 'isServerRecording', 'iAmModerator']);
 
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     let interval;
-    if (isRecording) {
+    if (isServerRecording) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 100);
       }, 100);
-    } else if (!isRecording) {
+    } else if (!isServerRecording) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isRecording]);
+  }, [isServerRecording]);
 
 
 
-  const leave = function(e) {
-    leaveRoom();
+  const leave = async function(e) {
+    await leaveRoom();
     handleleaveRoom(e);
   };
 
@@ -89,7 +95,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   let mics = [];
 
   availableMicrophones?.forEach((mic) => {
-    mics.push({ text: `${mic.label}`, action: () => { selectMicrophone(mic); setSelectedmic(mic.label) } });
+    mics.push({ text: `${mic.label}`, action: () => selectMicrophone(mic) });
   });
 
   return (
@@ -97,8 +103,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
       <div className='room-container'>
         <div className='jam-video-container'>
           {(myIdentity.info.id === presenters[presenters.length - 1]) ? <JamVideo stream={myVideo} /> :
-            presenters.length > 0 ? <JamVideo stream={remoteVideoStreams[0]?.stream} /> :
-              null}
+            presenters.length > 0 && <JamVideo stream={remoteVideoStreams[0]?.stream} /> }
         </div>
         <ul className='listwrap'>
           {state.iAmSpeaker && <JamAvatar
@@ -138,17 +143,30 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
                 key={peerId}
                 peerId={peerId}
               />
-            )
+            );
           })}
         </ul>
 
         <div className='jam-action-bar'>
-          <button className='button room-button' onClick={(e)=> {if(isRecording) {stopRecording().then(()=> downloadRecording())};leave(e)}}>Leave Room</button>
-          <button className='button button-alternative' onClick={() => { setProps('handRaised', !handRaised); setReactionshow(false) }}>
+          <button
+            className='button room-button' onClick={leave}
+          >
+            Leave Room
+          </button>
+          <button
+            className='button button-alternative' onClick={() => {
+              setProps('handRaised', !handRaised); setReactionShow(false);
+            }}
+          >
             {handRaised ? 'Stop raising hand' : '✋ Raise hand'}
           </button>
-          <button className={`button button-alternative${reactionshow ? '-2' : ''}`} onClick={() => setReactionshow(prev => !prev)}>😄</button>
-          {reactionshow &&
+          <button
+            className={`button button-alternative${reactionShow ? '-2' : ''}`}
+            onClick={() => setReactionShow(prev => !prev)}
+          >
+            😄
+          </button>
+          {reactionShow &&
             <div className='reaction-list'>
               {
                 reactionEmojis.map((emoji) => (
@@ -165,20 +183,23 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
           <br />
           {(availableMicrophones.length >= 1) &&
           <DropdownMenuContainer direction='up' size={18} items={mics}>
-            <button className={`button button-alternative`}>Change Mic</button>
+            <button className={'button button-alternative'}>Change Mic</button>
 
           </DropdownMenuContainer>}
           {iAmModerator && <button
-                              className={`button button-alternative${isRecording ? '-2' : ''}`}
-                              onClick={() => {
-                                          if (isRecording) {
-                                            stopRecording().then(() => { downloadRecording('jam-recording'); setTime(0)});
-                                          } else {
-                                            startRecording();
-                                          }
-                                        }}
+            className={`button button-alternative${isServerRecording ? '-2' : ''}`}
+            onClick={async () => {
+              if (isServerRecording) {
+                await stopServerRecording();
+                const recordingDownloadLink = await getRecordingsDownloadLink(roomId);
+                download(recordingDownloadLink);
+                setTime(0);
+              } else {
+                await startServerRecording();
+              }
+            }}
           >
-            {isRecording ? `🟥 ${parseTimer(time)}` : '🔴 start recording'}
+            {isServerRecording ? `🟥 ${parseTimer(time)}` : '🔴 start recording'}
           </button>}
         </div>
       </div>
@@ -187,9 +208,23 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
   );
 };
 
+JamRoom.propTypes = {
+  roomId: PropTypes.string.isRequired,
+  handleleaveRoom: PropTypes.func.isRequired,
+  jam: ImmutablePropTypes.map,
+  account: ImmutablePropTypes.map,
+};
+
+
 function parseTimer(time) {
-  return `${('0' + Math.floor((time / 60000) % 60)).slice(-2)}:${('0' + Math.floor((time / 1000) % 60)).slice(-2)}`
+  return `${('0' + Math.floor((time / 60000) % 60)).slice(-2)}:${('0' + Math.floor((time / 1000) % 60)).slice(-2)}`;
 }
 
+function download(link) {
+  const a = document.createElement('a');
+  a.href = link;
+  a.download = 'download';
+  a.click();
+}
 
 export default JamRoom;
