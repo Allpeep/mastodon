@@ -15,6 +15,17 @@ class InitialStateSerializer < ActiveModel::Serializer
     store = {
       streaming_api_base_url: Rails.configuration.x.streaming_api_base_url,
       jam_proxy_base_url: Rails.configuration.x.jam_proxy_base_url,
+      jam_config: {
+        urls: {
+          stun: Rails.configuration.x.jam_stun_server,
+          turn: Rails.configuration.x.jam_turn_server,
+          turnCredentials: {
+            username: Rails.configuration.x.jam_turn_user,
+            credential: Rails.configuration.x.jam_turn_password,
+          },
+        },
+        sfu: true,
+      },
       hide_nav_item: Rails.configuration.x.hide_nav_item,
       access_token: object.token,
       locale: I18n.locale,

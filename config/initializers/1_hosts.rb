@@ -35,6 +35,11 @@ Rails.application.configure do
     end
   end
 
+  config.x.jam_stun_server = ENV.fetch('JAM_STUN_SERVER', 'stun:stun.jam.systems:3478')
+  config.x.jam_turn_server = ENV.fetch('JAM_TURN_SERVER', 'turn:turn.jam.systems:3478')
+  config.x.jam_turn_user = ENV.fetch('JAM_TURN_USER', 'test')
+  config.x.jam_turn_password = ENV.fetch('JAM_TURN_PASSWORD', 'yieChoi0PeoKo8ni')
+
 
   unless Rails.env.test?
     config.hosts << host if host.present?
