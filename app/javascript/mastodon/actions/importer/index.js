@@ -44,8 +44,8 @@ export function importJams(jams) {
   return { type: JAMS_IMPORT, jams };
 }
 
-export function createJamInstances(jamHosts, jamProxyBaseUrl) {
-  return { type: JAM_INSTANCES_CREATE, jamHosts, jamProxyBaseUrl };
+export function createJamInstances(jamHosts, jamProxyBaseUrl, jamConfig) {
+  return { type: JAM_INSTANCES_CREATE, jamHosts, jamProxyBaseUrl, jamConfig };
 }
 
 
@@ -87,6 +87,7 @@ export function importFetchedStatuses(statuses) {
     const filters = [];
     const jamHosts = new Set();
     const jamProxyBaseUrl = getState().getIn(['meta', 'jam_proxy_base_url']);
+    const jamConfig = getState().getIn(['meta', 'jam_config']);
 
     function processStatus(status) {
       pushUnique(normalStatuses, normalizeStatus(status, getState().getIn(['statuses', status.id])));
@@ -113,7 +114,7 @@ export function importFetchedStatuses(statuses) {
     statuses.forEach(processStatus);
 
     dispatch(importPolls(polls));
-    dispatch(createJamInstances(jamHosts, jamProxyBaseUrl));
+    dispatch(createJamInstances(jamHosts, jamProxyBaseUrl, jamConfig));
     dispatch(importJams(jams));
     dispatch(importFetchedAccounts(accounts));
     dispatch(importStatuses(normalStatuses));

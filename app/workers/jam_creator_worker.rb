@@ -33,7 +33,6 @@ class JamCreatorWorker
     payload = signData(creator.jam_private_key, room_config)
 
     response = HTTP.post("https://#{jam_host}/_/pantry/api/v1/rooms/#{room_id}", json: payload)
-    Rails.logger.error response.status
     raise unless response.status.success?
 
   rescue HTTP::Error => e
