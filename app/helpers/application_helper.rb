@@ -179,6 +179,14 @@ module ApplicationHelper
     cdn_host.present?
   end
 
+  def noindex
+    Rails.configuration.x.noindex
+  end
+
+  def noindex?
+    noindex.present?
+  end
+
   def storage_host
     "https://#{ENV['S3_ALIAS_HOST'].presence || ENV['S3_CLOUDFRONT_HOST']}"
   end

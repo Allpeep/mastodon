@@ -149,4 +149,6 @@ Rails.application.configure do
     :about => ENV['HIDE_NAV_ITEM_ABOUT'].presence && ENV['HIDE_NAV_ITEM_ABOUT'].to_s == 'true',
   }
 
+  config.x.noindex = ENV['NOINDEX'] == 'true'
+
 end
