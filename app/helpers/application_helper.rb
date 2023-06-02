@@ -54,7 +54,7 @@ module ApplicationHelper
 
   def available_sign_up_path
     if closed_registrations? || omniauth_only?
-      'https://joinmastodon.org/#getting-started'
+      'https://allpeep.com/learn-more-from-server'
     else
       new_user_registration_path
     end

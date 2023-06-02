@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.3.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 1000 1000" style="enable-background:new 0 0 1000 1000;" xml:space="preserve">
-<symbol id="mastodon-svg-logo-full" viewBox="0 0 713.35878 175.8678">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
 <g>
 	<g>
 		<path class="st0" d="M82.1,533.9c-10.1-5.8-17.9-14.4-23.4-25.7c-5.5-11.3-8.3-24.9-8.3-40.9c0-16,2.8-29.6,8.3-40.9
@@ -64,5 +67,4 @@
 			l3-0.8v-27.3L671.3,608h-1.5L654.5,578.7z"/>
 	</g>
 </g>
-</symbol>
 </svg>
