@@ -6,6 +6,11 @@ html {
 }
 
 
+.app-holder{
+	box-shadow: inset 2000px 0 0 0 rgba(17, 37, 107, 0.4);
+}
+
+
 // Change the colors of button texts
 .button {
   color: $white;
@@ -33,19 +38,22 @@ html {
 .column-inline-form,
 .error-column,
 .regeneration-indicator {
-  background: $white;
-  border: 1px solid lighten($ui-base-color, 8%);
+	box-shadow: inset 2000px 0 0 0 rgba(255, 255, 255, 0.1);
+	background-color: transparent;
+	/* backdrop-filter: blur(5px); */
+
+  border: 1px solid $base-border-color;
   border-top: 0;
 }
 
 .column > .scrollable.about {
-  border-top: 1px solid lighten($ui-base-color, 8%);
+  border-top: 1px solid $base-border-color;
 }
 
 .about__meta,
 .about__section__title,
 .interaction-modal {
-  background: $white;
+
   border: 1px solid lighten($ui-base-color, 8%);
 }
 
@@ -58,14 +66,14 @@ html {
 }
 
 .filter-form {
-  background: $white;
-  border-bottom: 1px solid lighten($ui-base-color, 8%);
+
+  border-bottom: 1px solid $base-border-color;
 }
 
 .column-back-button,
 .column-header {
-  background: $white;
-  border: 1px solid lighten($ui-base-color, 8%);
+
+  border: 1px solid $base-border-color;
 
   @media screen and (max-width: $no-gap-breakpoint) {
     border-top: 0;
@@ -81,7 +89,7 @@ html {
 .column-header__button,
 .column-header__button.active,
 .account__header {
-  background: $white;
+
 }
 
 .column-header__button.active {
@@ -91,7 +99,7 @@ html {
   &:active,
   &:focus {
     color: $ui-highlight-color;
-    background: $white;
+  
   }
 }
 
@@ -119,14 +127,14 @@ html {
 
 .column-subheading {
   background: darken($ui-base-color, 4%);
-  border-bottom: 1px solid lighten($ui-base-color, 8%);
+  border-bottom: $base-border-color;
 }
 
 .getting-started,
 .scrollable {
   .column-link {
-    background: $white;
-    border-bottom: 1px solid lighten($ui-base-color, 8%);
+  
+    border-bottom: 1px solid $base-border-color;
 
     &:hover,
     &:active,
@@ -137,8 +145,8 @@ html {
 }
 
 .getting-started .navigation-bar {
-  border-top: 1px solid lighten($ui-base-color, 8%);
-  border-bottom: 1px solid lighten($ui-base-color, 8%);
+  border-top: 1px $base-border-color;
+  border-bottom: 1px solid $base-border-color;
 
   @media screen and (max-width: $no-gap-breakpoint) {
     border-top: 0;
@@ -153,7 +161,7 @@ html {
 .setting-text,
 .report-dialog-modal__textarea,
 .audio-player {
-  border: 1px solid lighten($ui-base-color, 8%);
+  border: 1px solid $base-border-color;
 }
 
 .report-dialog-modal .dialog-option .poll__input {
@@ -194,7 +202,7 @@ html {
 
 .drawer__header,
 .drawer__inner {
-  background: $white;
+
   border: 1px solid lighten($ui-base-color, 8%);
 }
 
@@ -255,7 +263,7 @@ html {
 
 .detailed-status,
 .detailed-status__action-bar {
-  background: $white;
+
 }
 
 // Change the background colors of status__content__spoiler-link
@@ -285,7 +293,7 @@ html {
 
 // Change the colors used in the dropdown menu
 .dropdown-menu {
-  background: $white;
+
 
   &__arrow {
     &.left {
@@ -308,7 +316,7 @@ html {
   &__item {
     a,
     button {
-      background: $white;
+    
       color: $darker-text-color;
     }
   }
@@ -378,7 +386,7 @@ html {
 .picture-in-picture__header,
 .picture-in-picture__footer,
 .reactions-bar__item {
-  background: $white;
+
   border: 1px solid lighten($ui-base-color, 8%);
 }
 
@@ -477,16 +485,16 @@ html {
 }
 
 .display-case__case {
-  background: $white;
+
 }
 
 .embed-modal .embed-modal__container .embed-modal__html {
-  background: $white;
+
   border: 1px solid lighten($ui-base-color, 8%);
 
   &:focus {
     border-color: lighten($ui-base-color, 12%);
-    background: $white;
+  
   }
 }
 
@@ -506,7 +514,7 @@ html {
 .empty-column-indicator,
 .error-column {
   color: $primary-text-color;
-  background: $white;
+
 }
 
 // Change the default colors used on some parts of the profile pages
@@ -520,7 +528,7 @@ html {
 .page-header,
 .directory__tag > a,
 .directory__tag > div {
-  background: $white;
+
   border: 1px solid lighten($ui-base-color, 8%);
 
   @media screen and (max-width: $no-gap-breakpoint) {
@@ -543,7 +551,7 @@ html {
 }
 
 .picture-in-picture-placeholder {
-  background: $white;
+
   border-color: lighten($ui-base-color, 8%);
   color: lighten($ui-base-color, 8%);
 }
@@ -688,6 +696,10 @@ html {
   svg {
     fill: $white;
   }
+}
+
+svg.logo{
+  fill:$white;
 }
 
 .notification__filter-bar button.active::after,
