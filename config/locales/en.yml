@@ -1,7 +1,7 @@
 ---
 en:
   about:
-    about_mastodon_html: 'The social network of the future: No ads, no corporate surveillance, ethical design, and decentralization! Own your data with Mastodon!'
+    about_mastodon_html: 'The social network of the future: decentralized, built for communities, not coporations! Own your data with AllPeep!'
     contact_missing: Not set
     contact_unavailable: N/A
     hosted_on: AllPeep hosted on %{domain}
