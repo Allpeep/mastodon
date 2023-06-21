@@ -54,7 +54,7 @@ module ApplicationHelper
 
   def available_sign_up_path
     if closed_registrations? || omniauth_only?
-      'https://joinmastodon.org/#getting-started'
+      'https://allpeep.com/learn-more-from-server'
     else
       new_user_registration_path
     end
@@ -177,14 +177,6 @@ module ApplicationHelper
 
   def cdn_host?
     cdn_host.present?
-  end
-
-  def noindex
-    Rails.configuration.x.noindex
-  end
-
-  def noindex?
-    noindex.present?
   end
 
   def storage_host
