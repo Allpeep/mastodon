@@ -1,18 +1,18 @@
 // Commonly used web colors
 $black: #000000;            // Black
 $white: #ffffff;            // White
-$success-green: #79bd9a !default;    // Padua
-$error-red: #df405a !default;        // Cerise
+$success-green: #00ff00 !default;    // GREEN
+$error-red: #ff0000 !default;        // RED
 $warning-red: #ff5050 !default;      // Sunset Orange
 $gold-star: #ca8f04 !default;        // Dark Goldenrod
 
 $red-bookmark: $warning-red;
 
 // Values from the classic Mastodon UI
-$classic-base-color: #282c37;         // Midnight Express
-$classic-primary-color: #9baec8;      // Echo Blue
-$classic-secondary-color: #d9e1e8;    // Pattens Blue
-$classic-highlight-color: #6364ff;    // Brand purple
+$classic-base-color: #0e3967;         // AP Navy
+$classic-primary-color: #15678a;      // Dark Teal
+$classic-secondary-color: #0ea3bd;    // Teal
+$classic-highlight-color: #5b529c;    // Brand purple
 
 // Variables for defaults in UI
 $base-shadow-color: $black !default;
