@@ -66,7 +66,6 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
 
   const leave = async function(e) {
-    await leaveRoom();
     handleleaveRoom(e);
   };
 
@@ -88,6 +87,7 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
     }
     enter();
+    return () => leaveRoom();
   }, []);
 
   let stagePeers = (speakers || []).filter(id => peers.includes(id));

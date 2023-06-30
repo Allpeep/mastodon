@@ -19,35 +19,20 @@ export default class Jam extends React.PureComponent {
 
   static defaultProps = {};
 
-  state = {
-    inRoom: this.props.jamInstance[0].inRoom,
-  };
-
-
   componentWillUnmount() {
     if (this.props.jam.get('entered') && this.props.deployFloatingJam) {
       this.props.deployFloatingJam(this.props.jam);
     }
   }
 
-  enterRoom = (e) => {
-    e.preventDefault();
-
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const { enterJam } = this.props;
-      this.state.inRoom = this.props.jam.get('room_id');
-      enterJam();
-    }
+  enterRoom = () => {
+    const { enterJam } = this.props;
+    enterJam();
   }
 
-  leaveRoom = (e) => {
-    e.preventDefault();
-
-    if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
-      const { leaveJam } = this.props;
-      this.state.inRoom = null;
-      leaveJam();
-    }
+  leaveRoom = () => {
+    const { leaveJam } = this.props;
+    leaveJam();
   }
 
   renderJamLobby = (jam) => {
@@ -56,13 +41,13 @@ export default class Jam extends React.PureComponent {
     let sched = null;
     let invalidsched = false;
     if (room_config) {
-      sched = room_config.get('schedule')
+      sched = room_config.get('schedule');
       if (sched && (typeof sched !== 'string') && sched.get('date')) {
 
         let now = DateTime.now();
         let scheduledAt = DateTime.fromISO(`${sched.get('date')}T${sched.get('time') ? `${sched.get('time')}:00` : '00:00:00'}`, { zone: sched.get('timezone') })
 
-        invalidsched = now < scheduledAt
+        invalidsched = now < scheduledAt;
       }
     }
 
@@ -104,7 +89,7 @@ export default class Jam extends React.PureComponent {
 
     const { jam, account } = this.props;
 
-    return (this.state.inRoom === jam.get('room_id')) ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
+    return (jam.get('entered')) ? this.renderJamRoom(jam, account) : this.renderJamLobby(jam);
   };
 
 }
@@ -114,12 +99,12 @@ function PreSchedLobby({ schedule }) {
   // add countdown ting
 
   let scheduleToLocal = DateTime.fromISO(`${schedule.get('date')}T${schedule.get('time') ? `${schedule.get('time')}:00` : '00:00:00'}`, { zone: schedule.get('timezone') })
-  .setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toString()
+    .setZone(Intl.DateTimeFormat().resolvedOptions().timeZone).toString();
 
   return (
     <div style={{ alignSelf: 'center' }}>
-      🗓 scheduled for {scheduleToLocal.slice(0,10)} at {scheduleToLocal.slice(11,16)} <br />
-      UTC{scheduleToLocal.slice(23,29)}
+      🗓 scheduled for {scheduleToLocal.slice(0, 10)} at {scheduleToLocal.slice(11, 16)} <br />
+      UTC{scheduleToLocal.slice(23, 29)}
     </div>
   )
 }

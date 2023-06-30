@@ -13,7 +13,11 @@ export default function jams(state = initialState, action) {
   case JAM_IMPORT:
     return state.set(action.jam.id, fromJS(action.jam));
   case JAM_ENTER:
-    return state.setIn([action.jamId, 'entered'], true);
+    const keys = [...state.keys()];
+    for(const key of keys) {
+      state = state.setIn([key, 'entered'], key === action.jamId);
+    }
+    return state;
   case JAM_LEAVE:
     return state.setIn([action.jamId, 'entered'], false);
   default:
