@@ -5,6 +5,11 @@ html {
   scrollbar-color: $ui-base-color rgba($ui-base-color, 0.25);
 }
 
+body{
+    background-color: #f7f7f7;
+
+}
+
 // Change the colors of button texts
 .button {
   color: $white;
@@ -138,6 +143,7 @@ html {
     &:active,
     &:focus {
       background: $ui-base-color;
+      color: $ui-highlight-color;
     }
   }
 }
@@ -166,7 +172,10 @@ html {
   color: $white;
 }
 
+
 .search__input {
+  background-color: $white;
+  color: $light-text-color;
   @media screen and (max-width: $no-gap-breakpoint) {
     border-top: 0;
     border-bottom: 0;
@@ -213,7 +222,7 @@ html {
   .compose-form__modifiers {
     .compose-form__upload__actions .icon-button,
     .compose-form__upload__warning .icon-button {
-      color: lighten($white, 7%);
+      color: lighten($white, 17%);
 
       &:active,
       &:focus,
@@ -656,6 +665,10 @@ html {
   a {
     color: $highlight-text-color;
   }
+}
+
+svg.logo{
+  color: #15678a;
 }
 
 .button.logo-button {

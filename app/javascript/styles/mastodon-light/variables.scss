@@ -2,10 +2,10 @@
 $black: #000000;
 $white: #ffffff;
 
-$classic-base-color: #282c37;
+$classic-base-color: #0e3967;
 $classic-primary-color: #9baec8;
 $classic-secondary-color: #d9e1e8;
-$classic-highlight-color: #6364ff;
+$classic-highlight-color: #15678a;
 
 // Differences
 $success-green: lighten(#3c754d, 8%);
@@ -14,20 +14,20 @@ $base-overlay-background: $white !default;
 $valid-value-color: $success-green !default;
 
 $ui-base-color: $classic-secondary-color !default;
-$ui-base-lighter-color: #b0c0cf;
+$ui-base-lighter-color: #f7f7f7;
 $ui-primary-color: #9bcbed;
 $ui-secondary-color: $classic-base-color !default;
-$ui-highlight-color: $classic-highlight-color !default;
+$ui-highlight-color: #0ea3bd !default;
 
-$primary-text-color: $black !default;
-$darker-text-color: $classic-base-color !default;
+$primary-text-color: #242424 !default;
+$darker-text-color: $black !default;
 $highlight-text-color: darken($ui-highlight-color, 8%) !default;
-$dark-text-color: #444b5d;
+$dark-text-color: #222;
 $action-button-color: #606984;
 
 $inverted-text-color: $black !default;
 $lighter-text-color: $classic-base-color !default;
-$light-text-color: #444b5d;
+$light-text-color: #818383;
 
 // Newly added colors
 $account-background-color: $white !default;
