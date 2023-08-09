@@ -25,14 +25,13 @@
   flex-wrap: wrap;
   min-width: auto;
   width: 100%;
-  border: 1px solid lighten($ui-base-color, 5%);
 
   button {
     margin: 0;
     padding: 5px 8px;
     border: 1px solid lighten($ui-base-color, 5%);
     border-radius: 0;
-    
+    font-weight: 400;   
   }
 }
 
@@ -63,8 +62,8 @@
 
 .room-container {
   box-sizing: border-box;
-  padding-top: 0.5rem;
-  padding-bottom: .5rem;
+  border-radius: 4px;
+  padding: 0.5rem;
   margin-top: 1rem;
   background-color: rgba(0,0,0, .1);
 
@@ -79,8 +78,6 @@
     margin: 3px;
     width: 3rem;
     height: 3rem;
-
-    overflow: scroll;
 
     @media (min-width: 768px) {
       width: 5rem;

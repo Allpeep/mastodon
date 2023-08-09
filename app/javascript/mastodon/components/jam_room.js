@@ -149,19 +149,19 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
 
         <div className='jam-action-bar'>
           <button
-            className='button room-button' onClick={leave}
+            className='button button-leave' onClick={leave}
           >
             Exit
           </button>
           <button
-            className='button button-alternative' onClick={() => {
+            className='button' onClick={() => {
               setProps('handRaised', !handRaised); setReactionShow(false);
             }}
           >
             {handRaised ? 'Lower hand' : 'Raise hand'}
           </button>
           <button
-            className={`button button-alternative${reactionShow ? '-2' : ''}`}
+            className={`button button-react${reactionShow ? '-2' : ''}`}
             onClick={() => setReactionShow(prev => !prev)}
           >
             React
@@ -178,16 +178,16 @@ const JamRoom = ({ roomId, handleleaveRoom, jam, account }) => {
             </div>
           }
           {iAmSpeaker &&
-            <button className={`button button-alternative${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? 'Unmute' : 'Mute'}</button>
+            <button className={`button button-mic${micMuted ? '-2' : ''}`} onClick={() => setProps('micMuted', !micMuted)}>{micMuted ? 'Unmute' : 'Mute'}</button>
           }
           <br />
           {(availableMicrophones.length >= 1) &&
           <DropdownMenuContainer direction='up' size={18} items={mics}>
-            <button className={'button button-alternative'}>Settings</button>
+            <button className={'button'}>Settings</button>
 
           </DropdownMenuContainer>}
           {false && <button
-            className={`button button-alternative${isServerRecording ? '-2' : ''}`}
+            className={`button button-record${isServerRecording ? '-2' : ''}`}
             onClick={async () => {
               if (isServerRecording) {
                 await stopServerRecording();
