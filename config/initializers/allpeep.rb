@@ -16,7 +16,7 @@ Rails.application.configure do
     :about => ENV['HIDE_NAV_ITEM_ABOUT'].presence && ENV['HIDE_NAV_ITEM_ABOUT'].to_s == 'true',
   }
 
-  config.x.allpeep_features {
+  config.x.allpeep_features = {
     :private_community => ENV['LIMITED_FEDERATION_MODE'].presence && ENV['LIMITED_FEDERATION_MODE'] == 'true',
   }
 
