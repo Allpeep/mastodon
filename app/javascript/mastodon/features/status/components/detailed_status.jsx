@@ -24,6 +24,8 @@ import Video from '../../video';
 
 import Card from './card';
 
+import JamContainer from '../../../containers/jam_container';
+
 const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
@@ -217,8 +219,13 @@ class DetailedStatus extends ImmutablePureComponent {
           />
         );
       }
-    } else if (status.get('spoiler_text').length === 0) {
+    } else if (status.get('spoiler_text').length === 0 && status.get('card')) {
       media = <Card sensitive={status.get('sensitive')} onOpenMedia={this.props.onOpenMedia} card={status.get('card', null)} />;
+    } else if (!!status.get('jam')) {
+      media = (<JamContainer
+        jamId={status.get('jam')}
+        deployFloatingJam={pictureInPicture.get('available') ? this.handleDeployFloatingJam : undefined}
+      />);
     }
 
     if (status.get('application')) {

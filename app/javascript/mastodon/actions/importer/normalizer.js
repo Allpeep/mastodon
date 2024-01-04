@@ -63,6 +63,10 @@ export function normalizeStatus(status, normalOldStatus) {
     normalStatus.poll = status.poll.id;
   }
 
+  if (status.jam && status.jam.id) {
+    normalStatus.jam = status.jam.id;
+  }
+
   if (status.filtered) {
     normalStatus.filtered = status.filtered.map(normalizeFilterResult);
   }

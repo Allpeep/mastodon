@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
-
 import classNames from 'classnames';
 
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
+
+import JamContainer from '../containers/jam_container';
 
 import { HotKeys } from 'react-hotkeys';
 
@@ -112,6 +113,7 @@ class Status extends ImmutablePureComponent {
     cachedMediaWidth: PropTypes.number,
     scrollKey: PropTypes.string,
     deployPictureInPicture: PropTypes.func,
+    deployFloatingJam: PropTypes.func,
     pictureInPicture: ImmutablePropTypes.contains({
       inUse: PropTypes.bool,
       available: PropTypes.bool,
@@ -255,6 +257,14 @@ class Status extends ImmutablePureComponent {
 
     deployPictureInPicture(status, type, mediaProps);
   };
+
+  handleDeployFloatingJam = (jam) => {
+    const { deployFloatingJam } = this.props;
+    const status = this._properStatus();
+
+    deployFloatingJam(status, jam);
+  }
+
 
   handleHotkeyReply = e => {
     e.preventDefault();
@@ -528,6 +538,11 @@ class Status extends ImmutablePureComponent {
           sensitive={status.get('sensitive')}
         />
       );
+    } else if (!!status.get('jam')) {
+      media = (<JamContainer
+        jamId={status.get('jam')}
+        deployFloatingJam={pictureInPicture.get('available') ? this.handleDeployFloatingJam : undefined}
+      />);
     }
 
     if (account === undefined || account === null) {

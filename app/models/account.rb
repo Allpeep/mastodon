@@ -4,7 +4,6 @@
 #
 # Table name: accounts
 #
-#  id                            :bigint(8)        not null, primary key
 #  username                      :string           default(""), not null
 #  domain                        :string
 #  private_key                   :text
@@ -17,11 +16,11 @@
 #  url                           :string
 #  avatar_file_name              :string
 #  avatar_content_type           :string
-#  avatar_file_size              :integer
+#  avatar_file_size              :bigint(8)
 #  avatar_updated_at             :datetime
 #  header_file_name              :string
 #  header_content_type           :string
-#  header_file_size              :integer
+#  header_file_size              :bigint(8)
 #  header_updated_at             :datetime
 #  avatar_remote_url             :string
 #  locked                        :boolean          default(FALSE), not null
@@ -32,6 +31,7 @@
 #  shared_inbox_url              :string           default(""), not null
 #  followers_url                 :string           default(""), not null
 #  protocol                      :integer          default("ostatus"), not null
+#  id                            :bigint(8)        not null, primary key
 #  memorial                      :boolean          default(FALSE), not null
 #  moved_to_account_id           :bigint(8)
 #  featured_collection_url       :string
@@ -45,8 +45,8 @@
 #  avatar_storage_schema_version :integer
 #  header_storage_schema_version :integer
 #  devices_url                   :string
-#  suspension_origin             :integer
 #  sensitized_at                 :datetime
+#  suspension_origin             :integer
 #  trendable                     :boolean
 #  reviewed_at                   :datetime
 #  requested_review_at           :datetime
@@ -293,6 +293,26 @@ class Account < ApplicationRecord
   def keypair
     @keypair ||= OpenSSL::PKey::RSA.new(private_key || public_key)
   end
+
+  def jam_seed
+    return nil unless private_key
+
+    Base64.urlsafe_encode64(OpenSSL::Digest.new('SHA256').digest(keypair.to_pem))
+  end
+
+  def jam_private_key
+    seed_hash = OpenSSL::Digest.new('SHA512').digest(jam_seed)
+    Ed25519::SigningKey.new seed_hash[0..31]
+  end
+
+  def jam_public_key
+    jam_private_key.verify_key
+  end
+
+  def jam_identity
+    Base64.urlsafe_encode64(jam_public_key.to_bytes).gsub('=','')
+  end
+
 
   def tags_as_strings=(tag_names)
     hashtags_map = Tag.find_or_create_by_names(tag_names).index_by(&:name)

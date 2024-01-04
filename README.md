@@ -121,6 +121,16 @@ To get you coding in just a few minutes, GitHub Codespaces provides a web-based 
 - When the editor is ready, run `foreman start -f Procfile.dev` in the terminal.
 - After a few seconds, a popup will appear with a button labeled _Open in Browser_. This will open Mastodon.
 - On the _Ports_ tab, right click on the “stream” row and select _Port visibility_ → _Public_.
+## Local Development with Docker
+
+To do local development with docker you have to
+
+- Install Docker and Docker Compose
+- Copy `.env.compose.sample` to `.env` or add the content to your existing `.env` file
+- Run `docker compose run --rm web bundle exec rails db:migrate` (This will take a while because it first has to build the Docker image) 
+- Run `docker compose up`
+- Direct your browser to http://localhost:3000
+
 
 ## Contributing
 

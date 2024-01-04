@@ -2564,6 +2564,13 @@ $ui-header-height: 55px;
   text-align: center;
   padding-bottom: 40px;
 
+  .logo {
+    width: 50px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    fill: $primary-text-color;
+  }
+
   h3 {
     font-size: 24px;
     line-height: 1.5;
@@ -8134,6 +8141,7 @@ noscript {
   bottom: 20px;
   inset-inline-end: 20px;
   width: 300px;
+  background: $base-overlay-background;
 
   &__footer {
     border-radius: 0 0 4px 4px;

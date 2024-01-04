@@ -33,10 +33,18 @@ function main() {
         console.error(err);
       }
 
-      if (registration && 'Notification' in window && Notification.permission === 'granted') {
-        const registerPushNotifications = await import('mastodon/actions/push_notifications');
+      if (registration) {
+        console.log('Registering click handler for notifications');
+        document.body.addEventListener('mousedown', (async () => {
+          try {
+            const registerPushNotifications = await import('mastodon/actions/push_notifications');
 
-        store.dispatch(registerPushNotifications.register());
+            store.dispatch(registerPushNotifications.register());
+          } catch (err) {
+            console.error(err);
+          }
+        }), true);
+
       }
     }
 

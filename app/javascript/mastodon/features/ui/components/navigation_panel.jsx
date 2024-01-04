@@ -1,3 +1,5 @@
+import React from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 
@@ -17,6 +19,12 @@ import ListPanel from './list_panel';
 import NotificationsCounterIcon from './notifications_counter_icon';
 import SignInBanner from './sign_in_banner';
 
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+  hide_nav_item: state.getIn(['meta', 'hide_nav_item']),
+});
+
 const messages = defineMessages({
   home: { id: 'tabs_bar.home', defaultMessage: 'Home' },
   notifications: { id: 'tabs_bar.notifications', defaultMessage: 'Notifications' },
@@ -34,6 +42,7 @@ const messages = defineMessages({
   openedInClassicInterface: { id: 'navigation_bar.opened_in_classic_interface', defaultMessage: 'Posts, accounts, and other specific pages are opened by default in the classic web interface.' },
 });
 
+
 class NavigationPanel extends Component {
 
   static contextTypes = {
@@ -43,6 +52,7 @@ class NavigationPanel extends Component {
 
   static propTypes = {
     intl: PropTypes.object.isRequired,
+    hide_nav_item: ImmutablePropTypes.map,
   };
 
   isFirehoseActive = (match, location) => {
@@ -50,7 +60,7 @@ class NavigationPanel extends Component {
   };
 
   render () {
-    const { intl } = this.props;
+    const { intl, hide_nav_item } = this.props;
     const { signedIn, disabledAccountId } = this.context.identity;
 
     let banner = undefined;
@@ -79,17 +89,22 @@ class NavigationPanel extends Component {
 
         {signedIn && (
           <>
+          {hide_nav_item.get('home') !== true &&
             <ColumnLink transparent to='/home' icon='home' text={intl.formatMessage(messages.home)} />
+          }
+          {hide_nav_item.get('notifications') !== true &&
             <ColumnLink transparent to='/notifications' icon={<NotificationsCounterIcon className='column-link__icon' />} text={intl.formatMessage(messages.notifications)} />
+          }
             <FollowRequestsColumnLink />
           </>
         )}
 
-        {trendsEnabled ? (
+        {trendsEnabled ?
+            hide_nav_item.get('explore') !== true &&
           <ColumnLink transparent to='/explore' icon='hashtag' text={intl.formatMessage(messages.explore)} />
-        ) : (
+         : hide_nav_item.get('search') !== true &&
           <ColumnLink transparent to='/search' icon='search' text={intl.formatMessage(messages.search)} />
-        )}
+        }
 
         {(signedIn || timelinePreview) && (
           <ColumnLink transparent to='/public/local' isActive={this.isFirehoseActive} icon='globe' text={intl.formatMessage(messages.firehose)} />
@@ -104,22 +119,36 @@ class NavigationPanel extends Component {
 
         {signedIn && (
           <>
+          {hide_nav_item.get('direct') !== true &&
             <ColumnLink transparent to='/conversations' icon='at' text={intl.formatMessage(messages.direct)} />
-            <ColumnLink transparent to='/bookmarks' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} />
+          }
+          {hide_nav_item.get('favourites') !== true &&
             <ColumnLink transparent to='/favourites' icon='star' text={intl.formatMessage(messages.favourites)} />
+          }
+          {hide_nav_item.get('bookmarks') !== true &&
+            <ColumnLink transparent to='/bookmarks' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} />
+          }
+          {hide_nav_item.get('lists') !== true &&
             <ColumnLink transparent to='/lists' icon='list-ul' text={intl.formatMessage(messages.lists)} />
+          }
 
+          {hide_nav_item.get('lists') !== true &&
             <ListPanel />
+          }
 
             <hr />
 
+          {hide_nav_item.get('preferences') !== true &&
             <ColumnLink transparent href='/settings/preferences' icon='cog' text={intl.formatMessage(messages.preferences)} />
-          </>
+          }
+        </>
         )}
 
         <div className='navigation-panel__legal'>
           <hr />
+      {hide_nav_item.get('about') !== true &&
           <ColumnLink transparent to='/about' icon='ellipsis-h' text={intl.formatMessage(messages.about)} />
+      }
         </div>
 
         <NavigationPortal />
@@ -129,4 +158,4 @@ class NavigationPanel extends Component {
 
 }
 
-export default injectIntl(NavigationPanel);
+export default connect(mapStateToProps)(injectIntl(NavigationPanel));

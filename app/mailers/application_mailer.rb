@@ -9,6 +9,8 @@ class ApplicationMailer < ActionMailer::Base
 
   after_action :set_autoreply_headers!
 
+  default from: email_address_with_name(Rails.configuration.action_mailer.default_options[:from], Setting.site_title)
+
   protected
 
   def locale_for_account(account, &block)

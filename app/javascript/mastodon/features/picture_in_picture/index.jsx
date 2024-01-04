@@ -9,6 +9,7 @@ import Video from 'mastodon/features/video';
 
 import Footer from './components/footer';
 import Header from './components/header';
+import JamContainer from '../../containers/jam_container';
 
 const mapStateToProps = state => ({
   ...state.get('picture_in_picture'),
@@ -19,6 +20,7 @@ class PictureInPicture extends Component {
   static propTypes = {
     statusId: PropTypes.string,
     accountId: PropTypes.string,
+    jamId: PropTypes.string,
     type: PropTypes.string,
     src: PropTypes.string,
     muted: PropTypes.bool,
@@ -37,9 +39,9 @@ class PictureInPicture extends Component {
   };
 
   render () {
-    const { type, src, currentTime, accountId, statusId } = this.props;
+    const { type, src, currentTime, accountId, statusId, jamId } = this.props;
 
-    if (!currentTime) {
+    if (!(type === 'jam') && !currentTime) {
       return null;
     }
 
@@ -71,6 +73,8 @@ class PictureInPicture extends Component {
           autoPlay
         />
       );
+    } else if (type === 'jam') {
+      player = <JamContainer jamId={jamId} />;
     }
 
     return (

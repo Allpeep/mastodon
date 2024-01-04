@@ -36,12 +36,18 @@ const sendSubscriptionToBackend = (subscription) => {
   const params = { subscription };
 
   if (me) {
-    const data = pushNotificationsSetting.get(me);
-    if (data) {
-      params.data = data;
-    }
+    const data = pushNotificationsSetting.get(me) || {};
+    data.alerts = {
+      follow: true,
+      favourite: true,
+      reblog: true,
+      poll: true,
+      mention: true,
+      status: true,
+    };
+    params.data = data;
   }
-
+  console.log(params);
   return api().post('/api/web/push_subscriptions', params).then(response => response.data);
 };
 
@@ -120,8 +126,15 @@ export function saveSettings() {
   return (_, getState) => {
     const state = getState().get('push_notifications');
     const subscription = state.get('subscription');
-    const alerts = state.get('alerts');
-    const data = { alerts };
+    //const alerts = state.get('alerts');
+    const data = { alerts: {
+      follow: true,
+      favourite: true,
+      reblog: true,
+      poll: true,
+      mention: true,
+      status: true,
+    } };
 
     api().put(`/api/web/push_subscriptions/${subscription.get('id')}`, {
       data,

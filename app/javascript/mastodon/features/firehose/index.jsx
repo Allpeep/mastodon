@@ -1,4 +1,7 @@
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+
 import { useRef, useCallback, useEffect } from 'react';
 
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl';
@@ -21,6 +24,10 @@ import StatusListContainer from '../ui/containers/status_list_container';
 
 const messages = defineMessages({
   title: { id: 'column.firehose', defaultMessage: 'Live feeds' },
+});
+
+const mapStateToProps = state => ({
+  allpeepFeatures: state.getIn(['meta', 'allpeep_features']),
 });
 
 // TODO: use a proper React context later on
@@ -204,6 +211,7 @@ const Firehose = ({ feedType, multiColumn }) => {
 Firehose.propTypes = {
   multiColumn: PropTypes.bool,
   feedType: PropTypes.string,
+  allpeepFeatures: ImmutablePropTypes.map,
 };
 
-export default Firehose;
+export default connect(mapStateToProps)(Firehose);

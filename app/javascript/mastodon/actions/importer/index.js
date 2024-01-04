@@ -5,7 +5,10 @@ export const ACCOUNTS_IMPORT = 'ACCOUNTS_IMPORT';
 export const STATUS_IMPORT   = 'STATUS_IMPORT';
 export const STATUSES_IMPORT = 'STATUSES_IMPORT';
 export const POLLS_IMPORT    = 'POLLS_IMPORT';
+export const JAM_IMPORT    = 'JAMS_IMPORT';
 export const FILTERS_IMPORT  = 'FILTERS_IMPORT';
+export const JAMS_IMPORT    = 'JAMS_IMPORT';
+export const JAM_INSTANCES_CREATE = 'JAM_INSTANCES_CREATE';
 
 function pushUnique(array, object) {
   if (array.every(element => element.id !== object.id)) {
@@ -37,6 +40,20 @@ export function importPolls(polls) {
   return { type: POLLS_IMPORT, polls };
 }
 
+export function importJams(jams) {
+  return { type: JAMS_IMPORT, jams };
+}
+
+export function createJamInstances(jamHosts, jamProxyBaseUrl, jamConfig) {
+  return { type: JAM_INSTANCES_CREATE, jamHosts, jamProxyBaseUrl, jamConfig };
+}
+
+
+export function importJam(jam) {
+  return { type: JAM_IMPORT, jam };
+}
+
+
 export function importFetchedAccount(account) {
   return importFetchedAccounts([account]);
 }
@@ -66,7 +83,11 @@ export function importFetchedStatuses(statuses) {
     const accounts = [];
     const normalStatuses = [];
     const polls = [];
+    const jams = [];
     const filters = [];
+    const jamHosts = new Set();
+    const jamProxyBaseUrl = getState().getIn(['meta', 'jam_proxy_base_url']);
+    const jamConfig = getState().getIn(['meta', 'jam_config']);
 
     function processStatus(status) {
       pushUnique(normalStatuses, normalizeStatus(status, getState().getIn(['statuses', status.id])));
@@ -83,11 +104,18 @@ export function importFetchedStatuses(statuses) {
       if (status.poll && status.poll.id) {
         pushUnique(polls, normalizePoll(status.poll, getState().getIn(['polls', status.poll.id])));
       }
+
+      if (status.jam && status.jam.id) {
+        jamHosts.add(status.jam.jam_host);
+        pushUnique(jams, status.jam);
+      }
     }
 
     statuses.forEach(processStatus);
 
     dispatch(importPolls(polls));
+    dispatch(createJamInstances(jamHosts, jamProxyBaseUrl, jamConfig));
+    dispatch(importJams(jams));
     dispatch(importFetchedAccounts(accounts));
     dispatch(importStatuses(normalStatuses));
     dispatch(importFilters(filters));
@@ -97,5 +125,11 @@ export function importFetchedStatuses(statuses) {
 export function importFetchedPoll(poll) {
   return (dispatch, getState) => {
     dispatch(importPolls([normalizePoll(poll, getState().getIn(['polls', poll.id]))]));
+  };
+}
+
+export function importFetchedJam(jam) {
+  return dispatch => {
+    dispatch(importJam(jam));
   };
 }

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import { defineMessages, injectIntl } from 'react-intl';
 
 import classNames from 'classnames';
@@ -18,6 +17,7 @@ import EmojiPickerDropdown from '../containers/emoji_picker_dropdown_container';
 import LanguageDropdown from '../containers/language_dropdown_container';
 import PollButtonContainer from '../containers/poll_button_container';
 import PollFormContainer from '../containers/poll_form_container';
+import JamButtonContainer from '../containers/jam_button_container';
 import PrivacyDropdownContainer from '../containers/privacy_dropdown_container';
 import ReplyIndicatorContainer from '../containers/reply_indicator_container';
 import SpoilerButtonContainer from '../containers/spoiler_button_container';
@@ -27,6 +27,7 @@ import WarningContainer from '../containers/warning_container';
 import { countableText } from '../util/counter';
 
 import CharacterCounter from './character_counter';
+import JamFormContainer from '../containers/jam_form_container';
 
 const allowedAroundShortCode = '><\u0085\u0020\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028\u2029\u0009\u000a\u000b\u000c\u000d';
 
@@ -283,6 +284,7 @@ class ComposeForm extends ImmutablePureComponent {
             <div className='compose-form__modifiers'>
               <UploadFormContainer />
               <PollFormContainer />
+              <JamFormContainer />
             </div>
           </AutosuggestTextarea>
           <EmojiPickerDropdown onPickEmoji={this.handleEmojiPick} />
@@ -290,6 +292,7 @@ class ComposeForm extends ImmutablePureComponent {
           <div className='compose-form__buttons-wrapper'>
             <div className='compose-form__buttons'>
               <UploadButtonContainer />
+              <JamButtonContainer />
               <PollButtonContainer />
               <PrivacyDropdownContainer disabled={this.props.isEditing} />
               <SpoilerButtonContainer />

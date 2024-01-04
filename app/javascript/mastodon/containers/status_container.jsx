@@ -33,7 +33,7 @@ import {
 } from '../actions/interactions';
 import { openModal } from '../actions/modal';
 import { initMuteModal } from '../actions/mutes';
-import { deployPictureInPicture } from '../actions/picture_in_picture';
+import { deployPictureInPicture, deployFloatingJam } from '../actions/picture_in_picture';
 import { initReport } from '../actions/reports';
 import {
   muteStatus,
@@ -282,6 +282,11 @@ const mapDispatchToProps = (dispatch, { intl, contextType }) => ({
       },
     }));
   },
+
+  deployFloatingJam (status, jam) {
+    dispatch(deployFloatingJam(status.get('id'), status.getIn(['account', 'id']), jam.get('id')));
+  },
+
 
 });
 

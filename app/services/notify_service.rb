@@ -176,7 +176,7 @@ class NotifyService < BaseService
   end
 
   def recipient_online?
-    subscribed_to_streaming_api? || subscribed_to_web_push?
+    subscribed_to_streaming_api? # || subscribed_to_web_push?
   end
 
   def always_send_emails?

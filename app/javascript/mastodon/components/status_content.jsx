@@ -89,7 +89,7 @@ class StatusContent extends PureComponent {
     hidden: true,
   };
 
-  _updateStatusLinks () {
+  _updateStatusLinks() {
     const node = this.node;
 
     if (!node) {
@@ -164,11 +164,11 @@ class StatusContent extends PureComponent {
     }
   };
 
-  componentDidMount () {
+  componentDidMount() {
     this._updateStatusLinks();
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     this._updateStatusLinks();
   }
 
@@ -197,8 +197,8 @@ class StatusContent extends PureComponent {
       return;
     }
 
-    const [ startX, startY ] = this.startXY;
-    const [ deltaX, deltaY ] = [Math.abs(e.clientX - startX), Math.abs(e.clientY - startY)];
+    const [startX, startY] = this.startXY;
+    const [deltaX, deltaY] = [Math.abs(e.clientX - startX), Math.abs(e.clientY - startY)];
 
     let element = e.target;
     while (element) {

@@ -153,11 +153,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.string "url"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
-    t.integer "avatar_file_size"
+    t.bigint "avatar_file_size"
     t.datetime "avatar_updated_at", precision: nil
     t.string "header_file_name"
     t.string "header_content_type"
-    t.integer "header_file_size"
+    t.bigint "header_file_size"
     t.datetime "header_updated_at", precision: nil
     t.string "avatar_remote_url"
     t.boolean "locked", default: false, null: false
@@ -181,8 +181,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.integer "avatar_storage_schema_version"
     t.integer "header_storage_schema_version"
     t.string "devices_url"
-    t.integer "suspension_origin"
     t.datetime "sensitized_at", precision: nil
+    t.integer "suspension_origin"
     t.boolean "trendable"
     t.datetime "reviewed_at", precision: nil
     t.datetime "requested_review_at", precision: nil
@@ -193,6 +193,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.index ["moved_to_account_id"], name: "index_accounts_on_moved_to_account_id", where: "(moved_to_account_id IS NOT NULL)"
     t.index ["uri"], name: "index_accounts_on_uri"
     t.index ["url"], name: "index_accounts_on_url", opclass: :text_pattern_ops, where: "(url IS NOT NULL)"
+  end
+
+  create_table "accounts_jams", id: false, force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "jam_id", null: false
+    t.index ["account_id", "jam_id"], name: "index_accounts_jams_on_account_id_and_jam_id"
+    t.index ["jam_id", "account_id"], name: "index_accounts_jams_on_jam_id_and_account_id", unique: true
   end
 
   create_table "accounts_tags", primary_key: ["tag_id", "account_id"], force: :cascade do |t|
@@ -355,7 +362,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.string "domain"
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -522,7 +529,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.datetime "updated_at", precision: nil, null: false
     t.string "data_file_name"
     t.string "data_content_type"
-    t.integer "data_file_size"
+    t.bigint "data_file_size"
     t.datetime "data_updated_at", precision: nil
     t.bigint "account_id", null: false
     t.boolean "overwrite", default: false, null: false
@@ -543,13 +550,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
   end
 
   create_table "ip_blocks", force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "expires_at", precision: nil
     t.inet "ip", default: "0.0.0.0", null: false
     t.integer "severity", default: 0, null: false
+    t.datetime "expires_at", precision: nil
     t.text "comment", default: "", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["ip"], name: "index_ip_blocks_on_ip", unique: true
+  end
+
+  create_table "jams", force: :cascade do |t|
+    t.string "room_id", null: false
+    t.bigint "status_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "jam_host"
+    t.jsonb "room_config"
   end
 
   create_table "list_accounts", force: :cascade do |t|
@@ -599,7 +615,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.bigint "status_id"
     t.string "file_file_name"
     t.string "file_content_type"
-    t.integer "file_file_size"
+    t.bigint "file_file_size"
     t.datetime "file_updated_at", precision: nil
     t.string "remote_url", default: "", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -615,7 +631,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.integer "file_storage_schema_version"
     t.string "thumbnail_file_name"
     t.string "thumbnail_content_type"
-    t.integer "thumbnail_file_size"
+    t.bigint "thumbnail_file_size"
     t.datetime "thumbnail_updated_at", precision: nil
     t.string "thumbnail_remote_url"
     t.index ["account_id", "status_id"], name: "index_media_attachments_on_account_id_and_status_id", order: { status_id: :desc }
@@ -783,7 +799,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.string "description", default: "", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at", precision: nil
     t.integer "type", default: 0, null: false
     t.text "html", default: "", null: false
@@ -895,7 +911,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.string "var", default: "", null: false
     t.string "file_file_name"
     t.string "file_content_type"
-    t.integer "file_file_size"
+    t.bigint "file_file_size"
     t.datetime "file_updated_at", precision: nil
     t.json "meta"
     t.datetime "created_at", precision: nil, null: false
@@ -932,8 +948,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
   create_table "status_pins", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "status_id", null: false
-    t.datetime "created_at", precision: nil, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: nil, default: -> { "now()" }, null: false
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["account_id", "status_id"], name: "index_status_pins_on_account_id_and_status_id", unique: true
     t.index ["status_id"], name: "index_status_pins_on_status_id"
   end
@@ -982,6 +998,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_150100) do
     t.datetime "edited_at", precision: nil
     t.boolean "trendable"
     t.bigint "ordered_media_attachment_ids", array: true
+    t.bigint "jam_id"
     t.index ["account_id", "id", "visibility", "updated_at"], name: "index_statuses_20190820", order: { id: :desc }, where: "(deleted_at IS NULL)"
     t.index ["account_id"], name: "index_statuses_on_account_id"
     t.index ["deleted_at"], name: "index_statuses_on_deleted_at", where: "(deleted_at IS NOT NULL)"

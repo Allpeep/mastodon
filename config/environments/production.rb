@@ -156,4 +156,7 @@ Rails.application.configure do
   }
 
   config.x.otp_secret = ENV.fetch('OTP_SECRET')
+  config.x.jam_host = ENV.fetch('JAM_HOST', 'jam.systems')
+
+
 end

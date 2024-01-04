@@ -67,6 +67,7 @@ class Api::V1::StatusesController < Api::BaseController
       application: doorkeeper_token.application,
       poll: status_params[:poll],
       allowed_mentions: status_params[:allowed_mentions],
+      jam: status_params[:jam],
       idempotency: request.headers['Idempotency-Key'],
       with_rate_limit: true
     )
@@ -139,6 +140,14 @@ class Api::V1::StatusesController < Api::BaseController
       :language,
       :scheduled_at,
       allowed_mentions: [],
+      jam: [
+        :name,
+        schedule: [
+                :date,
+                :time,
+                :timezone
+              ],
+      ],
       media_ids: [],
       media_attributes: [
         :id,

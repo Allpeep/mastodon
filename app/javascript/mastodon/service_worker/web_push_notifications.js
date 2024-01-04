@@ -9,6 +9,11 @@ const GROUP_TAG = 'tag';
 
 const notify = options =>
   self.registration.getNotifications().then(notifications => {
+
+    if (navigator.setAppBadge) {
+      navigator.setAppBadge(notifications.length);
+    }
+
     if (notifications.length >= MAX_NOTIFICATIONS) { // Reached the maximum number of notifications, proceed with grouping
       const group = {
         title: formatMessage('notifications.group', options.data.preferred_locale, { count: notifications.length + 1 }),

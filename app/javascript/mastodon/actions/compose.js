@@ -64,6 +64,11 @@ export const COMPOSE_UPLOAD_CHANGE_REQUEST     = 'COMPOSE_UPLOAD_UPDATE_REQUEST'
 export const COMPOSE_UPLOAD_CHANGE_SUCCESS     = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
 export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
 
+export const COMPOSE_JAM_ADD             = 'COMPOSE_JAM_ADD';
+export const COMPOSE_JAM_REMOVE          = 'COMPOSE_JAM_REMOVE';
+export const COMPOSE_JAM_TITLE_CHANGE    = 'COMPOSE_JAM_TITLE_CHANGE';
+export const COMPOSE_JAM_SCHEDULE_CHANGE = 'COMPOSE_JAM_SCHEDULE_CHANGE';
+
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
 export const COMPOSE_POLL_OPTION_ADD      = 'COMPOSE_POLL_OPTION_ADD';
@@ -207,6 +212,7 @@ export function submitCompose(routerHistory) {
         spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
         visibility: getState().getIn(['compose', 'privacy']),
         poll: getState().getIn(['compose', 'poll'], null),
+        jam: getState().getIn(['compose', 'jam'], false),
         language: getState().getIn(['compose', 'language']),
       },
       headers: {
@@ -579,15 +585,15 @@ const fetchComposeSuggestionsTags = throttle((dispatch, getState, token) => {
 export function fetchComposeSuggestions(token) {
   return (dispatch, getState) => {
     switch (token[0]) {
-    case ':':
-      fetchComposeSuggestionsEmojis(dispatch, getState, token);
-      break;
-    case '#':
-      fetchComposeSuggestionsTags(dispatch, getState, token);
-      break;
-    default:
-      fetchComposeSuggestionsAccounts(dispatch, getState, token);
-      break;
+      case ':':
+        fetchComposeSuggestionsEmojis(dispatch, getState, token);
+        break;
+      case '#':
+        fetchComposeSuggestionsTags(dispatch, getState, token);
+        break;
+      default:
+        fetchComposeSuggestionsAccounts(dispatch, getState, token);
+        break;
     }
   };
 }
@@ -765,6 +771,32 @@ export function changeComposing(value) {
     type: COMPOSE_COMPOSING_CHANGE,
     value,
   };
+}
+
+export function addJam() {
+  return {
+    type: COMPOSE_JAM_ADD,
+  };
+};
+
+export function removeJam() {
+  return {
+    type: COMPOSE_JAM_REMOVE,
+  };
+};
+
+export function changeJamTitle(name) {
+  return {
+    type: COMPOSE_JAM_TITLE_CHANGE,
+    name,
+  }
+}
+
+export function changeJamSchedule(schedule) {
+  return {
+    type: COMPOSE_JAM_SCHEDULE_CHANGE,
+    schedule,
+  }
 }
 
 export function addPoll() {

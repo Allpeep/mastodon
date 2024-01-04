@@ -20,6 +20,8 @@ import filters from './filters';
 import followed_tags from './followed_tags';
 import height_cache from './height_cache';
 import history from './history';
+import jams from './jams';
+import jam_instances from './jam_instances';
 import listAdder from './list_adder';
 import listEditor from './list_editor';
 import lists from './lists';
@@ -84,6 +86,8 @@ const reducers = {
   markers,
   picture_in_picture,
   history,
+  jams,
+  jam_instances,
   tags,
   followed_tags,
 };
